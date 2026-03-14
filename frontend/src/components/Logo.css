@@ -1,0 +1,261 @@
+.logo-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.logo-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 3px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10%;
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-circle::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.logo-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+/* T Shape Base - Dark Blue Metallic */
+.logo-t-base {
+  position: absolute;
+  width: 40px;
+  height: 50px;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 30%, #3d6bb3 50%, #2a5298 70%, #1e3c72 100%);
+  border-radius: 4px;
+  box-shadow: 
+    0 6px 12px rgba(0, 0, 0, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    inset 0 2px 6px rgba(255, 255, 255, 0.25),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.4);
+  transform: perspective(150px) rotateX(8deg) rotateY(-2deg);
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-t-base::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 12px;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 30%, #3d6bb3 50%, #2a5298 70%, #1e3c72 100%);
+  border-radius: 4px;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 3px rgba(255, 255, 255, 0.25),
+    inset 0 -1px 3px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Top Chevron - Dark Blue */
+.logo-chevron-top {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 15px solid #1e3c72;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+  transform: translateY(-8px) translateX(8px) rotate(45deg);
+  z-index: 2;
+}
+
+.logo-chevron-top::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: -10px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 12px solid #2a5298;
+  filter: brightness(1.2);
+}
+
+/* Bottom Chevron - Gold/Bronze */
+.logo-chevron-bottom {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 18px solid #d4af37;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+  transform: translateY(2px) translateX(10px) rotate(45deg);
+  z-index: 2;
+}
+
+.logo-chevron-bottom::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: -12px;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 15px solid #f4d03f;
+  filter: brightness(1.15);
+}
+
+/* Arrow - Gold/Bronze pointing up-right */
+.logo-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 20px solid #d4af37;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+  transform: translateY(-15px) translateX(18px) rotate(-45deg);
+  z-index: 3;
+}
+
+.logo-arrow::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: -6px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 15px solid #f4d03f;
+  filter: brightness(1.15);
+}
+
+/* Size variants */
+.logo-small .logo-circle {
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  min-height: 60px;
+}
+
+.logo-small .logo-wrapper {
+  width: 40px;
+  height: 50px;
+}
+
+.logo-small .logo-t-base {
+  width: 30px;
+  height: 38px;
+}
+
+.logo-small .logo-t-base::before {
+  width: 45px;
+  height: 9px;
+}
+
+.logo-medium .logo-circle {
+  width: 90px;
+  height: 90px;
+  min-width: 90px;
+  min-height: 90px;
+}
+
+.logo-medium .logo-wrapper {
+  width: 60px;
+  height: 75px;
+}
+
+.logo-medium .logo-t-base {
+  width: 50px;
+  height: 62px;
+}
+
+.logo-medium .logo-t-base::before {
+  width: 70px;
+  height: 14px;
+}
+
+.logo-large .logo-circle {
+  width: 150px;
+  height: 150px;
+  min-width: 150px;
+  min-height: 150px;
+}
+
+.logo-large .logo-wrapper {
+  width: 100px;
+  height: 125px;
+}
+
+.logo-large .logo-t-base {
+  width: 80px;
+  height: 100px;
+}
+
+.logo-large .logo-t-base::before {
+  width: 110px;
+  height: 22px;
+}
+
+/* Add metallic shine effect */
+.logo-t-base,
+.logo-chevron-top,
+.logo-chevron-bottom,
+.logo-arrow {
+  position: relative;
+}
+
+.logo-t-base::after,
+.logo-chevron-top::before,
+.logo-chevron-bottom::before,
+.logo-arrow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  pointer-events: none;
+  border-radius: inherit;
+}
