@@ -87,7 +87,7 @@ const Dashboard = () => {
       <div className="dashboard-sidebar">
         <div className="sidebar-header">
           <Logo size="medium" />
-          <h5 className="sidebar-title">TEAM 4stack Ads</h5>
+          <h5 className="sidebar-title">Team4stack Ads</h5>
         </div>
         
         <div className="sidebar-nav">

@@ -93,7 +93,7 @@ const Withdraw = () => {
       {/* Left Sidebar */}
       <div className="dashboard-sidebar">
         <div className="sidebar-header">
-          <h5 className="sidebar-title">TEAM 4stack Ads</h5>
+          <h5 className="sidebar-title">Team4stack Ads</h5>
         </div>
 
         <div className="sidebar-nav">

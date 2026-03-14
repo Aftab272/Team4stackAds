@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Card, Badge } from 'react-bootstrap'
+import { Container, Card, Badge, Button } from 'react-bootstrap'
 import axios from 'axios'
 import './Page.css'
 
@@ -22,10 +22,66 @@ const OfficialChannel = () => {
     }
   }
 
+  const appLinks = [
+    {
+      name: 'WhatsApp',
+      href: 'https://wa.me/923027434569',
+      bg: 'success',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg',
+      label: 'WhatsApp'
+    },
+    {
+      name: 'Telegram',
+      href: 'https://t.me/yourchannel',
+      bg: 'info',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg',
+      label: 'Telegram'
+    },
+    {
+      name: 'Botim',
+      href: 'https://g.botim.me/invite',
+      bg: 'dark',
+      logo: 'https://cdn-icons-png.flaticon.com/512/5968/5968920.png',
+      label: 'Botim'
+    }
+  ]
+
   return (
     <Container className="page-container">
       <h1 className="page-title">Official Channel</h1>
       
+      <Card className="page-card mb-4">
+        <Card.Body>
+          <h4 className="mb-3">Connect with us</h4>
+          <p className="text-muted">Join our official channels to get updates, support, and announcements directly.</p>
+
+          <div className="d-flex flex-column gap-3 align-items-center">
+            {appLinks.map((app) => (
+              <a
+                key={app.name}
+                href={app.href}
+                target="_blank"
+                rel="noreferrer"
+                className={`btn btn-${app.bg} d-flex flex-column align-items-center justify-content-center text-white app-box`}
+                style={{ width: '140px', height: '140px', textDecoration: 'none' }}
+              >
+                <img src={app.logo} alt={app.name} width={40} height={40} />
+                <span className="mt-2" style={{ fontSize: '0.85rem', fontWeight: 600 }}>
+                  {app.label}
+                </span>
+              </a>
+            ))}
+          </div>
+        </Card.Body>
+      </Card>
+
+      <Card className="page-card mb-4">
+        <Card.Body>
+          <h4 className="mb-3">Earning Opportunity</h4>
+          <p className="text-muted">Join our earning website to participate in various activities and earn money. Connect with our channels for more details and updates!</p>
+        </Card.Body>
+      </Card>
+
       {announcements.length === 0 ? (
         <Card className="page-card">
           <Card.Body>

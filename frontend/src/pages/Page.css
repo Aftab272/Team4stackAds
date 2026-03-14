@@ -19,6 +19,11 @@
   margin-bottom: 1.5rem;
 }
 
+.wallet-orange {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c5a 100%);
+  color: white;
+}
+'}
 .guide-item {
   border: none;
   border-bottom: 1px solid #e0e0e0;

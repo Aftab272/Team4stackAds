@@ -1,0 +1,33 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 280px;
+  width: calc(100% - 280px);
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c5a 100%);
+  padding: 10px 0;
+  z-index: 1000;
+}
+
+.footer-icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.footer-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.5rem;
+  transition: color 0.3s;
+}
+
+.footer-link:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+@media (max-width: 768px) {
+  .footer {
+    left: 0;
+    width: 100%;
+  }
+}

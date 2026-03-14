@@ -48,6 +48,10 @@ const Wallet = () => {
     return stats
   }
 
+  const getTotalEarnings = () => {
+    return (walletData?.staffEarning || 0) + (walletData?.team4stackEarning || 0)
+  }
+
   const stats = getWithdrawalStats()
 
   return (
@@ -55,7 +59,7 @@ const Wallet = () => {
       {/* Left Sidebar */}
       <div className="dashboard-sidebar">
         <div className="sidebar-header">
-          <h5 className="sidebar-title">TEAM 4stack Ads</h5>
+          <h5 className="sidebar-title">Team4stack Ads</h5>
         </div>
 
         <div className="sidebar-nav">
@@ -105,72 +109,84 @@ const Wallet = () => {
           <Row className="mb-4">
             <Col xs={12} sm={6} md={4} className="mb-3">
               <Card className="shadow text-center h-100">
-                <Card.Body className="d-flex flex-column justify-content-center">
+                <Card.Body className="d-flex flex-column justify-content-center wallet-orange">
                   <div className="mb-2">
                     <span className="fs-1">💵</span>
                   </div>
-                  <h3 className="text-success mb-1">${walletData?.balance || 0}</h3>
-                  <p className="text-muted mb-0">Current Balance</p>
+                  <h3 className="mb-1">${walletData?.balance || 0}</h3>
+                  <p className="mb-0">Current Balance</p>
                 </Card.Body>
               </Card>
             </Col>
 
             <Col xs={12} sm={6} md={4} className="mb-3">
               <Card className="shadow text-center h-100">
-                <Card.Body className="d-flex flex-column justify-content-center">
+                <Card.Body className="d-flex flex-column justify-content-center wallet-orange">
                   <div className="mb-2">
                     <span className="fs-1">👨‍💼</span>
                   </div>
-                  <h3 className="text-primary mb-1">${walletData?.staffEarning || 0}</h3>
-                  <p className="text-muted mb-0">Staff Earning</p>
+                  <h3 className="mb-1">${walletData?.staffEarning || 0}</h3>
+                  <p className="mb-0">Staff Earning</p>
                 </Card.Body>
               </Card>
             </Col>
 
             <Col xs={12} sm={6} md={4} className="mb-3">
               <Card className="shadow text-center h-100">
-                <Card.Body className="d-flex flex-column justify-content-center">
+                <Card.Body className="d-flex flex-column justify-content-center wallet-orange">
                   <div className="mb-2">
                     <span className="fs-1">🏢</span>
                   </div>
-                  <h3 className="text-info mb-1">${walletData?.team4stackEarning || 0}</h3>
-                  <p className="text-muted mb-0">Team4stack Earning</p>
+                  <h3 className="mb-1">${walletData?.team4stackEarning || 0}</h3>
+                  <p className="mb-0">Team4stack Earning</p>
                 </Card.Body>
               </Card>
             </Col>
 
             <Col xs={12} sm={6} md={4} className="mb-3">
               <Card className="shadow text-center h-100">
-                <Card.Body className="d-flex flex-column justify-content-center">
+                <Card.Body className="d-flex flex-column justify-content-center wallet-orange">
+                  <div className="mb-2">
+                    <span className="fs-1">💰</span>
+                  </div>
+                  <h3 className="mb-1">${getTotalEarnings()}</h3>
+                  <p className="mb-0">Total Earnings</p>
+                </Card.Body>
+              </Card>
+            </Col>
+
+            <Col xs={12} sm={6} md={4} className="mb-3">
+              <Card className="shadow text-center h-100">
+                <Card.Body className="d-flex flex-column justify-content-center wallet-orange">
                   <div className="mb-2">
                     <span className="fs-1">✅</span>
                   </div>
-                  <h3 className="text-success mb-1">{stats.approved}</h3>
-                  <p className="text-muted mb-0">Approved Withdraw</p>
+                  <h3 className="mb-1">{stats.approved}</h3>
+                  <p className="mb-0">Approved Withdraw</p>
                 </Card.Body>
               </Card>
             </Col>
 
             <Col xs={12} sm={6} md={4} className="mb-3">
               <Card className="shadow text-center h-100">
-                <Card.Body className="d-flex flex-column justify-content-center">
+                <Card.Body className="d-flex flex-column justify-content-center wallet-orange">
                   <div className="mb-2">
                     <span className="fs-1">⏳</span>
                   </div>
-                  <h3 className="text-warning mb-1">{stats.pending}</h3>
-                  <p className="text-muted mb-0">Pending Withdraw</p>
+                  <h3 className="mb-1">{stats.pending}</h3>
+                  <p className="mb-0">Pending Withdraw</p>
                 </Card.Body>
               </Card>
             </Col>
 
             <Col xs={12} sm={6} md={4} className="mb-3">
               <Card className="shadow text-center h-100">
-                <Card.Body className="d-flex flex-column justify-content-center">
+                <Card.Body className="d-flex flex-column justify-content-center wallet-orange">
                   <div className="mb-2">
                     <span className="fs-1">❌</span>
                   </div>
-                  <h3 className="text-danger mb-1">{stats.rejected}</h3>
-                  <p className="text-muted mb-0">Rejected Withdraw</p>
+                  <h3 className="mb-1">{stats.rejected}</h3>
+                  <p className="mb-0">Rejected Withdraw</p>
                 </Card.Body>
               </Card>
             </Col>

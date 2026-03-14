@@ -31,7 +31,7 @@ const Support = () => {
       {/* Left Sidebar */}
       <div className="dashboard-sidebar">
         <div className="sidebar-header">
-          <h5 className="sidebar-title">TEAM 4stack Ads</h5>
+          <h5 className="sidebar-title">Team4stack Ads</h5>
         </div>
         
         <div className="sidebar-nav">
@@ -150,10 +150,10 @@ const Support = () => {
                   <div className="text-center">
                     <h6>Other Ways to Contact Us</h6>
                     <p className="mb-1">
-                      <strong>Email:</strong> support@team4stackads.com
+                      <strong>Email:</strong> kk34samikhan@gmail.com, ranaaftabakram9@gmail.com, team4stack@gmail.com
                     </p>
                     <p className="mb-1">
-                      <strong>Phone:</strong> +92-XXX-XXXXXXX
+                      <strong>Phone:</strong> 03027434569, 03083266634
                     </p>
                     <p className="mb-0">
                       <strong>Response Time:</strong> 24-48 hours

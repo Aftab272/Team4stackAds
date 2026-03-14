@@ -13,6 +13,15 @@ import Wallet from './pages/Wallet'
 import UserProfile from './pages/UserProfile'
 import Settings from './pages/Settings'
 import Support from './pages/Support'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import Terms from './pages/Terms'
+import AccountHistory from './pages/AccountHistory'
+import SearchHistory from './pages/SearchHistory'
+import SecurityPermissions from './pages/SecurityPermissions'
+import Accessibility from './pages/Accessibility'
+import HelpCenter from './pages/HelpCenter'
+import TermsPolicies from './pages/TermsPolicies'
+import Footer from './components/Footer'
 import './App.css'
 
 function App() {
@@ -33,8 +42,17 @@ function App() {
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/wallet" element={<Wallet />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/account-history" element={<AccountHistory />} />
+          <Route path="/search-history" element={<SearchHistory />} />
+          <Route path="/security-permissions" element={<SecurityPermissions />} />
+          <Route path="/accessibility" element={<Accessibility />} />
+          <Route path="/help-center" element={<HelpCenter />} />
+          <Route path="/terms-policies" element={<TermsPolicies />} />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
         </Routes>
+        <Footer />
       </div>
     </Router>
   )
