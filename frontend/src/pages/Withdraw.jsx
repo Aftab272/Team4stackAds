@@ -330,12 +330,3 @@ const Withdraw = () => {
 }
 
 export default Withdraw
-            </tbody>
-          </Table>
-        </Card.Body>
-      </Card>
-    </Container>
-  )
-}
-
-export default Withdraw
