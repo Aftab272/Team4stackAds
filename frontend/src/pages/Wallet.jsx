@@ -59,6 +59,7 @@ const Wallet = () => {
       {/* Left Sidebar */}
       <div className="dashboard-sidebar">
         <div className="sidebar-header">
+          <Logo size="small" />
           <h5 className="sidebar-title">Team4stack Ads</h5>
         </div>
 
