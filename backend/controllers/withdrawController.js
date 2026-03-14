@@ -72,4 +72,183 @@ const getWithdrawals = async (req, res) => {
   }
 }
 
-module.exports = { createWithdrawRequest, getWithdrawals }
+// Admin: Get all withdrawal requests
+const getAllWithdrawRequests = async (req, res) => {
+  try {
+    const { status = 'all', page = 1, limit = 20 } = req.query
+    const offset = (page - 1) * limit
+
+    let query = supabase
+      .from('withdraw_requests')
+      .select('*', { count: 'exact' })
+      .order('created_at', { ascending: false })
+      .range(offset, offset + parseInt(limit) - 1)
+
+    if (status !== 'all') {
+      query = query.eq('status', status)
+    }
+
+    const { data: requests, error, count } = await query
+
+    if (error) {
+      return res.status(500).json({ message: 'Error fetching withdrawal requests', error: error.message })
+    }
+
+    // Get user details for each request
+    const requestsWithUsers = await Promise.all(
+      requests.map(async (request) => {
+        const { data: user } = await supabase
+          .from('users')
+          .select('name, email')
+          .eq('id', request.user_id)
+          .single()
+
+        return {
+          ...request,
+          userName: user?.name || 'Unknown',
+          userEmail: user?.email || 'Unknown',
+        }
+      })
+    )
+
+    res.json({
+      requests: requestsWithUsers,
+      pagination: {
+        total: count,
+        page: parseInt(page),
+        limit: parseInt(limit),
+        totalPages: Math.ceil(count / parseInt(limit)),
+      },
+    })
+  } catch (error) {
+    console.error('Get all withdraw requests error:', error)
+    res.status(500).json({ message: 'Internal server error', error: error.message })
+  }
+}
+
+// Admin: Approve withdrawal
+const approveWithdrawal = async (req, res) => {
+  try {
+    const { id } = req.params
+    const adminId = req.user.userId
+
+    // Get withdraw request
+    const { data: request, error: fetchError } = await supabase
+      .from('withdraw_requests')
+      .select('*')
+      .eq('id', id)
+      .single()
+
+    if (fetchError || !request) {
+      return res.status(404).json({ message: 'Withdrawal request not found' })
+    }
+
+    if (request.status !== 'pending') {
+      return res.status(400).json({ message: 'Request already processed' })
+    }
+
+    // Update request status
+    const { error: updateError } = await supabase
+      .from('withdraw_requests')
+      .update({ 
+        status: 'approved',
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', id)
+
+    if (updateError) {
+      return res.status(500).json({ message: 'Error approving withdrawal', error: updateError.message })
+    }
+
+    // Deduct from wallet
+    const { data: wallet } = await supabase
+      .from('wallet')
+      .select('*')
+      .eq('user_id', request.user_id)
+      .single()
+
+    if (wallet) {
+      const newBalance = parseFloat(wallet.balance) - parseFloat(request.amount)
+      
+      await supabase
+        .from('wallet')
+        .update({
+          balance: newBalance,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('user_id', request.user_id)
+
+      // Record transaction
+      await supabase.from('wallet_transactions').insert({
+        wallet_id: wallet.id,
+        type: 'debit',
+        amount: request.amount,
+        description: `Withdrawal approved: ${request.payment_method}`,
+        balance_after: newBalance,
+      })
+    }
+
+    // Log admin activity
+    const { logAdminActivity } = require('./adminController')
+    await logAdminActivity(adminId, 'APPROVE_WITHDRAWAL', 'withdraw_requests', id, { amount: request.amount })
+
+    res.json({ message: 'Withdrawal approved successfully' })
+  } catch (error) {
+    console.error('Approve withdrawal error:', error)
+    res.status(500).json({ message: 'Internal server error', error: error.message })
+  }
+}
+
+// Admin: Reject withdrawal
+const rejectWithdrawal = async (req, res) => {
+  try {
+    const { id } = req.params
+    const { reason } = req.body
+    const adminId = req.user.userId
+
+    // Get withdraw request
+    const { data: request, error: fetchError } = await supabase
+      .from('withdraw_requests')
+      .select('*')
+      .eq('id', id)
+      .single()
+
+    if (fetchError || !request) {
+      return res.status(404).json({ message: 'Withdrawal request not found' })
+    }
+
+    if (request.status !== 'pending') {
+      return res.status(400).json({ message: 'Request already processed' })
+    }
+
+    // Update request status
+    const { error: updateError } = await supabase
+      .from('withdraw_requests')
+      .update({ 
+        status: 'rejected',
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', id)
+
+    if (updateError) {
+      return res.status(500).json({ message: 'Error rejecting withdrawal', error: updateError.message })
+    }
+
+    // Log admin activity
+    const { logAdminActivity } = require('./adminController')
+    await logAdminActivity(adminId, 'REJECT_WITHDRAWAL', 'withdraw_requests', id, { reason })
+
+    res.json({ message: 'Withdrawal rejected', reason })
+  } catch (error) {
+    console.error('Reject withdrawal error:', error)
+    res.status(500).json({ message: 'Internal server error', error: error.message })
+  }
+}
+
+module.exports = { 
+  createWithdrawRequest, 
+  getWithdrawals,
+  getAllWithdrawRequests,
+  approveWithdrawal,
+  rejectWithdrawal
+}

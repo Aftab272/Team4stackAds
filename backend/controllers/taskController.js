@@ -117,4 +117,140 @@ const completeTask = async (req, res) => {
   }
 }
 
-module.exports = { getTasks, completeTask }
+// Admin: Get all tasks
+const getAllTasks = async (req, res) => {
+  try {
+    const { status = 'all', page = 1, limit = 20 } = req.query
+    const offset = (page - 1) * limit
+
+    let query = supabase
+      .from('tasks')
+      .select('*', { count: 'exact' })
+      .order('created_at', { ascending: false })
+      .range(offset, offset + parseInt(limit) - 1)
+
+    if (status !== 'all') {
+      query = query.eq('status', status)
+    }
+
+    const { data: tasks, error, count } = await query
+
+    if (error) {
+      return res.status(500).json({ message: 'Error fetching tasks', error: error.message })
+    }
+
+    res.json({
+      tasks: tasks || [],
+      pagination: {
+        total: count,
+        page: parseInt(page),
+        limit: parseInt(limit),
+        totalPages: Math.ceil(count / parseInt(limit)),
+      },
+    })
+  } catch (error) {
+    console.error('Get all tasks error:', error)
+    res.status(500).json({ message: 'Internal server error', error: error.message })
+  }
+}
+
+// Admin: Create new task
+const createTask = async (req, res) => {
+  try {
+    const { title, description, reward, deadline } = req.body
+    const adminId = req.user.userId
+
+    if (!title || !reward) {
+      return res.status(400).json({ message: 'Title and reward are required' })
+    }
+
+    const { data: task, error } = await supabase
+      .from('tasks')
+      .insert({
+        title,
+        description,
+        reward: parseFloat(reward),
+        deadline: deadline || null,
+        status: 'active',
+      })
+      .select()
+      .single()
+
+    if (error) {
+      return res.status(500).json({ message: 'Error creating task', error: error.message })
+    }
+
+    // Log admin activity
+    const { logAdminActivity } = require('./adminController')
+    await logAdminActivity(adminId, 'CREATE_TASK', 'tasks', task.id, { title, reward })
+
+    res.status(201).json({ message: 'Task created successfully', task })
+  } catch (error) {
+    console.error('Create task error:', error)
+    res.status(500).json({ message: 'Internal server error', error: error.message })
+  }
+}
+
+// Admin: Update task
+const updateTask = async (req, res) => {
+  try {
+    const { id } = req.params
+    const { title, description, reward, deadline, status } = req.body
+    const adminId = req.user.userId
+
+    const updateData = {}
+    if (title) updateData.title = title
+    if (description !== undefined) updateData.description = description
+    if (reward) updateData.reward = parseFloat(reward)
+    if (deadline) updateData.deadline = deadline
+    if (status) updateData.status = status
+
+    const { data: task, error } = await supabase
+      .from('tasks')
+      .update(updateData)
+      .eq('id', id)
+      .select()
+      .single()
+
+    if (error) {
+      return res.status(500).json({ message: 'Error updating task', error: error.message })
+    }
+
+    // Log admin activity
+    const { logAdminActivity } = require('./adminController')
+    await logAdminActivity(adminId, 'UPDATE_TASK', 'tasks', id, updateData)
+
+    res.json({ message: 'Task updated successfully', task })
+  } catch (error) {
+    console.error('Update task error:', error)
+    res.status(500).json({ message: 'Internal server error', error: error.message })
+  }
+}
+
+// Admin: Delete task
+const deleteTask = async (req, res) => {
+  try {
+    const { id } = req.params
+    const adminId = req.user.userId
+
+    const { error } = await supabase
+      .from('tasks')
+      .delete()
+      .eq('id', id)
+
+    if (error) {
+      return res.status(500).json({ message: 'Error deleting task', error: error.message })
+    }
+
+    // Log admin activity
+    const { logAdminActivity } = require('./adminController')
+    await logAdminActivity(adminId, 'DELETE_TASK', 'tasks', id, {})
+
+    res.json({ message: 'Task deleted successfully' })
+  } catch (error) {
+    console.error('Delete task error:', error)
+    res.status(500).json({ message: 'Internal server error', error: error.message })
+  }
+}
+
+module.exports = { getTasks, completeTask, getAllTasks, createTask, updateTask, deleteTask }
