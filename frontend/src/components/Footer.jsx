@@ -9,7 +9,7 @@ const Footer = () => {
         <Link to="/dashboard" className="footer-link">
           <i className="bi bi-house"></i>
         </Link>
-        <Link to="/dashboard" className="footer-link">
+        <Link to="/notifications" className="footer-link">
           <i className="bi bi-bell"></i>
         </Link>
         <Link to="/wallet" className="footer-link">
@@ -18,7 +18,7 @@ const Footer = () => {
         <Link to="/profile" className="footer-link">
           <i className="bi bi-person"></i>
         </Link>
-        <Link to="/profile" className="footer-link">
+        <Link to="/owner-profile" className="footer-link">
           <i className="bi bi-person-circle"></i>
         </Link>
       </div>

@@ -3,6 +3,28 @@
   min-height: calc(100vh - 76px);
 }
 
+.back-button-container {
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.back-button-container .btn {
+  border-radius: 12px;
+  font-weight: 600;
+  padding: 0.65rem 1.25rem;
+  transition: all 0.25s ease;
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c5a 100%);
+  border: none;
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.35);
+}
+
+.back-button-container .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(255, 107, 53, 0.45);
+  filter: brightness(1.05);
+}
+
 .page-title {
   color: white;
   font-weight: bold;

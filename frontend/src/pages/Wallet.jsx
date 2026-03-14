@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Container, Card, Table, Row, Col, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import Logo from '../components/Logo'
 import './Page.css'
 
 const Wallet = () => {
@@ -100,6 +101,11 @@ const Wallet = () => {
 
       {/* Main Content */}
       <div className="dashboard-main">
+        <div className="back-button-container mb-3">
+          <Button variant="outline-primary" onClick={() => navigate('/dashboard')}>
+            ← Back to Dashboard
+          </Button>
+        </div>
         <Container className="py-5">
           <div className="dashboard-content">
             <h2 className="content-title">💰 My Wallet</h2>

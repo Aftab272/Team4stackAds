@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Container, Card, Button, Row, Col, Form, Alert } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import Logo from '../components/Logo'
 
 const Support = () => {
   const navigate = useNavigate()
@@ -72,6 +73,11 @@ const Support = () => {
 
       {/* Main Content */}
       <div className="dashboard-main">
+        <div className="back-button-container mb-3">
+          <Button variant="outline-primary" onClick={() => navigate('/dashboard')}>
+            ← Back to Dashboard
+          </Button>
+        </div>
         <Container className="py-5">
           <div className="dashboard-content">
             <h2 className="content-title">🆘 Support Center</h2>

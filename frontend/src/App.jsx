@@ -11,6 +11,7 @@ import AboutUs from './pages/AboutUs'
 import ContactUs from './pages/ContactUs'
 import Wallet from './pages/Wallet'
 import UserProfile from './pages/UserProfile'
+import OwnerProfile from './pages/OwnerProfile'
 import Settings from './pages/Settings'
 import Support from './pages/Support'
 import PrivacyPolicy from './pages/PrivacyPolicy'
@@ -21,6 +22,7 @@ import SecurityPermissions from './pages/SecurityPermissions'
 import Accessibility from './pages/Accessibility'
 import HelpCenter from './pages/HelpCenter'
 import TermsPolicies from './pages/TermsPolicies'
+import Notifications from './pages/Notifications'
 import Footer from './components/Footer'
 import './App.css'
 
@@ -31,6 +33,7 @@ function App() {
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/owner-profile" element={<OwnerProfile />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/support" element={<Support />} />
           <Route path="/withdraw" element={<Withdraw />} />
@@ -49,6 +52,7 @@ function App() {
           <Route path="/security-permissions" element={<SecurityPermissions />} />
           <Route path="/accessibility" element={<Accessibility />} />
           <Route path="/help-center" element={<HelpCenter />} />
+          <Route path="/notifications" element={<Notifications />} />
           <Route path="/terms-policies" element={<TermsPolicies />} />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
         </Routes>
