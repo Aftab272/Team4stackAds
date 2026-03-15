@@ -4,10 +4,13 @@ import { FiBell, FiUser } from 'react-icons/fi'
 
 const Navbar = () => {
   const adminName = localStorage.getItem('userName') || 'Admin'
+  const userRole = localStorage.getItem('userRole') || 'user'
 
   return (
     <BSNavbar bg="dark" variant="dark" className="admin-navbar">
-      <BSNavbar.Brand href="/admin/dashboard">Admin Dashboard</BSNavbar.Brand>
+      <BSNavbar.Brand href="/admin/dashboard">
+        {userRole === 'admin' ? '🛡️ Admin Panel' : '👤 User Panel'}
+      </BSNavbar.Brand>
       
       <Nav className="ms-auto align-items-center">
         <Nav.Link className="notification-link">

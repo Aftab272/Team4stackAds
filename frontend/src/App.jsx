@@ -30,18 +30,18 @@ import TermsPolicies from './pages/TermsPolicies'
 import Notifications from './pages/Notifications'
 
 // Admin Pages
-// import AdminDashboard from './admin/pages/Dashboard'
-// import Users from './admin/pages/Users'
-// import WithdrawRequests from './admin/pages/WithdrawRequests'
-// import Tasks from './admin/pages/Tasks'
-// import WalletAdmin from './admin/pages/Wallet'
-// import Announcements from './admin/pages/Announcements'
-// import Reports from './admin/pages/Reports'
+import AdminDashboard from './admin/pages/Dashboard'
+import Users from './admin/pages/Users'
+import WithdrawRequests from './admin/pages/WithdrawRequests'
+import Tasks from './admin/pages/Tasks'
+import WalletAdmin from './admin/pages/Wallet'
+import Announcements from './admin/pages/Announcements'
+import Reports from './admin/pages/Reports'
 
 // Admin Components
-// import Sidebar from './admin/components/Sidebar'
-// import Navbar from './admin/components/Navbar'
-// import './admin/Admin.css'
+import Sidebar from './admin/components/Sidebar'
+import Navbar from './admin/components/Navbar'
+import './admin/Admin.css'
 
 // Footer
 import Footer from './components/Footer'
@@ -123,8 +123,7 @@ function App() {
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/terms-policies" element={<TermsPolicies />} />
 
-        {/* Admin Routes - DISABLED TEMPORARILY */}
-        {/* 
+        {/* Admin Routes */}
         <Route path="/admin/dashboard" element={
           <ProtectedRoute requireAdmin={true}>
             <AdminLayout>
@@ -174,7 +173,6 @@ function App() {
             </AdminLayout>
           </ProtectedRoute>
         } />
-        */}
 
         {/* 404 Route */}
         <Route path="*" element={<Navigate to="/dashboard" replace />} />

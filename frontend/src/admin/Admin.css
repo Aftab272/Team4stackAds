@@ -44,6 +44,33 @@
   margin-bottom: 0;
 }
 
+/* Panel Sections */
+.panel-section {
+  padding: 1rem 0;
+}
+
+.panel-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 0.5rem 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0.5rem 1.5rem;
+}
+
+/* Logout Link */
+.logout-link {
+  border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+  margin-top: auto;
+}
+
 .sidebar .nav-link {
   color: rgba(255, 255, 255, 0.8);
   padding: 1rem 1.5rem;
