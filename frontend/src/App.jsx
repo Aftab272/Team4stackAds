@@ -67,6 +67,27 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
   */
 }
 
+const getStoredRole = () => localStorage.getItem('userRole') || 'user'
+
+const RoleRoute = ({ children, allow = 'both' }) => {
+  const role = getStoredRole()
+
+  if (allow === 'admin' && role !== 'admin') {
+    return <Navigate to="/dashboard" replace />
+  }
+
+  if (allow === 'user' && role === 'admin') {
+    return <Navigate to="/admin/dashboard" replace />
+  }
+
+  return children
+}
+
+const DashboardRedirect = () => {
+  const role = getStoredRole()
+  return <Navigate to={role === 'admin' ? '/admin/dashboard' : '/dashboard'} replace />
+}
+
 // Admin Layout Component
 const AdminLayout = ({ children }) => {
   return (
@@ -92,13 +113,15 @@ function App() {
     <Router>
       <Routes>
         {/* Public Route */}
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/" element={<DashboardRedirect />} />
         
         {/* User Routes */}
         <Route path="/dashboard" element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
+          <RoleRoute allow="user">
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          </RoleRoute>
         } />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/owner-profile" element={<OwnerProfile />} />
@@ -125,57 +148,71 @@ function App() {
 
         {/* Admin Routes */}
         <Route path="/admin/dashboard" element={
-          <ProtectedRoute requireAdmin={true}>
-            <AdminLayout>
-              <AdminDashboard />
-            </AdminLayout>
-          </ProtectedRoute>
+          <RoleRoute allow="admin">
+            <ProtectedRoute requireAdmin={true}>
+              <AdminLayout>
+                <AdminDashboard />
+              </AdminLayout>
+            </ProtectedRoute>
+          </RoleRoute>
         } />
         <Route path="/admin/users" element={
-          <ProtectedRoute requireAdmin={true}>
-            <AdminLayout>
-              <Users />
-            </AdminLayout>
-          </ProtectedRoute>
+          <RoleRoute allow="admin">
+            <ProtectedRoute requireAdmin={true}>
+              <AdminLayout>
+                <Users />
+              </AdminLayout>
+            </ProtectedRoute>
+          </RoleRoute>
         } />
         <Route path="/admin/withdraw-requests" element={
-          <ProtectedRoute requireAdmin={true}>
-            <AdminLayout>
-              <WithdrawRequests />
-            </AdminLayout>
-          </ProtectedRoute>
+          <RoleRoute allow="admin">
+            <ProtectedRoute requireAdmin={true}>
+              <AdminLayout>
+                <WithdrawRequests />
+              </AdminLayout>
+            </ProtectedRoute>
+          </RoleRoute>
         } />
         <Route path="/admin/tasks" element={
-          <ProtectedRoute requireAdmin={true}>
-            <AdminLayout>
-              <Tasks />
-            </AdminLayout>
-          </ProtectedRoute>
+          <RoleRoute allow="admin">
+            <ProtectedRoute requireAdmin={true}>
+              <AdminLayout>
+                <Tasks />
+              </AdminLayout>
+            </ProtectedRoute>
+          </RoleRoute>
         } />
         <Route path="/admin/wallet" element={
-          <ProtectedRoute requireAdmin={true}>
-            <AdminLayout>
-              <WalletAdmin />
-            </AdminLayout>
-          </ProtectedRoute>
+          <RoleRoute allow="admin">
+            <ProtectedRoute requireAdmin={true}>
+              <AdminLayout>
+                <WalletAdmin />
+              </AdminLayout>
+            </ProtectedRoute>
+          </RoleRoute>
         } />
         <Route path="/admin/announcements" element={
-          <ProtectedRoute requireAdmin={true}>
-            <AdminLayout>
-              <Announcements />
-            </AdminLayout>
-          </ProtectedRoute>
+          <RoleRoute allow="admin">
+            <ProtectedRoute requireAdmin={true}>
+              <AdminLayout>
+                <Announcements />
+              </AdminLayout>
+            </ProtectedRoute>
+          </RoleRoute>
         } />
         <Route path="/admin/reports" element={
-          <ProtectedRoute requireAdmin={true}>
-            <AdminLayout>
-              <Reports />
-            </AdminLayout>
-          </ProtectedRoute>
+          <RoleRoute allow="admin">
+            <ProtectedRoute requireAdmin={true}>
+              <AdminLayout>
+                <Reports />
+              </AdminLayout>
+            </ProtectedRoute>
+          </RoleRoute>
         } />
 
         {/* 404 Route */}
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<DashboardRedirect />} />
       </Routes>
       <Footer />
     </Router>

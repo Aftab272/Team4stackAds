@@ -50,55 +50,27 @@ const Sidebar = () => {
 
       {/* Admin Panel Section */}
       {userRole === 'admin' && (
-        <>
-          <div className="panel-section">
-            <div className="panel-label">ADMIN PANEL</div>
-            <Nav className="flex-column">
-              {adminMenuItems.map((item) => {
-                const Icon = item.icon
-                return (
-                  <Nav.Link
-                    key={item.path}
-                    className={location.pathname === item.path ? 'active' : ''}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      navigate(item.path)
-                    }}
-                  >
-                    <Icon className="me-2" />
-                    {item.label}
-                  </Nav.Link>
-                )
-              })}
-            </Nav>
-          </div>
-
-          {/* Divider */}
-          <div className="sidebar-divider"></div>
-
-          {/* User Panel Section (Admin can access both) */}
-          <div className="panel-section">
-            <div className="panel-label">USER PANEL</div>
-            <Nav className="flex-column">
-              {userMenuItems.map((item) => {
-                const Icon = item.icon
-                return (
-                  <Nav.Link
-                    key={item.path}
-                    className={location.pathname === item.path ? 'active' : ''}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      navigate(item.path)
-                    }}
-                  >
-                    <Icon className="me-2" />
-                    {item.label}
-                  </Nav.Link>
-                )
-              })}
-            </Nav>
-          </div>
-        </>
+        <div className="panel-section">
+          <div className="panel-label">ADMIN PANEL</div>
+          <Nav className="flex-column">
+            {adminMenuItems.map((item) => {
+              const Icon = item.icon
+              return (
+                <Nav.Link
+                  key={item.path}
+                  className={location.pathname === item.path ? 'active' : ''}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    navigate(item.path)
+                  }}
+                >
+                  <Icon className="me-2" />
+                  {item.label}
+                </Nav.Link>
+              )
+            })}
+          </Nav>
+        </div>
       )}
 
       {/* User Panel Section (For regular users only) */}
