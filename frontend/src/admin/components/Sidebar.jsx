@@ -20,8 +20,8 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <h3>Team4StackAds</h3>
-        <p>Admin Panel</p>
+        <h3>Admin Dashboard</h3>
+        <p>Team4StackAds</p>
       </div>
       
       <Nav className="flex-column">
