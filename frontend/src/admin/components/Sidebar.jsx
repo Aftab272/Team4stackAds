@@ -6,15 +6,15 @@ import {
   FiUsers,
   FiDollarSign,
   FiCheckSquare,
-  FiWallet,
-  FiMegaphone,
+  FiCreditCard,
+  FiVolume2,
   FiBarChart,
   FiLogOut,
   FiShield,
   FiUser
 } from 'react-icons/fi'
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
   const navigate = useNavigate()
   const location = useLocation()
   const userRole = localStorage.getItem('userRole') || 'user'
@@ -25,8 +25,8 @@ const Sidebar = () => {
     { path: '/admin/users', icon: FiUsers, label: 'Users' },
     { path: '/admin/withdraw-requests', icon: FiDollarSign, label: 'Withdrawals' },
     { path: '/admin/tasks', icon: FiCheckSquare, label: 'Tasks' },
-    { path: '/admin/wallet', icon: FiWallet, label: 'Wallet' },
-    { path: '/admin/announcements', icon: FiMegaphone, label: 'Announcements' },
+    { path: '/admin/wallet', icon: FiCreditCard, label: 'Wallet' },
+    { path: '/admin/announcements', icon: FiVolume2, label: 'Announcements' },
     { path: '/admin/reports', icon: FiBarChart, label: 'Reports' },
   ]
 
@@ -34,14 +34,14 @@ const Sidebar = () => {
   const userMenuItems = [
     { path: '/dashboard', icon: FiHome, label: 'Dashboard' },
     { path: '/profile', icon: FiUser, label: 'Profile' },
-    { path: '/wallet', icon: FiWallet, label: 'Wallet' },
+    { path: '/wallet', icon: FiCreditCard, label: 'Wallet' },
     { path: '/team', icon: FiUsers, label: 'Team' },
     { path: '/work', icon: FiCheckSquare, label: 'Work' },
     { path: '/salary', icon: FiDollarSign, label: 'Salary' },
   ]
 
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isOpen ? 'active' : ''}`}>
       {/* Header */}
       <div className="sidebar-header">
         <h3>Team4StackAds</h3>
@@ -63,6 +63,7 @@ const Sidebar = () => {
                     onClick={(e) => {
                       e.preventDefault()
                       navigate(item.path)
+                      if (onClose) onClose()
                     }}
                   >
                     <Icon className="me-2" />
@@ -89,6 +90,7 @@ const Sidebar = () => {
                     onClick={(e) => {
                       e.preventDefault()
                       navigate(item.path)
+                      if (onClose) onClose()
                     }}
                   >
                     <Icon className="me-2" />
@@ -107,14 +109,15 @@ const Sidebar = () => {
           {userMenuItems.map((item) => {
             const Icon = item.icon
             return (
-              <Nav.Link
-                key={item.path}
-                className={location.pathname === item.path ? 'active' : ''}
-                onClick={(e) => {
-                  e.preventDefault()
-                  navigate(item.path)
-                }}
-              >
+            <Nav.Link
+              key={item.path}
+              className={location.pathname === item.path ? 'active' : ''}
+              onClick={(e) => {
+                e.preventDefault()
+                navigate(item.path)
+                if (onClose) onClose()
+              }}
+            >
                 <Icon className="me-2" />
                 {item.label}
               </Nav.Link>
@@ -130,6 +133,7 @@ const Sidebar = () => {
             localStorage.removeItem('token')
             localStorage.removeItem('userRole')
             navigate('/')
+            if (onClose) onClose()
           }}
           className="logout-link"
         >

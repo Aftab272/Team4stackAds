@@ -51,9 +51,9 @@ const Reports = () => {
       <Card className="mb-4">
         <Card.Body>
           <Form.Select
+            className="admin-filter-select"
             value={reportType}
             onChange={(e) => setReportType(e.target.value)}
-            style={{ width: '250px' }}
           >
             <option value="overview">Overview</option>
             <option value="user-growth">User Growth</option>
@@ -72,7 +72,7 @@ const Reports = () => {
                 <h5 className="mb-0">User Registration Growth</h5>
               </Card.Header>
               <Card.Body>
-                <div style={{ height: '300px' }}>
+                <div className="chart-box">
                   <Line
                     data={{
                       labels: Object.keys(reportData.userGrowth),

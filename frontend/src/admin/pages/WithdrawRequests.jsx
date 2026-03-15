@@ -115,9 +115,9 @@ const WithdrawRequests = () => {
       <Card className="mb-4">
         <Card.Body>
           <Form.Select
+            className="admin-filter-select"
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            style={{ width: '200px' }}
           >
             <option value="pending">Pending</option>
             <option value="approved">Approved</option>

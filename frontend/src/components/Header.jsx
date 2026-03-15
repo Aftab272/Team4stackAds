@@ -1,26 +1,40 @@
 import React, { useState } from 'react'
-import { Navbar, Nav, Container, Offcanvas } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Navbar, Nav, Container, Offcanvas, Button } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom'
+import { FiMenu, FiX, FiHome, FiUser, FiSettings, FiHelpCircle } from 'react-icons/fi'
 import Logo from './Logo'
 import './Header.css'
 
 const Header = () => {
   const [show, setShow] = useState(false)
+  const navigate = useNavigate()
+  const userName = localStorage.getItem('userName') || 'User'
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" className="custom-navbar">
+    <Navbar expand="lg" className="modern-header">
       <Container fluid>
         <Navbar.Brand as={Link} to="/dashboard" className="brand-logo">
           <div className="brand-content">
             <Logo size="small" />
-            <h2 className="mb-0">Team4StackAds</h2>
+            <div className="brand-text">
+              <h2 className="brand-title">Team4Stack</h2>
+              <p className="brand-subtitle">Ads Platform</p>
+            </div>
           </div>
         </Navbar.Brand>
         
-        <Navbar.Toggle 
-          aria-controls="offcanvasNavbar" 
-          onClick={() => setShow(true)}
-        />
+        <div className="header-actions">
+          <div className="user-badge">
+            <span className="user-greeting">Hi, {userName}</span>
+          </div>
+          <Navbar.Toggle 
+            aria-controls="offcanvasNavbar" 
+            onClick={() => setShow(true)}
+            className="menu-toggle"
+          >
+            <FiMenu size={24} />
+          </Navbar.Toggle>
+        </div>
         
         <Navbar.Offcanvas
           id="offcanvasNavbar"
@@ -28,16 +42,34 @@ const Header = () => {
           placement="end"
           show={show}
           onHide={() => setShow(false)}
+          className="modern-offcanvas"
         >
-          <Offcanvas.Header closeButton>
-            <Offcanvas.Title id="offcanvasNavbarLabel">
-              Team4StackAds
+          <Offcanvas.Header className="offcanvas-header-custom">
+            <Offcanvas.Title id="offcanvasNavbarLabel" className="offcanvas-title">
+              <Logo size="medium" />
+              <h3>Team4Stack</h3>
             </Offcanvas.Title>
+            <Button variant="link" onClick={() => setShow(false)} className="close-btn">
+              <FiX size={24} />
+            </Button>
           </Offcanvas.Header>
-          <Offcanvas.Body>
-            <Nav className="justify-content-end flex-grow-1 pe-3">
-              <Nav.Link as={Link} to="/dashboard" onClick={() => setShow(false)}>
-                Dashboard
+          <Offcanvas.Body className="offcanvas-body-custom">
+            <Nav className="flex-column">
+              <Nav.Link as={Link} to="/dashboard" onClick={() => setShow(false)} className="offcanvas-link">
+                <FiHome className="link-icon" />
+                <span>Dashboard</span>
+              </Nav.Link>
+              <Nav.Link as={Link} to="/profile" onClick={() => setShow(false)} className="offcanvas-link">
+                <FiUser className="link-icon" />
+                <span>Profile</span>
+              </Nav.Link>
+              <Nav.Link as={Link} to="/settings" onClick={() => setShow(false)} className="offcanvas-link">
+                <FiSettings className="link-icon" />
+                <span>Settings</span>
+              </Nav.Link>
+              <Nav.Link as={Link} to="/support" onClick={() => setShow(false)} className="offcanvas-link">
+                <FiHelpCircle className="link-icon" />
+                <span>Support</span>
               </Nav.Link>
             </Nav>
           </Offcanvas.Body>

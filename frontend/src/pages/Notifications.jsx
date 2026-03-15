@@ -1,6 +1,7 @@
 import React from 'react'
-import { Container, Card, ListGroup, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import { FiArrowLeft, FiBell } from 'react-icons/fi'
+import './Page.css'
 
 const Notifications = () => {
   const navigate = useNavigate()
@@ -21,38 +22,49 @@ const Notifications = () => {
     {
       id: 3,
       title: 'Reminder',
-      message: 'Don\'t forget to verify your email to secure your account.',
+      message: "Don't forget to verify your email to secure your account.",
       time: 'Yesterday'
     }
   ]
 
   return (
-    <Container className="py-5">
-      <div className="back-button-container mb-3">
-        <Button variant="outline-primary" onClick={() => navigate('/dashboard')}>
-          ← Back to Dashboard
-        </Button>
-      </div>
+    <div className="app-page">
+      <div className="app-container">
+        <div className="page-header">
+          <div className="page-header-top">
+            <button type="button" className="pill-button" onClick={() => navigate('/dashboard')}>
+              <FiArrowLeft />
+              Back
+            </button>
+          </div>
+          <div>
+            <h2 className="page-title">Notifications</h2>
+            <p className="page-subtitle">Only website notifications are shown here.</p>
+          </div>
+        </div>
 
-      <Card className="shadow">
-        <Card.Body>
-          <h2>Notifications</h2>
-          <p className="text-muted">Only website notifications are shown here.</p>
+        <div className="page-card p-4">
+          <div className="d-flex align-items-center gap-2 mb-3">
+            <FiBell />
+            <h3 className="m-0 text-white">Recent Alerts</h3>
+          </div>
 
-          <ListGroup variant="flush" className="mt-4">
+          <div className="list-card">
             {notifications.map((note) => (
-              <ListGroup.Item key={note.id} className="d-flex justify-content-between align-items-start">
-                <div>
-                  <div className="fw-bold">{note.title}</div>
-                  <div className="text-muted">{note.message}</div>
+              <div key={note.id} className="list-item">
+                <div className="transaction-row">
+                  <div>
+                    <h4>{note.title}</h4>
+                    <p>{note.message}</p>
+                  </div>
+                  <span className="page-subtitle">{note.time}</span>
                 </div>
-                <small className="text-muted">{note.time}</small>
-              </ListGroup.Item>
+              </div>
             ))}
-          </ListGroup>
-        </Card.Body>
-      </Card>
-    </Container>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

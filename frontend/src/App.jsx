@@ -1,5 +1,5 @@
-import React from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 // import 'react-toastify/dist/ReactToastify.css' // Uncomment after npm install
 import './App.css'
@@ -30,6 +30,7 @@ import TermsPolicies from './pages/TermsPolicies'
 import Notifications from './pages/Notifications'
 
 // Admin Pages
+import AdminLogin from './admin/pages/AdminLogin'
 import AdminDashboard from './admin/pages/Dashboard'
 import Users from './admin/pages/Users'
 import WithdrawRequests from './admin/pages/WithdrawRequests'
@@ -48,36 +49,55 @@ import Footer from './components/Footer'
 
 // Protected Route Component
 const ProtectedRoute = ({ children, requireAdmin = false }) => {
-  // TEMPORARY DISABLED - For testing
-  return children
-  
-  /* ORIGINAL CODE - Uncomment after setup
   const token = localStorage.getItem('token')
   const userRole = localStorage.getItem('userRole')
 
-  if (!token) {
-    return <Navigate to="/" replace />
-  }
-
-  if (requireAdmin && userRole !== 'admin') {
-    return <Navigate to="/dashboard" replace />
+  // Only check authentication for admin routes
+  if (requireAdmin) {
+    if (!token || userRole !== 'admin') {
+      return <Navigate to="/admin/login" replace />
+    }
   }
   
+  // For regular user routes, allow access without strict authentication
+  // (You can add authentication check here later if needed)
   return children
-  */
+}
+
+// Admin Redirect Component - redirects to login or dashboard based on auth
+const AdminRedirect = () => {
+  const token = localStorage.getItem('token')
+  const userRole = localStorage.getItem('userRole')
+
+  if (token && userRole === 'admin') {
+    return <Navigate to="/admin/dashboard" replace />
+  }
+  
+  return <Navigate to="/admin/login" replace />
 }
 
 // Admin Layout Component
 const AdminLayout = ({ children }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+  const handleToggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev)
+  }
+
+  const handleCloseSidebar = () => {
+    setIsSidebarOpen(false)
+  }
+
   return (
     <div className="admin-wrapper">
+      {isSidebarOpen && <div className="sidebar-overlay" onClick={handleCloseSidebar} />}
       <div className="d-flex">
         {/* Sidebar */}
-        <Sidebar />
+        <Sidebar isOpen={isSidebarOpen} onClose={handleCloseSidebar} />
         
         {/* Main Content */}
         <div className="main-content">
-          <Navbar />
+          <Navbar onToggleSidebar={handleToggleSidebar} />
           <div className="admin-page">
             {children}
           </div>
@@ -87,9 +107,13 @@ const AdminLayout = ({ children }) => {
   )
 }
 
-function App() {
+// App Content Component (to use useLocation hook)
+const AppContent = () => {
+  const location = useLocation()
+  const isAdminRoute = location.pathname.startsWith('/admin')
+
   return (
-    <Router>
+    <>
       <Routes>
         {/* Public Route */}
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
@@ -124,6 +148,8 @@ function App() {
         <Route path="/terms-policies" element={<TermsPolicies />} />
 
         {/* Admin Routes */}
+        <Route path="/admin" element={<AdminRedirect />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={
           <ProtectedRoute requireAdmin={true}>
             <AdminLayout>
@@ -177,7 +203,15 @@ function App() {
         {/* 404 Route */}
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
-      <Footer />
+      {!isAdminRoute && <Footer />}
+    </>
+  )
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   )
 }

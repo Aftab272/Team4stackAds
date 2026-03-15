@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Card, Table, Row, Col, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import {
+  FiArrowLeft,
+  FiArrowUpRight,
+  FiDollarSign,
+  FiUsers,
+  FiBriefcase,
+  FiCheckCircle,
+  FiClock,
+  FiXCircle
+} from 'react-icons/fi'
 import axios from 'axios'
-import Logo from '../components/Logo'
 import './Page.css'
 
 const Wallet = () => {
@@ -40,7 +48,7 @@ const Wallet = () => {
 
   const getWithdrawalStats = () => {
     const stats = { approved: 0, pending: 0, rejected: 0, totalAmount: 0 }
-    withdrawals.forEach(withdrawal => {
+    withdrawals.forEach((withdrawal) => {
       if (stats[withdrawal.status] !== undefined) {
         stats[withdrawal.status]++
         stats.totalAmount += withdrawal.amount
@@ -53,193 +61,131 @@ const Wallet = () => {
     return (walletData?.staffEarning || 0) + (walletData?.team4stackEarning || 0)
   }
 
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    }).format(value || 0)
+  }
+
   const stats = getWithdrawalStats()
 
   return (
-    <div className="dashboard-layout">
-      {/* Left Sidebar */}
-      <div className="dashboard-sidebar">
-        <div className="sidebar-header">
-          <Logo size="small" />
-          <h5 className="sidebar-title">Team4stack Ads</h5>
-        </div>
-
-        <div className="sidebar-nav">
-          <Button
-            variant="outline-light"
-            className="sidebar-btn"
-            onClick={() => navigate('/dashboard')}
-          >
-            🏠 Dashboard
-          </Button>
-
-          <Button
-            variant="outline-light"
-            className="sidebar-btn"
-            onClick={() => navigate('/profile')}
-          >
-            👤 User Profile
-          </Button>
-
-          <Button
-            variant="outline-light"
-            className="sidebar-btn"
-            onClick={() => navigate('/settings')}
-          >
-            ⚙️ Settings
-          </Button>
-
-          <Button
-            variant="outline-light"
-            className="sidebar-btn"
-            onClick={() => navigate('/support')}
-          >
-            🆘 Support
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="dashboard-main">
-        <div className="back-button-container mb-3">
-          <Button variant="outline-primary" onClick={() => navigate('/dashboard')}>
-            ← Back to Dashboard
-          </Button>
-        </div>
-        <Container className="py-5">
-          <div className="dashboard-content">
-            <h2 className="content-title">💰 My Wallet</h2>
-            <p className="content-subtitle">View your balance, earnings, and withdrawal statistics</p>
+    <div className="app-page">
+      <div className="app-container">
+        <div className="page-header">
+          <div className="page-header-top">
+            <button type="button" className="pill-button" onClick={() => navigate('/dashboard')}>
+              <FiArrowLeft />
+              Back
+            </button>
+            <button type="button" className="primary-pill" onClick={() => navigate('/withdraw')}>
+              Withdraw
+            </button>
           </div>
+          <div>
+            <h2 className="page-title">My Wallet</h2>
+            <p className="page-subtitle">Track balance, earnings, and withdrawals</p>
+          </div>
+        </div>
 
-          {/* Statistics Cards */}
-          <Row className="mb-4">
-            <Col xs={12} sm={6} md={4} className="mb-3">
-              <Card className="shadow text-center h-100">
-                <Card.Body className="d-flex flex-column justify-content-center wallet-orange">
-                  <div className="mb-2">
-                    <span className="fs-1">💵</span>
+        <div className="wallet-hero">
+          <span className="chip">Current Balance</span>
+          <h3>{formatCurrency(walletData?.balance)}</h3>
+          <div className="d-flex justify-content-between align-items-center mt-4 flex-wrap gap-2">
+            <div>
+              <small>Total Earnings</small>
+              <div className="fw-semibold">{formatCurrency(getTotalEarnings())}</div>
+            </div>
+            <button type="button" className="ghost-pill" onClick={() => navigate('/account-history')}>
+              View History
+              <FiArrowUpRight className="ms-2" />
+            </button>
+          </div>
+        </div>
+
+        <div className="card-row mb-4">
+          <div className="stat-tile">
+            <div className="stat-icon" style={{ background: 'linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%)' }}>
+              <FiUsers size={20} />
+            </div>
+            <span>Staff Earning</span>
+            <h3>{formatCurrency(walletData?.staffEarning)}</h3>
+          </div>
+          <div className="stat-tile">
+            <div className="stat-icon" style={{ background: 'linear-gradient(135deg, #14b8a6 0%, #0f766e 100%)' }}>
+              <FiBriefcase size={20} />
+            </div>
+            <span>Team4stack Earning</span>
+            <h3>{formatCurrency(walletData?.team4stackEarning)}</h3>
+          </div>
+          <div className="stat-tile">
+            <div className="stat-icon" style={{ background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)' }}>
+              <FiDollarSign size={20} />
+            </div>
+            <span>Total Earnings</span>
+            <h3>{formatCurrency(getTotalEarnings())}</h3>
+          </div>
+          <div className="stat-tile">
+            <div className="stat-icon" style={{ background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)' }}>
+              <FiCheckCircle size={20} />
+            </div>
+            <span>Approved Withdraw</span>
+            <h3>{stats.approved}</h3>
+          </div>
+          <div className="stat-tile">
+            <div className="stat-icon" style={{ background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)' }}>
+              <FiClock size={20} />
+            </div>
+            <span>Pending Withdraw</span>
+            <h3>{stats.pending}</h3>
+          </div>
+          <div className="stat-tile">
+            <div className="stat-icon" style={{ background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)' }}>
+              <FiXCircle size={20} />
+            </div>
+            <span>Rejected Withdraw</span>
+            <h3>{stats.rejected}</h3>
+          </div>
+        </div>
+
+        <div className="page-card p-4">
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <h3 className="m-0 text-white">Transaction History</h3>
+            {loading && <span className="page-subtitle">Loading...</span>}
+          </div>
+          <div className="list-card">
+            {transactions.length === 0 ? (
+              <div className="list-item">
+                <h4>No transactions yet</h4>
+                <p>Your recent activity will appear here.</p>
+              </div>
+            ) : (
+              transactions.map((transaction) => {
+                const isCredit = transaction.type === 'credit'
+                return (
+                  <div key={transaction.id} className="list-item">
+                    <div className="transaction-row">
+                      <div>
+                        <h4>{transaction.description || 'Wallet Activity'}</h4>
+                        <p>{new Date(transaction.created_at).toLocaleDateString()}</p>
+                      </div>
+                      <div className="text-end">
+                        <span className={`badge-pill ${isCredit ? 'success' : 'danger'}`}>
+                          {transaction.type}
+                        </span>
+                        <div className={`transaction-amount ${isCredit ? 'text-success' : 'text-danger'}`}>
+                          {isCredit ? '+' : '-'}{formatCurrency(Math.abs(transaction.amount))}
+                        </div>
+                      </div>
+                    </div>
+                    <p className="mt-2">Balance after: {formatCurrency(transaction.balance_after)}</p>
                   </div>
-                  <h3 className="mb-1">${walletData?.balance || 0}</h3>
-                  <p className="mb-0">Current Balance</p>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col xs={12} sm={6} md={4} className="mb-3">
-              <Card className="shadow text-center h-100">
-                <Card.Body className="d-flex flex-column justify-content-center wallet-orange">
-                  <div className="mb-2">
-                    <span className="fs-1">👨‍💼</span>
-                  </div>
-                  <h3 className="mb-1">${walletData?.staffEarning || 0}</h3>
-                  <p className="mb-0">Staff Earning</p>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col xs={12} sm={6} md={4} className="mb-3">
-              <Card className="shadow text-center h-100">
-                <Card.Body className="d-flex flex-column justify-content-center wallet-orange">
-                  <div className="mb-2">
-                    <span className="fs-1">🏢</span>
-                  </div>
-                  <h3 className="mb-1">${walletData?.team4stackEarning || 0}</h3>
-                  <p className="mb-0">Team4stack Earning</p>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col xs={12} sm={6} md={4} className="mb-3">
-              <Card className="shadow text-center h-100">
-                <Card.Body className="d-flex flex-column justify-content-center wallet-orange">
-                  <div className="mb-2">
-                    <span className="fs-1">💰</span>
-                  </div>
-                  <h3 className="mb-1">${getTotalEarnings()}</h3>
-                  <p className="mb-0">Total Earnings</p>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col xs={12} sm={6} md={4} className="mb-3">
-              <Card className="shadow text-center h-100">
-                <Card.Body className="d-flex flex-column justify-content-center wallet-orange">
-                  <div className="mb-2">
-                    <span className="fs-1">✅</span>
-                  </div>
-                  <h3 className="mb-1">{stats.approved}</h3>
-                  <p className="mb-0">Approved Withdraw</p>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col xs={12} sm={6} md={4} className="mb-3">
-              <Card className="shadow text-center h-100">
-                <Card.Body className="d-flex flex-column justify-content-center wallet-orange">
-                  <div className="mb-2">
-                    <span className="fs-1">⏳</span>
-                  </div>
-                  <h3 className="mb-1">{stats.pending}</h3>
-                  <p className="mb-0">Pending Withdraw</p>
-                </Card.Body>
-              </Card>
-            </Col>
-
-            <Col xs={12} sm={6} md={4} className="mb-3">
-              <Card className="shadow text-center h-100">
-                <Card.Body className="d-flex flex-column justify-content-center wallet-orange">
-                  <div className="mb-2">
-                    <span className="fs-1">❌</span>
-                  </div>
-                  <h3 className="mb-1">{stats.rejected}</h3>
-                  <p className="mb-0">Rejected Withdraw</p>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-
-          {/* Transaction History */}
-          <Card className="shadow">
-            <Card.Body>
-              <h4 className="mb-3">📊 Transaction History</h4>
-              <Table responsive striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                    <th>Amount</th>
-                    <th>Balance</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {transactions.length === 0 ? (
-                    <tr>
-                      <td colSpan="5" className="text-center">No transactions yet</td>
-                    </tr>
-                  ) : (
-                    transactions.map((transaction) => (
-                      <tr key={transaction.id}>
-                        <td>{new Date(transaction.created_at).toLocaleDateString()}</td>
-                        <td>
-                          <span className={`badge bg-${transaction.type === 'credit' ? 'success' : 'danger'}`}>
-                            {transaction.type}
-                          </span>
-                        </td>
-                        <td>{transaction.description}</td>
-                        <td className={transaction.type === 'credit' ? 'text-success' : 'text-danger'}>
-                          {transaction.type === 'credit' ? '+' : '-'}${Math.abs(transaction.amount)}
-                        </td>
-                        <td>${transaction.balance_after}</td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </Table>
-            </Card.Body>
-          </Card>
-        </Container>
+                )
+              })
+            )}
+          </div>
+        </div>
       </div>
     </div>
   )
