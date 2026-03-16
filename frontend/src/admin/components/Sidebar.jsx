@@ -10,6 +10,7 @@ import {
   FiBell,
   FiBarChart,
   FiLogOut,
+  FiSettings,
   FiShield,
   FiUser
 } from 'react-icons/fi'
@@ -19,9 +20,21 @@ const Sidebar = ({ isOpen, onClose }) => {
   const location = useLocation()
   const userRole = localStorage.getItem('userRole') || 'user'
 
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('userRole')
+    navigate('/')
+    if (onClose) onClose()
+  }
+
+  const primaryAdminItems = [
+    { path: '/admin/dashboard', icon: FiShield, label: 'Admin Dashboard' },
+    { path: '/dashboard', icon: FiHome, label: 'User Dashboard' },
+    { path: '/settings', icon: FiSettings, label: 'Settings' },
+  ]
+
   // Admin menu items
   const adminMenuItems = [
-    { path: '/admin/dashboard', icon: FiShield, label: 'Admin Dashboard' },
     { path: '/admin/users', icon: FiUsers, label: 'Users' },
     { path: '/admin/withdraw-requests', icon: FiDollarSign, label: 'Withdrawals' },
     { path: '/admin/tasks', icon: FiCheckSquare, label: 'Tasks' },
@@ -51,6 +64,42 @@ const Sidebar = ({ isOpen, onClose }) => {
       {/* Admin Panel Section */}
       {userRole === 'admin' && (
         <>
+          <div className="panel-section">
+            <div className="panel-label">PRIMARY</div>
+            <Nav className="flex-column">
+              {primaryAdminItems.map((item) => {
+                const Icon = item.icon
+                return (
+                  <Nav.Link
+                    key={item.path}
+                    className={location.pathname === item.path ? 'active' : ''}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      navigate(item.path)
+                      if (onClose) onClose()
+                    }}
+                  >
+                    <Icon className="me-2" />
+                    {item.label}
+                  </Nav.Link>
+                )
+              })}
+              <Nav.Link
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleLogout()
+                }}
+                className="logout-link"
+              >
+                <FiLogOut className="me-2" />
+                Logout
+              </Nav.Link>
+            </Nav>
+          </div>
+
+          {/* Divider */}
+          <div className="sidebar-divider"></div>
+
           <div className="panel-section">
             <div className="panel-label">ADMIN PANEL</div>
             <Nav className="flex-column">
@@ -129,12 +178,7 @@ const Sidebar = ({ isOpen, onClose }) => {
       {/* Logout Button */}
       <div className="sidebar-footer">
         <Nav.Link
-          onClick={() => {
-            localStorage.removeItem('token')
-            localStorage.removeItem('userRole')
-            navigate('/')
-            if (onClose) onClose()
-          }}
+          onClick={handleLogout}
           className="logout-link"
         >
           <FiLogOut className="me-2" />
