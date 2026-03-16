@@ -163,7 +163,7 @@ const AdminDashboard = () => {
               <h5 className="mb-0">User Growth (Last 30 Days)</h5>
             </Card.Header>
             <Card.Body>
-              <div style={{ height: '300px' }}>
+              <div className="chart-box">
                 {userGrowthData && userGrowthData.labels.length > 0 ? (
                   <Line data={userGrowthChartData} options={chartOptions} />
                 ) : (

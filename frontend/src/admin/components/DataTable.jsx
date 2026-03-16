@@ -38,7 +38,7 @@ const DataTable = ({
             data.map((row, rowIdx) => (
               <tr key={rowIdx}>
                 {columns.map((col, colIdx) => (
-                  <td key={colIdx}>
+                  <td key={colIdx} data-label={col.header}>
                     {col.render ? col.render(row) : row[col.accessor]}
                   </td>
                 ))}

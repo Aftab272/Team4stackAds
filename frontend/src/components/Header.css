@@ -1,12 +1,18 @@
-.custom-navbar {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+.modern-header {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .brand-logo {
   font-weight: bold;
-  color: #ff6b35 !important;
+  color: white !important;
   text-decoration: none;
   transition: all 0.3s ease;
   display: flex;
@@ -16,30 +22,157 @@
 .brand-content {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.brand-subtitle {
+  margin: 0;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
 }
 
 .brand-logo:hover {
-  color: #ff8c5a !important;
+  transform: scale(1.05);
+  color: white !important;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.user-badge {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.user-greeting {
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.menu-toggle {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 10px;
+  padding: 0.5rem;
+  color: white !important;
+  transition: all 0.3s ease;
+}
+
+.menu-toggle:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
   transform: scale(1.05);
 }
 
-.brand-logo:hover .logo-circle {
-  transform: scale(1.1);
-  transition: transform 0.3s ease;
-  border-color: rgba(212, 175, 55, 0.6);
-  box-shadow: 
-    0 10px 20px rgba(0, 0, 0, 0.4),
-    inset 0 2px 4px rgba(255, 255, 255, 0.3),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+.menu-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+}
+
+/* Offcanvas Styles */
+.modern-offcanvas {
+  background: rgba(102, 126, 234, 0.95) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.offcanvas-header-custom {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1.5rem;
+}
+
+.offcanvas-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+  margin: 0;
+}
+
+.offcanvas-title h3 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+  color: white !important;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: rotate(90deg);
+}
+
+.offcanvas-body-custom {
+  padding: 1.5rem;
+}
+
+.offcanvas-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.offcanvas-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white !important;
+  transform: translateX(5px);
+}
+
+.link-icon {
+  width: 20px;
+  height: 20px;
 }
 
 @media (max-width: 768px) {
-  .brand-logo h2 {
-    font-size: 1.5rem;
+  .brand-title {
+    font-size: 1.25rem;
+  }
+  
+  .brand-subtitle {
+    font-size: 0.7rem;
+  }
+  
+  .user-badge {
+    display: none;
   }
   
   .brand-content {
-    gap: 0.5rem;
+    gap: 0.75rem;
   }
 }
