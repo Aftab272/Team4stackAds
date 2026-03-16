@@ -6,8 +6,8 @@ import {
   FiUsers,
   FiDollarSign,
   FiCheckSquare,
-  FiWallet,
-  FiMegaphone,
+  FiCreditCard,
+  FiBell,
   FiBarChart,
   FiLogOut,
   FiShield,
@@ -25,8 +25,8 @@ const Sidebar = () => {
     { path: '/admin/users', icon: FiUsers, label: 'Users' },
     { path: '/admin/withdraw-requests', icon: FiDollarSign, label: 'Withdrawals' },
     { path: '/admin/tasks', icon: FiCheckSquare, label: 'Tasks' },
-    { path: '/admin/wallet', icon: FiWallet, label: 'Wallet' },
-    { path: '/admin/announcements', icon: FiMegaphone, label: 'Announcements' },
+    { path: '/admin/wallet', icon: FiCreditCard, label: 'Wallet' },
+    { path: '/admin/announcements', icon: FiBell, label: 'Announcements' },
     { path: '/admin/reports', icon: FiBarChart, label: 'Reports' },
   ]
 
@@ -34,7 +34,7 @@ const Sidebar = () => {
   const userMenuItems = [
     { path: '/dashboard', icon: FiHome, label: 'Dashboard' },
     { path: '/profile', icon: FiUser, label: 'Profile' },
-    { path: '/wallet', icon: FiWallet, label: 'Wallet' },
+    { path: '/wallet', icon: FiCreditCard, label: 'Wallet' },
     { path: '/team', icon: FiUsers, label: 'Team' },
     { path: '/work', icon: FiCheckSquare, label: 'Work' },
     { path: '/salary', icon: FiDollarSign, label: 'Salary' },
