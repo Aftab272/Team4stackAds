@@ -154,7 +154,11 @@ const Work = () => {
                       <strong>{pkg.ownerProfit}</strong>
                     </div>
                   )}
-                  <button type="button" className="package-cta">
+                  <button
+                    type="button"
+                    className="package-cta"
+                    onClick={() => navigate('/package-deposit', { state: { package: pkg } })}
+                  >
                     Purchase Package
                   </button>
                 </Card.Body>

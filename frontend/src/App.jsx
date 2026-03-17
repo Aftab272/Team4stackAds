@@ -30,6 +30,7 @@ import TermsPolicies from './pages/TermsPolicies'
 import Notifications from './pages/Notifications'
 import Team4StackProfile from './pages/Team4StackProfile'
 import QuickActions from './pages/QuickActions'
+import PackageDeposit from './pages/PackageDeposit'
 
 // Admin Pages
 import AdminLogin from './admin/pages/AdminLogin'
@@ -150,6 +151,7 @@ const AppContent = () => {
         <Route path="/terms-policies" element={<TermsPolicies />} />
         <Route path="/team4stack-profile" element={<Team4StackProfile />} />
         <Route path="/quick-actions" element={<QuickActions />} />
+        <Route path="/package-deposit" element={<PackageDeposit />} />
 
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminRedirect />} />
