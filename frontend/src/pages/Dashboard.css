@@ -84,6 +84,62 @@
   background: rgba(245, 158, 11, 0.15);
 }
 
+.team4stack-card {
+  margin-top: 1.25rem;
+  border-radius: 18px;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+}
+
+.team4stack-card-text {
+  margin: 0 0 0.75rem 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.team4stack-card-toggle {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  margin-bottom: 0.65rem;
+  cursor: pointer;
+}
+
+.team4stack-chevron {
+  transition: transform 0.2s ease;
+}
+
+.team4stack-chevron.open {
+  transform: rotate(90deg);
+}
+
+.team4stack-card-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.team4stack-card-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.team4stack-card-item strong {
+  color: var(--text-primary);
+  font-weight: 600;
+  text-align: right;
+}
+
 .dashboard-container {
   max-width: 480px;
   margin: 0 auto;
