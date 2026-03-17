@@ -12,8 +12,10 @@ import './Dashboard.css'
 const Dashboard = () => {
   const navigate = useNavigate()
   const [userName] = useState(localStorage.getItem('userName') || 'User')
-  const userRole = localStorage.getItem('userRole')
-  const displayName = userRole === 'admin' ? 'User' : userName
+  const rawRole = localStorage.getItem('userRole') || ''
+  const normalizedRole = rawRole.toLowerCase()
+  const isAdmin = normalizedRole === 'admin'
+  const displayName = isAdmin ? 'User' : userName
   const [stats, setStats] = useState({
     balance: 0,
     totalEarned: 0,
@@ -167,7 +169,7 @@ const Dashboard = () => {
             </h1>
           </div>
           <div className="header-actions">
-            {userRole === 'admin' && (
+            {isAdmin && (
               <button
                 type="button"
                 className="ghost-pill"
