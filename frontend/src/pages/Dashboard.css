@@ -10,10 +10,84 @@
   overflow-x: hidden;
 }
 
+.user-dashboard-shell {
+  display: flex;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 7rem;
+}
+
+.user-sidebar {
+  width: 240px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 22px;
+  padding: 1.25rem;
+  color: var(--text-primary);
+  position: sticky;
+  top: 1.5rem;
+  height: fit-content;
+  flex-shrink: 0;
+}
+
+.user-sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.user-sidebar-kicker {
+  margin: 0 0 0.2rem 0;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.user-sidebar-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.user-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.user-sidebar-link {
+  width: 100%;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(15, 23, 42, 0.6);
+  color: var(--text-primary);
+  border-radius: 14px;
+  padding: 0.6rem 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.user-sidebar-link:hover {
+  border-color: rgba(56, 189, 248, 0.5);
+  transform: translateY(-1px);
+}
+
+.user-sidebar-auth {
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.15);
+}
+
 .dashboard-container {
   max-width: 480px;
   margin: 0 auto;
-  padding: 1.5rem 1.25rem 7rem;
+  padding: 0;
   position: relative;
   z-index: 1;
 }
@@ -357,7 +431,6 @@
 @media (min-width: 768px) {
   .dashboard-container {
     max-width: 760px;
-    padding: 2.5rem 2.5rem 7rem;
   }
 
   .action-grid {
@@ -372,5 +445,17 @@
 @media (min-width: 1100px) {
   .dashboard-container {
     max-width: 1000px;
+  }
+}
+
+@media (max-width: 900px) {
+  .user-dashboard-shell {
+    flex-direction: column;
+    padding: 1.25rem 1rem 7rem;
+  }
+
+  .user-sidebar {
+    width: 100%;
+    position: static;
   }
 }

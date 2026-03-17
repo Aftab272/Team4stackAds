@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { 
   FiDollarSign, FiUsers, FiBook, FiVolume2, FiBriefcase, 
   FiInfo, FiPhone, FiCreditCard, FiActivity, FiAward,
-  FiArrowUpRight, FiZap, FiBell, FiChevronRight, FiUser
+  FiArrowUpRight, FiZap, FiBell, FiChevronRight, FiUser, FiSettings
 } from 'react-icons/fi'
 import Logo from '../components/Logo'
 import './Dashboard.css'
@@ -16,6 +16,7 @@ const Dashboard = () => {
   const normalizedRole = rawRole.toLowerCase()
   const isAdmin = normalizedRole === 'admin'
   const displayName = isAdmin ? 'User' : userName
+  const isLoggedIn = Boolean(localStorage.getItem('token'))
   const [stats, setStats] = useState({
     balance: 0,
     totalEarned: 0,
@@ -34,6 +35,16 @@ const Dashboard = () => {
 
   const handleNavigation = (path) => {
     navigate(path)
+  }
+
+  const handleAuthAction = () => {
+    if (isLoggedIn) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('userRole')
+      navigate('/')
+      return
+    }
+    navigate('/')
   }
 
   const quickStats = [
@@ -154,7 +165,44 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-screen">
-      <div className="dashboard-container">
+      <div className="user-dashboard-shell">
+        <aside className="user-sidebar">
+          <div className="user-sidebar-header">
+            <Logo size="small" />
+            <div>
+              <p className="user-sidebar-kicker">User Panel</p>
+              <h2 className="user-sidebar-title">{displayName}</h2>
+            </div>
+          </div>
+          <nav className="user-sidebar-nav">
+            <button
+              type="button"
+              className="user-sidebar-link"
+              onClick={() => handleNavigation('/profile')}
+            >
+              <FiUser />
+              User Profile
+            </button>
+            <button
+              type="button"
+              className="user-sidebar-link"
+              onClick={() => handleNavigation('/settings')}
+            >
+              <FiSettings />
+              Settings
+            </button>
+            <button
+              type="button"
+              className="user-sidebar-link user-sidebar-auth"
+              onClick={handleAuthAction}
+            >
+              <FiArrowUpRight />
+              {isLoggedIn ? 'Logout' : 'Login'}
+            </button>
+          </nav>
+        </aside>
+
+        <div className="dashboard-container">
         <motion.header
           className="app-header"
           initial={{ opacity: 0, y: -16 }}
@@ -162,9 +210,9 @@ const Dashboard = () => {
           transition={{ duration: 0.45 }}
         >
           <div>
-            <p className="app-kicker">Welcome back</p>
+            <p className="app-kicker">Welcome to</p>
             <h1 className="app-title">
-              Hi, <span className="app-title-accent">{displayName}</span>
+              <span className="app-title-accent">Team4Stack Ads</span>
               <FiZap className="sparkle-icon" />
             </h1>
           </div>
@@ -309,6 +357,7 @@ const Dashboard = () => {
             <span>Mobile-first workspace</span>
           </div>
         </motion.div>
+        </div>
       </div>
     </div>
   )
