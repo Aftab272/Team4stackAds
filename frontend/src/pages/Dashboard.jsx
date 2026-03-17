@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { 
   FiDollarSign, FiUsers, FiBook, FiVolume2, FiBriefcase, 
   FiInfo, FiPhone, FiCreditCard, FiActivity, FiAward,
-  FiArrowUpRight, FiZap, FiBell, FiChevronRight, FiUser, FiSettings
+  FiArrowUpRight, FiZap, FiBell, FiChevronRight, FiUser, FiSettings, FiCheckSquare
 } from 'react-icons/fi'
 import Logo from '../components/Logo'
 import team4StackLogo from '../assets/team4stack-logo.jpeg'
@@ -199,6 +199,14 @@ const Dashboard = () => {
             <button
               type="button"
               className="user-sidebar-link"
+              onClick={() => handleNavigation('/work')}
+            >
+              <FiCheckSquare />
+              Tasks
+            </button>
+            <button
+              type="button"
+              className="user-sidebar-link"
               onClick={() => handleNavigation('/profile')}
             >
               <FiUser />
@@ -333,36 +341,11 @@ const Dashboard = () => {
             <button
               type="button"
               className="link-button"
-              onClick={() => handleNavigation('/work')}
+              onClick={() => handleNavigation('/quick-actions')}
             >
-              View tasks
+              View all actions
               <FiChevronRight />
             </button>
-          </div>
-
-          <div className="action-grid">
-            {dashboardCards.map((card) => {
-              const IconComponent = card.icon
-              return (
-                <motion.button
-                  key={card.id}
-                  type="button"
-                  className="action-card"
-                  onClick={() => handleNavigation(card.path)}
-                  whileHover={{ y: -6 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="action-icon" style={{ background: card.gradient }}>
-                    <IconComponent size={22} />
-                  </div>
-                  <div className="action-text">
-                    <h3>{card.title}</h3>
-                    <p>{card.description}</p>
-                  </div>
-                  <FiArrowUpRight className="action-arrow" />
-                </motion.button>
-              )
-            })}
           </div>
         </motion.section>
 
