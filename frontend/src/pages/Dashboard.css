@@ -92,12 +92,6 @@
   border: 1px solid rgba(148, 163, 184, 0.22);
 }
 
-.team4stack-card-text {
-  margin: 0 0 0.75rem 0;
-  color: var(--text-muted);
-  font-size: 0.8rem;
-}
-
 .team4stack-card-toggle {
   width: 100%;
   background: transparent;
@@ -109,16 +103,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 0;
-  margin-bottom: 0.65rem;
   cursor: pointer;
 }
 
 .team4stack-chevron {
   transition: transform 0.2s ease;
-}
-
-.team4stack-chevron.open {
-  transform: rotate(90deg);
 }
 
 .team4stack-card-list {

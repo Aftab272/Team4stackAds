@@ -28,6 +28,7 @@ import Accessibility from './pages/Accessibility'
 import HelpCenter from './pages/HelpCenter'
 import TermsPolicies from './pages/TermsPolicies'
 import Notifications from './pages/Notifications'
+import Team4StackProfile from './pages/Team4StackProfile'
 
 // Admin Pages
 import AdminLogin from './admin/pages/AdminLogin'
@@ -146,6 +147,7 @@ const AppContent = () => {
         <Route path="/help-center" element={<HelpCenter />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/terms-policies" element={<TermsPolicies />} />
+        <Route path="/team4stack-profile" element={<Team4StackProfile />} />
 
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminRedirect />} />
