@@ -1,6 +1,7 @@
 import React from 'react'
 import { Navbar as BSNavbar, Nav, Dropdown } from 'react-bootstrap'
-import { FiBell, FiUser, FiMenu } from 'react-icons/fi'
+import { FiBell, FiMenu } from 'react-icons/fi'
+import team4StackLogo from '../../assets/team4stack-logo.jpeg'
 
 const Navbar = ({ onToggleSidebar }) => {
   const adminName = localStorage.getItem('userName') || 'Admin'
@@ -28,7 +29,7 @@ const Navbar = ({ onToggleSidebar }) => {
 
         <Dropdown align="end">
           <Dropdown.Toggle variant="link" className="nav-link dropdown-toggle">
-            <FiUser size={20} className="me-1" />
+            <img src={team4StackLogo} alt="Team4Stack Ads" className="admin-avatar" />
             <span className="admin-user-name">{adminName}</span>
           </Dropdown.Toggle>
 

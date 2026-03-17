@@ -7,6 +7,7 @@ import {
   FiArrowUpRight, FiZap, FiBell, FiChevronRight, FiUser, FiSettings
 } from 'react-icons/fi'
 import Logo from '../components/Logo'
+import team4StackLogo from '../assets/team4stack-logo.jpeg'
 import './Dashboard.css'
 
 const Dashboard = () => {
@@ -175,7 +176,9 @@ const Dashboard = () => {
       <div className="user-dashboard-shell">
         <aside className="user-sidebar">
           <div className="user-sidebar-header">
-            <Logo size="small" />
+            <div className="user-sidebar-logo">
+              <img src={team4StackLogo} alt="Team4Stack Ads" />
+            </div>
             <div>
               <p className="user-sidebar-kicker">User Panel</p>
               <h2 className="user-sidebar-title">{displayName}</h2>

@@ -156,6 +156,17 @@
   color: #f97316 !important;
   font-weight: 600;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(249, 115, 22, 0.55);
 }
 
 .sidebar-toggle {
