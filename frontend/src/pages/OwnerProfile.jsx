@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { FiArrowLeft, FiMail, FiPhone, FiUser, FiBriefcase, FiHome, FiClock } from 'react-icons/fi'
 import './Page.css'
 import './OwnerProfile.css'
+import ownerPhoto from '../assets/owner.jpeg'
 
 const OwnerProfile = () => {
   const navigate = useNavigate()
@@ -36,14 +37,8 @@ const OwnerProfile = () => {
         </div>
 
         <div className="page-card owner-card p-4 text-center">
-          <div
-            className="stat-icon mb-3"
-            style={{
-              background: 'linear-gradient(135deg, #0ea5a4 0%, #38bdf8 100%)',
-              margin: '0 auto'
-            }}
-          >
-            <FiUser size={22} />
+          <div className="owner-photo">
+            <img src={ownerPhoto} alt={owner.name} />
           </div>
           <h3 className="mb-1 text-white">{owner.name}</h3>
           <p className="page-subtitle mb-4">Application Owner</p>

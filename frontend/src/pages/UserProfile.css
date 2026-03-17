@@ -1,0 +1,34 @@
+.user-title-box {
+  background: #f97316;
+  border: 1px solid #ea580c;
+  border-radius: 18px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  box-shadow: 0 16px 28px rgba(249, 115, 22, 0.35);
+}
+
+.user-title {
+  margin: 0;
+  color: #ffffff;
+  text-shadow: none;
+}
+
+.user-card {
+  background: #f97316 !important;
+  border: 1px solid #ea580c !important;
+  color: #ffffff;
+}
+
+.user-card label,
+.user-card strong,
+.user-card span,
+.user-card p {
+  color: #ffffff !important;
+}
+
+.user-card .form-input {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}

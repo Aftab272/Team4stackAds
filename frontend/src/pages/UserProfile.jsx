@@ -11,6 +11,7 @@ import {
   FiCalendar
 } from 'react-icons/fi'
 import './Page.css'
+import './UserProfile.css'
 
 const UserProfile = () => {
   const navigate = useNavigate()
@@ -42,26 +43,29 @@ const UserProfile = () => {
   return (
     <div className="app-page">
       <div className="app-container">
-        <div className="page-header">
-          <div className="page-header-top">
-            <button type="button" className="pill-button" onClick={() => navigate('/dashboard')}>
-              <FiArrowLeft />
-              Back
-            </button>
-            {!isEditing && (
-              <button type="button" className="pill-button" onClick={() => setIsEditing(true)}>
-                <FiEdit3 />
-                Edit
-              </button>
-            )}
-          </div>
-          <div>
-            <h2 className="page-title">{user.name}</h2>
-            <p className="page-subtitle">Manage your account information</p>
-          </div>
+        <div className="back-button-container">
+          <button
+            type="button"
+            className="back-dashboard-button"
+            onClick={() => navigate('/dashboard')}
+          >
+            <FiArrowLeft />
+            Back Dashboard
+          </button>
         </div>
+        <div className="user-title-box">
+          <h2 className="page-title user-title">User Profile</h2>
+        </div>
+        {!isEditing && (
+          <div className="page-header-top">
+            <button type="button" className="pill-button" onClick={() => setIsEditing(true)}>
+              <FiEdit3 />
+              Edit
+            </button>
+          </div>
+        )}
 
-        <div className="page-card p-4">
+        <div className="page-card user-card p-4">
           <div className="text-center mb-4">
             <div
               className="stat-icon"
