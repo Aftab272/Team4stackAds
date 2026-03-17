@@ -201,8 +201,8 @@
   border-radius: 0.5rem;
   box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
   transition: transform 0.2s;
-  background: #fff7ed;
-  border-left: 4px solid #f97316;
+  background: #f97316;
+  border-left: 4px solid #ea580c;
 }
 
 .stat-card:hover {
@@ -253,12 +253,12 @@
 .stat-value {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #5a5c69;
+  color: #fff7ed;
   margin-bottom: 0.25rem;
 }
 
 .stat-label {
-  color: #858796;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.875rem;
   font-weight: 500;
   text-transform: uppercase;
