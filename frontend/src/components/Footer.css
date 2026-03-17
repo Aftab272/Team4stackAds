@@ -46,7 +46,7 @@
 
 @media (min-width: 900px) {
   .footer {
-    max-width: 460px;
+    max-width: 720px;
     left: 50%;
     transform: translateX(-50%);
     border-radius: 20px 20px 0 0;
