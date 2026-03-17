@@ -69,6 +69,15 @@ const AdminDashboard = () => {
     datasets: userGrowthData?.datasets || [],
   }
 
+  const ownerProfitByPackage = [
+    { name: 'Starter', profit: 'Rs. 50/day' },
+    { name: 'Basic', profit: 'Rs. 80/day' },
+    { name: 'Standard', profit: 'Rs. 120/day' },
+    { name: 'Premium', profit: 'Rs. 200/day' },
+    { name: 'VIP', profit: 'Rs. 300/day' },
+    { name: 'Elite', profit: 'Rs. 450/day' },
+  ]
+
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -198,6 +207,20 @@ const AdminDashboard = () => {
                   <div className="d-flex justify-content-between">
                     <span>Active Tasks:</span>
                     <strong>{stats?.totalTasks}</strong>
+                  </div>
+                </div>
+                <div className="stat-item">
+                  <div className="d-flex justify-content-between">
+                    <span>Owner Profit (Daily):</span>
+                    <strong>Per Package</strong>
+                  </div>
+                  <div className="d-flex flex-column gap-2 mt-2">
+                    {ownerProfitByPackage.map((item) => (
+                      <div key={item.name} className="d-flex justify-content-between">
+                        <span>{item.name}</span>
+                        <strong>{item.profit}</strong>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

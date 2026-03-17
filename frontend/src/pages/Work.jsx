@@ -11,6 +11,69 @@ const Work = () => {
   const [tasks, setTasks] = useState([])
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState({ type: '', text: '' })
+  const isAdmin = (localStorage.getItem('userRole') || '').toLowerCase() === 'admin'
+  const packages = [
+    {
+      name: 'Starter Package',
+      price: 'Rs. 700',
+      adsPerDay: 500,
+      earningPerAd: 'Rs. 0.20',
+      dailyEarning: 'Rs. 100',
+      weeklyEarning: 'Rs. 700',
+      ownerProfit: 'Rs. 50/day',
+      accent: 'starter'
+    },
+    {
+      name: 'Basic Package',
+      price: 'Rs. 1,500',
+      adsPerDay: 800,
+      earningPerAd: 'Rs. 0.25',
+      dailyEarning: 'Rs. 200',
+      weeklyEarning: 'Rs. 1,400',
+      ownerProfit: 'Rs. 80/day',
+      accent: 'basic'
+    },
+    {
+      name: 'Standard Package',
+      price: 'Rs. 3,000',
+      adsPerDay: 1200,
+      earningPerAd: 'Rs. 0.30',
+      dailyEarning: 'Rs. 360',
+      weeklyEarning: 'Rs. 2,520',
+      ownerProfit: 'Rs. 120/day',
+      accent: 'standard'
+    },
+    {
+      name: 'Premium Package',
+      price: 'Rs. 6,000',
+      adsPerDay: 2000,
+      earningPerAd: 'Rs. 0.35',
+      dailyEarning: 'Rs. 700',
+      weeklyEarning: 'Rs. 4,900',
+      ownerProfit: 'Rs. 200/day',
+      accent: 'premium'
+    },
+    {
+      name: 'VIP Package',
+      price: 'Rs. 10,000',
+      adsPerDay: 3000,
+      earningPerAd: 'Rs. 0.40',
+      dailyEarning: 'Rs. 1,200',
+      weeklyEarning: 'Rs. 8,400',
+      ownerProfit: 'Rs. 300/day',
+      accent: 'vip'
+    },
+    {
+      name: 'Elite Package',
+      price: 'Rs. 15,000',
+      adsPerDay: 4000,
+      earningPerAd: 'Rs. 0.45',
+      dailyEarning: 'Rs. 1,800',
+      weeklyEarning: 'Rs. 12,600',
+      ownerProfit: 'Rs. 450/day',
+      accent: 'elite'
+    }
+  ]
 
   useEffect(() => {
     fetchTasks()
@@ -54,6 +117,51 @@ const Work = () => {
       </div>
       <div className="work-title-box">
         <h1 className="page-title work-title">Available Tasks</h1>
+      </div>
+
+      <div className="work-packages">
+        <h2 className="work-section-title">Packages</h2>
+        <div className="row">
+          {packages.map((pkg) => (
+            <div key={pkg.name} className="col-lg-4 col-md-6 mb-3">
+              <Card className={`package-card ${pkg.accent}`}>
+                <Card.Body>
+                  <div className="package-header">
+                    <h4>{pkg.name}</h4>
+                    <span className="package-price">{pkg.price}</span>
+                  </div>
+                  <div className="package-grid">
+                    <div>
+                      <span>Ads / Day</span>
+                      <strong>{pkg.adsPerDay}</strong>
+                    </div>
+                    <div>
+                      <span>Earning / Ad</span>
+                      <strong>{pkg.earningPerAd}</strong>
+                    </div>
+                    <div>
+                      <span>Daily Earning</span>
+                      <strong>{pkg.dailyEarning}</strong>
+                    </div>
+                    <div>
+                      <span>Weekly Earning</span>
+                      <strong>{pkg.weeklyEarning}</strong>
+                    </div>
+                  </div>
+                  {isAdmin && (
+                    <div className="package-footer">
+                      <span>Owner Profit</span>
+                      <strong>{pkg.ownerProfit}</strong>
+                    </div>
+                  )}
+                  <button type="button" className="package-cta">
+                    Purchase Package
+                  </button>
+                </Card.Body>
+              </Card>
+            </div>
+          ))}
+        </div>
       </div>
       
       {message.text && (
