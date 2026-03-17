@@ -207,6 +207,14 @@ const Dashboard = () => {
             <button
               type="button"
               className="user-sidebar-link"
+              onClick={() => handleNavigation('/quick-actions')}
+            >
+              <FiArrowUpRight />
+              View All Actions
+            </button>
+            <button
+              type="button"
+              className="user-sidebar-link"
               onClick={() => handleNavigation('/profile')}
             >
               <FiUser />

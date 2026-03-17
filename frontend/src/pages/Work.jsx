@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Card, Button, Badge, Alert } from 'react-bootstrap'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { FiArrowLeft } from 'react-icons/fi'
 import './Page.css'
+import './Work.css'
 
 const Work = () => {
+  const navigate = useNavigate()
   const [tasks, setTasks] = useState([])
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState({ type: '', text: '' })
@@ -37,8 +41,20 @@ const Work = () => {
   }
 
   return (
-    <Container className="page-container">
-      <h1 className="page-title">Available Tasks</h1>
+    <Container className="page-container work-page">
+      <div className="back-button-container">
+        <button
+          type="button"
+          className="back-dashboard-button"
+          onClick={() => navigate('/dashboard')}
+        >
+          <FiArrowLeft />
+          Back Dashboard
+        </button>
+      </div>
+      <div className="work-title-box">
+        <h1 className="page-title work-title">Available Tasks</h1>
+      </div>
       
       {message.text && (
         <Alert variant={message.type} dismissible onClose={() => setMessage({ type: '', text: '' })}>

@@ -82,6 +82,25 @@
   margin-bottom: 1rem;
 }
 
+.back-dashboard-button {
+  border: none;
+  background: #0b1b3a;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.back-dashboard-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(11, 27, 58, 0.35);
+}
+
 .back-button-container .btn {
   border-radius: 999px;
   font-weight: 600;
