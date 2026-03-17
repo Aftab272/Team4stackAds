@@ -1,0 +1,15 @@
+.withdraw-title-box {
+  background: #f97316;
+  border: 1px solid #ea580c;
+  border-radius: 18px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  box-shadow: 0 16px 28px rgba(249, 115, 22, 0.35);
+}
+
+.withdraw-title {
+  margin: 0;
+  color: #ffffff;
+  text-shadow: none;
+}

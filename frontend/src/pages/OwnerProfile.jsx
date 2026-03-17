@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FiArrowLeft, FiMail, FiPhone, FiUser, FiBriefcase, FiHome, FiClock } from 'react-icons/fi'
 import './Page.css'
+import './OwnerProfile.css'
 
 const OwnerProfile = () => {
   const navigate = useNavigate()
@@ -13,27 +14,28 @@ const OwnerProfile = () => {
     availability: '24 Hours Available',
     profile: 'Student of Software Engineering, University CUI',
     skills: 'MERN Stack Developer',
-    company: 'WeConnect',
+    company: 'Team4Stack',
     website: 'www.team4stack.com'
   }
 
   return (
     <div className="app-page">
       <div className="app-container">
-        <div className="page-header">
-          <div className="page-header-top">
-            <button type="button" className="pill-button" onClick={() => navigate('/dashboard')}>
-              <FiArrowLeft />
-              Back
-            </button>
-          </div>
-          <div>
-            <h2 className="page-title">Owner Profile</h2>
-            <p className="page-subtitle">Owner information and contact details</p>
-          </div>
+        <div className="back-button-container">
+          <button
+            type="button"
+            className="back-dashboard-button"
+            onClick={() => navigate('/dashboard')}
+          >
+            <FiArrowLeft />
+            Back Dashboard
+          </button>
+        </div>
+        <div className="owner-title-box">
+          <h2 className="page-title owner-title">Owner Profile</h2>
         </div>
 
-        <div className="page-card p-4 text-center">
+        <div className="page-card owner-card p-4 text-center">
           <div
             className="stat-icon mb-3"
             style={{

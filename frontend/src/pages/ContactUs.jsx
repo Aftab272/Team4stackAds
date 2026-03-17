@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import { Container, Card, Form, Button, Alert } from 'react-bootstrap'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { FiArrowLeft } from 'react-icons/fi'
 import './Page.css'
+import './ContactUs.css'
 
 const ContactUs = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -41,9 +45,21 @@ const ContactUs = () => {
 
   return (
     <Container className="page-container">
-      <h1 className="page-title">Contact Us</h1>
+      <div className="back-button-container">
+        <button
+          type="button"
+          className="back-dashboard-button"
+          onClick={() => navigate('/dashboard')}
+        >
+          <FiArrowLeft />
+          Back Dashboard
+        </button>
+      </div>
+      <div className="contact-title-box">
+        <h1 className="page-title contact-title">Contact Us</h1>
+      </div>
       
-      <Card className="page-card">
+      <Card className="page-card contact-card">
         <Card.Body>
           <h3>Get in Touch</h3>
           <p className="text-muted mb-4">

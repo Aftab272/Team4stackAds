@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Container, Card, Form, Button, Alert, Table, Spinner, Row, Col, Badge } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import Logo from '../components/Logo'
 import './Page.css'
+import './Withdraw.css'
 
 const Withdraw = () => {
   const navigate = useNavigate()
@@ -90,59 +90,22 @@ const Withdraw = () => {
   }
 
   return (
-    <div className="dashboard-layout">
-      {/* Left Sidebar */}
-      <div className="dashboard-sidebar">
-        <div className="sidebar-header">
-          <Logo size="small" />
-          <h5 className="sidebar-title">Team4stack Ads</h5>
-        </div>
-
-        <div className="sidebar-nav">
-          <Button
-            variant="outline-light"
-            className="sidebar-btn"
+    <div className="app-page">
+      <div className="app-container">
+        <div className="back-button-container mb-3">
+          <button
+            type="button"
+            className="back-dashboard-button"
             onClick={() => navigate('/dashboard')}
           >
-            🏠 Dashboard
-          </Button>
-
-          <Button
-            variant="outline-light"
-            className="sidebar-btn"
-            onClick={() => navigate('/profile')}
-          >
-            👤 User Profile
-          </Button>
-
-          <Button
-            variant="outline-light"
-            className="sidebar-btn"
-            onClick={() => navigate('/settings')}
-          >
-            ⚙️ Settings
-          </Button>
-
-          <Button
-            variant="outline-light"
-            className="sidebar-btn"
-            onClick={() => navigate('/support')}
-          >
-            🆘 Support
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="dashboard-main">
-        <div className="back-button-container mb-3">
-          <Button variant="outline-primary" onClick={() => navigate('/dashboard')}>
             ← Back to Dashboard
-          </Button>
+          </button>
         </div>
         <Container className="py-5">
           <div className="dashboard-content">
-            <h2 className="content-title">💰 Withdraw Funds</h2>
+            <div className="withdraw-title-box">
+              <h2 className="content-title withdraw-title">Withdraw Funds</h2>
+            </div>
             <p className="content-subtitle">Request withdrawals and track your withdrawal history</p>
           </div>
 

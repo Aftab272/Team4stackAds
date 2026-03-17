@@ -1,0 +1,70 @@
+.wallet-title-box {
+  background: #f97316;
+  border: 1px solid #ea580c;
+  border-radius: 18px;
+  padding: 1rem 1.25rem;
+  margin-top: 1rem;
+  text-align: center;
+  box-shadow: 0 16px 28px rgba(249, 115, 22, 0.35);
+}
+
+.wallet-title {
+  margin: 0;
+  color: #ffffff;
+  text-shadow: none;
+}
+
+.wallet-subtitle {
+  color: rgba(255, 255, 255, 0.85) !important;
+  margin-top: 0.5rem;
+}
+
+.wallet-card {
+  background: #f97316 !important;
+  border: 1px solid #ea580c !important;
+  color: #ffffff;
+}
+
+.wallet-card h3,
+.wallet-card h4,
+.wallet-card p,
+.wallet-card span,
+.wallet-card .text-white,
+.wallet-card .page-subtitle {
+  color: #ffffff !important;
+}
+
+.wallet-card .list-item {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.wallet-hero {
+  background: #f97316 !important;
+  border: 1px solid #ea580c !important;
+  color: #ffffff;
+  box-shadow: 0 18px 35px rgba(249, 115, 22, 0.35) !important;
+}
+
+.wallet-hero h3,
+.wallet-hero small,
+.wallet-hero span,
+.wallet-hero .fw-semibold {
+  color: #ffffff !important;
+}
+
+.stat-tile {
+  background: #f97316 !important;
+  border: 1px solid #ea580c !important;
+  color: #ffffff;
+}
+
+.stat-tile span,
+.stat-tile h3 {
+  color: #ffffff !important;
+}
+
+.stat-icon {
+  background: rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+}

@@ -12,6 +12,7 @@ import {
 } from 'react-icons/fi'
 import axios from 'axios'
 import './Page.css'
+import './Wallet.css'
 
 const Wallet = () => {
   const navigate = useNavigate()
@@ -75,17 +76,17 @@ const Wallet = () => {
       <div className="app-container">
         <div className="page-header">
           <div className="page-header-top">
-            <button type="button" className="pill-button" onClick={() => navigate('/dashboard')}>
+            <button type="button" className="back-dashboard-button" onClick={() => navigate('/dashboard')}>
               <FiArrowLeft />
-              Back
+              Back Dashboard
             </button>
             <button type="button" className="primary-pill" onClick={() => navigate('/withdraw')}>
               Withdraw
             </button>
           </div>
-          <div>
-            <h2 className="page-title">My Wallet</h2>
-            <p className="page-subtitle">Track balance, earnings, and withdrawals</p>
+          <div className="wallet-title-box">
+            <h2 className="page-title wallet-title">My Wallet</h2>
+            <p className="page-subtitle wallet-subtitle">Track balance, earnings, and withdrawals</p>
           </div>
         </div>
 
@@ -149,7 +150,7 @@ const Wallet = () => {
           </div>
         </div>
 
-        <div className="page-card p-4">
+        <div className="page-card wallet-card p-4">
           <div className="d-flex justify-content-between align-items-center mb-3">
             <h3 className="m-0 text-white">Transaction History</h3>
             {loading && <span className="page-subtitle">Loading...</span>}
