@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FiArrowLeft, FiMail, FiPhone, FiUser } from 'react-icons/fi'
+import { FiArrowLeft, FiMail, FiPhone, FiUser, FiBriefcase, FiHome, FiClock } from 'react-icons/fi'
 import './Page.css'
 
 const OwnerProfile = () => {
@@ -8,8 +8,13 @@ const OwnerProfile = () => {
 
   const owner = {
     name: 'M Aftab Akram',
-    email: 'ranaaftabakram9@gmail.com',
-    phone: '03027434569'
+    email: 'ranaaftabakram@gmail.com',
+    phone: '03027434569',
+    availability: '24 Hours Available',
+    profile: 'Student of Software Engineering, University CUI',
+    skills: 'MERN Stack Developer',
+    company: 'WeConnect',
+    website: 'www.team4stack.com'
   }
 
   return (
@@ -53,6 +58,36 @@ const OwnerProfile = () => {
                 <FiPhone className="me-2" /> Phone
               </span>
               <strong>{owner.phone}</strong>
+            </div>
+            <div className="info-row">
+              <span>
+                <FiClock className="me-2" /> Availability
+              </span>
+              <strong>{owner.availability}</strong>
+            </div>
+            <div className="info-row">
+              <span>
+                <FiUser className="me-2" /> Profile
+              </span>
+              <strong>{owner.profile}</strong>
+            </div>
+            <div className="info-row">
+              <span>
+                <FiBriefcase className="me-2" /> Skills
+              </span>
+              <strong>{owner.skills}</strong>
+            </div>
+            <div className="info-row">
+              <span>
+                <FiUser className="me-2" /> Company
+              </span>
+              <strong>{owner.company}</strong>
+            </div>
+            <div className="info-row">
+              <span>
+                <FiHome className="me-2" /> Website
+              </span>
+              <strong>{owner.website}</strong>
             </div>
           </div>
         </div>
