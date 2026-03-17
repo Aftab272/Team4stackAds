@@ -51,4 +51,11 @@
     transform: translateX(-50%);
     border-radius: 20px 20px 0 0;
   }
+
+  .user-dashboard-body .footer {
+    max-width: 1000px;
+    width: min(1000px, calc(100vw - 280px));
+    left: calc(50% + 132px);
+    transform: translateX(-50%);
+  }
 }

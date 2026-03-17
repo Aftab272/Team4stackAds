@@ -33,6 +33,13 @@ const Dashboard = () => {
     })
   }, [])
 
+  useEffect(() => {
+    document.body.classList.add('user-dashboard-body')
+    return () => {
+      document.body.classList.remove('user-dashboard-body')
+    }
+  }, [])
+
   const handleNavigation = (path) => {
     navigate(path)
   }
