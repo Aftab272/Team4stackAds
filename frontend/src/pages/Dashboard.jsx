@@ -167,6 +167,15 @@ const Dashboard = () => {
             </h1>
           </div>
           <div className="header-actions">
+            {userRole === 'admin' && (
+              <button
+                type="button"
+                className="ghost-pill"
+                onClick={() => handleNavigation('/admin/dashboard')}
+              >
+                Admin Dashboard
+              </button>
+            )}
             <button
               type="button"
               className="icon-button"
