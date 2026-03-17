@@ -5,7 +5,7 @@
 /* Admin Layout */
 .admin-wrapper {
   min-height: 100vh;
-  background: #f8f9fc;
+  background: #e7efff;
   overflow-x: hidden;
 }
 
@@ -17,7 +17,7 @@
 /* Sidebar Styles */
 .sidebar {
   width: 260px;
-  background: linear-gradient(180deg, #4e73df 0%, #224abe 100%);
+  background: linear-gradient(180deg, #1e3a8a 0%, #1d4ed8 100%);
   min-height: 100vh;
   color: white;
   position: fixed;
@@ -131,7 +131,7 @@
 }
 
 .admin-navbar .navbar-brand {
-  color: #4e73df !important;
+  color: #f97316 !important;
   font-weight: 700;
   font-size: 1rem;
 }
@@ -153,7 +153,7 @@
 }
 
 .nav-link.dropdown-toggle {
-  color: #4e73df !important;
+  color: #f97316 !important;
   font-weight: 600;
   text-decoration: none;
 }
@@ -162,7 +162,7 @@
   display: none;
   border: none;
   background: transparent;
-  color: #4e73df;
+  color: #f97316;
   padding: 0.35rem;
   border-radius: 0.35rem;
 }
@@ -186,7 +186,7 @@
 .page-header h2 {
   font-size: 1.75rem;
   font-weight: 700;
-  color: #5a5c69;
+  color: #c2410c;
   margin-bottom: 0.5rem;
 }
 
@@ -293,7 +293,7 @@
   background: #f8f9fc;
   border-top: none;
   border-bottom: 2px solid #e3e6f0;
-  color: #4e73df;
+  color: #f97316;
   font-weight: 700;
   font-size: 0.8rem;
   text-transform: uppercase;
@@ -354,7 +354,7 @@
 }
 
 .card-header h5 {
-  color: #4e73df;
+  color: #f97316;
   font-weight: 700;
   font-size: 1rem;
   margin-bottom: 0;
@@ -378,13 +378,13 @@
 }
 
 .btn-primary {
-  background: #4e73df;
-  border-color: #4e73df;
+  background: #f97316;
+  border-color: #f97316;
 }
 
 .btn-primary:hover {
-  background: #2e59d9;
-  border-color: #2e59d9;
+  background: #ea580c;
+  border-color: #ea580c;
 }
 
 .btn-warning {
@@ -412,8 +412,8 @@
 /* Forms */
 .form-control:focus,
 .form-select:focus {
-  border-color: #bac8f3;
-  box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+  border-color: #fdba74;
+  box-shadow: 0 0 0 0.2rem rgba(249, 115, 22, 0.25);
 }
 
 /* Badges */
@@ -430,7 +430,7 @@
 }
 
 .modal-title {
-  color: #4e73df;
+  color: #f97316;
   font-weight: 700;
 }
 
@@ -540,7 +540,7 @@
   .admin-table tbody td::before {
     content: attr(data-label);
     font-weight: 600;
-    color: #4e73df;
+    color: #f97316;
     text-transform: uppercase;
     font-size: 0.7rem;
     letter-spacing: 0.04em;
@@ -558,7 +558,7 @@
 }
 
 .border-left-primary {
-  border-left: 4px solid #4e73df !important;
+  border-left: 4px solid #f97316 !important;
 }
 
 .border-left-success {
