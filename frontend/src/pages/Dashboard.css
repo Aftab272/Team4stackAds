@@ -101,26 +101,27 @@
   background: #1d4ed8;
 }
 
-.team4stack-card {
+.user-sidebar .team4stack-card {
   margin-top: 1rem;
   margin-bottom: 0.9rem;
   border-radius: 18px;
   padding: 1rem;
-  background: #1d4ed8;
-  border: 1px solid rgba(29, 78, 216, 0.9);
+  background: #1d4ed8 !important;
+  border: 1px solid rgba(29, 78, 216, 0.9) !important;
 }
 
-.team4stack-card-toggle {
+.user-sidebar .team4stack-card-toggle {
   width: 100%;
-  background: transparent;
+  background: #1d4ed8 !important;
   border: none;
+  border-radius: 14px;
   color: #ffffff;
   font-size: 0.95rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0;
+  padding: 0.6rem 0.85rem;
   cursor: pointer;
 }
 

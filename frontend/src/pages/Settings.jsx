@@ -1,7 +1,6 @@
 import React, { useRef } from 'react'
 import { Container, Card, Button, Row, Col, Form, ListGroup } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import Logo from '../components/Logo'
 
 const Settings = () => {
   const navigate = useNavigate()
@@ -21,51 +20,8 @@ const Settings = () => {
   }
 
   return (
-    <div className="dashboard-layout">
-      {/* Left Sidebar */}
-      <div className="dashboard-sidebar">
-        <div className="sidebar-header">
-          <Logo size="small" />
-          <h5 className="sidebar-title">Team4stack Ads</h5>
-        </div>
-        
-        <div className="sidebar-nav">
-          <Button 
-            variant="outline-light" 
-            className="sidebar-btn"
-            onClick={() => navigate('/dashboard')}
-          >
-            🏠 Dashboard
-          </Button>
-          
-          <Button 
-            variant="outline-light" 
-            className="sidebar-btn"
-            onClick={() => navigate('/profile')}
-          >
-            👤 User Profile
-          </Button>
-          
-          <Button 
-            variant="outline-light" 
-            className="sidebar-btn active"
-            onClick={() => navigate('/settings')}
-          >
-            ⚙️ Settings
-          </Button>
-          
-          <Button 
-            variant="outline-light" 
-            className="sidebar-btn"
-            onClick={() => navigate('/support')}
-          >
-            🆘 Support
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="dashboard-main">
+    <div className="app-page">
+      <div className="app-container">
         <div className="back-button-container mb-3">
           <Button variant="outline-primary" onClick={() => navigate('/dashboard')}>
             ← Back to Dashboard

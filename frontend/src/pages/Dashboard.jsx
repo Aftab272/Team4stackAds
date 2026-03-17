@@ -184,17 +184,6 @@ const Dashboard = () => {
               <h2 className="user-sidebar-title">{displayName}</h2>
             </div>
           </div>
-          <div className="team4stack-card">
-            <button
-              type="button"
-              className="team4stack-card-toggle"
-              onClick={() => handleNavigation('/team4stack-profile')}
-            >
-              <span>Team4Stack Profile</span>
-              <FiChevronRight className="team4stack-chevron" />
-            </button>
-          </div>
-
           <nav className="user-sidebar-nav">
             <button
               type="button"
