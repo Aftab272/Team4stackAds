@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Card, Table, Badge, Alert } from 'react-bootstrap'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { FiArrowLeft } from 'react-icons/fi'
 import './Page.css'
+import './Team.css'
 
 const Team = () => {
+  const navigate = useNavigate()
   const [teamData, setTeamData] = useState(null)
   const [referrals, setReferrals] = useState([])
   const [loading, setLoading] = useState(true)
@@ -31,12 +35,24 @@ const Team = () => {
   }
 
   return (
-    <Container className="page-container">
-      <h1 className="page-title">My Team</h1>
+    <Container className="page-container team-page">
+      <div className="back-button-container">
+        <button
+          type="button"
+          className="back-dashboard-button"
+          onClick={() => navigate('/dashboard')}
+        >
+          <FiArrowLeft />
+          Back Dashboard
+        </button>
+      </div>
+      <div className="team-title-box">
+        <h1 className="page-title team-title">My Team</h1>
+      </div>
       
       <div className="row mb-4">
         <div className="col-md-4 mb-3">
-          <Card className="page-card text-center">
+          <Card className="page-card team-card text-center">
             <Card.Body>
               <h3>{teamData?.totalReferrals || 0}</h3>
               <p className="text-muted">Total Referrals</p>
@@ -44,7 +60,7 @@ const Team = () => {
           </Card>
         </div>
         <div className="col-md-4 mb-3">
-          <Card className="page-card text-center">
+          <Card className="page-card team-card text-center">
             <Card.Body>
               <h3>{teamData?.activeReferrals || 0}</h3>
               <p className="text-muted">Active Members</p>
@@ -52,7 +68,7 @@ const Team = () => {
           </Card>
         </div>
         <div className="col-md-4 mb-3">
-          <Card className="page-card text-center">
+          <Card className="page-card team-card text-center">
             <Card.Body>
               <h3>${teamData?.totalEarnings || 0}</h3>
               <p className="text-muted">Team Earnings</p>
@@ -61,7 +77,7 @@ const Team = () => {
         </div>
       </div>
 
-      <Card className="page-card mb-4">
+      <Card className="page-card team-card mb-4">
         <Card.Body>
           <h3>Your Referral Code</h3>
           <Alert variant="info" className="d-flex justify-content-between align-items-center">
@@ -76,7 +92,7 @@ const Team = () => {
         </Card.Body>
       </Card>
 
-      <Card className="page-card">
+      <Card className="page-card team-card">
         <Card.Body>
           <h3>Referral List</h3>
           <Table responsive striped bordered hover>

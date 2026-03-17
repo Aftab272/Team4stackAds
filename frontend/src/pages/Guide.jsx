@@ -1,8 +1,12 @@
 import React from 'react'
 import { Container, Card, ListGroup } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import { FiArrowLeft } from 'react-icons/fi'
 import './Page.css'
+import './Guide.css'
 
 const Guide = () => {
+  const navigate = useNavigate()
   const guideSteps = [
     {
       title: 'Getting Started',
@@ -32,9 +36,21 @@ const Guide = () => {
 
   return (
     <Container className="page-container">
-      <h1 className="page-title">User Guide</h1>
+      <div className="back-button-container">
+        <button
+          type="button"
+          className="back-dashboard-button"
+          onClick={() => navigate('/dashboard')}
+        >
+          <FiArrowLeft />
+          Back Dashboard
+        </button>
+      </div>
+      <div className="guide-title-box">
+        <h1 className="page-title guide-title">User Guide</h1>
+      </div>
       
-      <Card className="page-card">
+      <Card className="page-card guide-card">
         <Card.Body>
           <h2 className="mb-4">Welcome to Team4StackAds!</h2>
           <p className="lead">
@@ -55,7 +71,7 @@ const Guide = () => {
             ))}
           </ListGroup>
 
-          <div className="mt-4 p-3 bg-light rounded">
+          <div className="mt-4 p-3 guide-tips-box">
             <h5>Tips for Success:</h5>
             <ul>
               <li>Complete tasks daily to maximize your earnings</li>

@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Card, Table, Row, Col } from 'react-bootstrap'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { FiArrowLeft } from 'react-icons/fi'
 import './Page.css'
+import './Salary.css'
 
 const Salary = () => {
+  const navigate = useNavigate()
   const [salaryData, setSalaryData] = useState(null)
   const [earnings, setEarnings] = useState([])
   const [loading, setLoading] = useState(true)
@@ -26,11 +30,23 @@ const Salary = () => {
 
   return (
     <Container className="page-container">
-      <h1 className="page-title">Salary & Earnings</h1>
+      <div className="back-button-container">
+        <button
+          type="button"
+          className="back-dashboard-button"
+          onClick={() => navigate('/dashboard')}
+        >
+          <FiArrowLeft />
+          Back Dashboard
+        </button>
+      </div>
+      <div className="salary-title-box">
+        <h1 className="page-title salary-title">Salary & Earnings</h1>
+      </div>
       
       <Row className="mb-4">
         <Col md={4} className="mb-3">
-          <Card className="page-card text-center">
+          <Card className="page-card salary-card text-center">
             <Card.Body>
               <h3 className="text-success">${salaryData?.totalEarnings || 0}</h3>
               <p className="text-muted">Total Earnings</p>
@@ -38,7 +54,7 @@ const Salary = () => {
           </Card>
         </Col>
         <Col md={4} className="mb-3">
-          <Card className="page-card text-center">
+          <Card className="page-card salary-card text-center">
             <Card.Body>
               <h3 className="text-primary">${salaryData?.thisMonth || 0}</h3>
               <p className="text-muted">This Month</p>
@@ -46,7 +62,7 @@ const Salary = () => {
           </Card>
         </Col>
         <Col md={4} className="mb-3">
-          <Card className="page-card text-center">
+          <Card className="page-card salary-card text-center">
             <Card.Body>
               <h3 className="text-warning">${salaryData?.teamBonus || 0}</h3>
               <p className="text-muted">Team Bonus</p>
@@ -55,7 +71,7 @@ const Salary = () => {
         </Col>
       </Row>
 
-      <Card className="page-card">
+      <Card className="page-card salary-card">
         <Card.Body>
           <h3>Earnings History</h3>
           <Table responsive striped bordered hover>

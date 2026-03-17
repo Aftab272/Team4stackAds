@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Card, Badge, Button } from 'react-bootstrap'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { FiArrowLeft } from 'react-icons/fi'
 import './Page.css'
+import './OfficialChannel.css'
 
 const OfficialChannel = () => {
+  const navigate = useNavigate()
   const [announcements, setAnnouncements] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -48,9 +52,21 @@ const OfficialChannel = () => {
 
   return (
     <Container className="page-container">
-      <h1 className="page-title">Official Channel</h1>
+      <div className="back-button-container">
+        <button
+          type="button"
+          className="back-dashboard-button"
+          onClick={() => navigate('/dashboard')}
+        >
+          <FiArrowLeft />
+          Back Dashboard
+        </button>
+      </div>
+      <div className="official-title-box">
+        <h1 className="page-title official-title">Official Channel</h1>
+      </div>
       
-      <Card className="page-card mb-4">
+      <Card className="page-card official-card mb-4">
         <Card.Body>
           <h4 className="mb-3">Connect with us</h4>
           <p className="text-muted">Join our official channels to get updates, support, and announcements directly.</p>
@@ -75,7 +91,7 @@ const OfficialChannel = () => {
         </Card.Body>
       </Card>
 
-      <Card className="page-card mb-4">
+      <Card className="page-card official-card mb-4">
         <Card.Body>
           <h4 className="mb-3">Earning Opportunity</h4>
           <p className="text-muted">Join our earning website to participate in various activities and earn money. Connect with our channels for more details and updates!</p>
@@ -83,14 +99,14 @@ const OfficialChannel = () => {
       </Card>
 
       {announcements.length === 0 ? (
-        <Card className="page-card">
+        <Card className="page-card official-card">
           <Card.Body>
             <p className="text-center text-muted">No announcements at the moment. Check back later!</p>
           </Card.Body>
         </Card>
       ) : (
         announcements.map((announcement) => (
-          <Card key={announcement.id} className="page-card mb-3">
+          <Card key={announcement.id} className="page-card official-card mb-3">
             <Card.Body>
               <div className="d-flex justify-content-between align-items-start mb-2">
                 <h4>{announcement.title}</h4>

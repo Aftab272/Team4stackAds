@@ -1,13 +1,29 @@
 import React from 'react'
 import { Container, Card, Row, Col } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import { FiArrowLeft } from 'react-icons/fi'
 import './Page.css'
+import './AboutUs.css'
 
 const AboutUs = () => {
+  const navigate = useNavigate()
   return (
     <Container className="page-container">
-      <h1 className="page-title">About Us</h1>
+      <div className="back-button-container">
+        <button
+          type="button"
+          className="back-dashboard-button"
+          onClick={() => navigate('/dashboard')}
+        >
+          <FiArrowLeft />
+          Back Dashboard
+        </button>
+      </div>
+      <div className="about-title-box">
+        <h1 className="page-title about-title">About Us</h1>
+      </div>
       
-      <Card className="page-card mb-4">
+      <Card className="page-card about-card mb-4">
         <Card.Body>
           <h2>Welcome to Team4StackAds</h2>
           <p className="lead">
@@ -23,7 +39,7 @@ const AboutUs = () => {
 
       <Row>
         <Col md={4} className="mb-3">
-          <Card className="page-card h-100">
+          <Card className="page-card about-card h-100">
             <Card.Body className="text-center">
               <h3>🎯 Our Mission</h3>
               <p>
@@ -34,7 +50,7 @@ const AboutUs = () => {
           </Card>
         </Col>
         <Col md={4} className="mb-3">
-          <Card className="page-card h-100">
+          <Card className="page-card about-card h-100">
             <Card.Body className="text-center">
               <h3>💡 Our Vision</h3>
               <p>
@@ -45,7 +61,7 @@ const AboutUs = () => {
           </Card>
         </Col>
         <Col md={4} className="mb-3">
-          <Card className="page-card h-100">
+          <Card className="page-card about-card h-100">
             <Card.Body className="text-center">
               <h3>✨ Our Values</h3>
               <p>
