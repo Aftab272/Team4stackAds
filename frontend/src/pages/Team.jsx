@@ -43,7 +43,7 @@ const Team = () => {
           onClick={() => navigate('/quick-actions')}
         >
           <FiArrowLeft />
-          Back Dashboard
+          Back to Quick Actions
         </button>
       </div>
       <div className="team-title-box">

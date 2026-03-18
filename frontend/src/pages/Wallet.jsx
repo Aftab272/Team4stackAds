@@ -78,7 +78,7 @@ const Wallet = () => {
           <div className="page-header-top">
             <button type="button" className="back-dashboard-button" onClick={() => navigate('/quick-actions')}>
               <FiArrowLeft />
-              Back Dashboard
+              Back to Quick Actions
             </button>
             <button type="button" className="primary-pill" onClick={() => navigate('/withdraw')}>
               Withdraw

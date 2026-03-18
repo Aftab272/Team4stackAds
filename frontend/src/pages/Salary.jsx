@@ -37,7 +37,7 @@ const Salary = () => {
           onClick={() => navigate('/quick-actions')}
         >
           <FiArrowLeft />
-          Back Dashboard
+          Back to Quick Actions
         </button>
       </div>
       <div className="salary-title-box">

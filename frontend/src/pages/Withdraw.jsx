@@ -98,7 +98,7 @@ const Withdraw = () => {
             className="back-dashboard-button"
             onClick={() => navigate('/quick-actions')}
           >
-            ← Back to Dashboard
+            ← Back to Quick Actions
           </button>
         </div>
         <Container className="py-5">
