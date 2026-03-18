@@ -49,7 +49,7 @@ const ContactUs = () => {
         <button
           type="button"
           className="back-dashboard-button"
-          onClick={() => navigate('/dashboard')}
+          onClick={() => navigate('/quick-actions')}
         >
           <FiArrowLeft />
           Back Dashboard

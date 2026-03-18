@@ -76,7 +76,7 @@ const Wallet = () => {
       <div className="app-container">
         <div className="page-header">
           <div className="page-header-top">
-            <button type="button" className="back-dashboard-button" onClick={() => navigate('/dashboard')}>
+            <button type="button" className="back-dashboard-button" onClick={() => navigate('/quick-actions')}>
               <FiArrowLeft />
               Back Dashboard
             </button>

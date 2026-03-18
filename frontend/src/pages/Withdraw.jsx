@@ -96,7 +96,7 @@ const Withdraw = () => {
           <button
             type="button"
             className="back-dashboard-button"
-            onClick={() => navigate('/dashboard')}
+            onClick={() => navigate('/quick-actions')}
           >
             ← Back to Dashboard
           </button>
