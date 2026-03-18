@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import { FiArrowLeft } from 'react-icons/fi'
 import './Page.css'
 import './OfficialChannel.css'
+import communityImg from '../assets/community.webp'
+import offersImg from '../assets/offers.png'
 
 const OfficialChannel = () => {
   const navigate = useNavigate()
@@ -87,6 +89,19 @@ const OfficialChannel = () => {
                 </span>
               </a>
             ))}
+          </div>
+
+          <div className="community-offers-grid">
+            <div className="community-offers-card">
+              <img src={communityImg} alt="Community" />
+              <h5>Community</h5>
+              <p>Join our community for updates and support.</p>
+            </div>
+            <div className="community-offers-card">
+              <img src={offersImg} alt="Offers" />
+              <h5>Offers</h5>
+              <p>Explore latest offers and rewards.</p>
+            </div>
           </div>
         </Card.Body>
       </Card>
