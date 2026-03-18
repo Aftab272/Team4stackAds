@@ -81,7 +81,7 @@ const OfficialChannel = () => {
                 target="_blank"
                 rel="noreferrer"
                 className={`btn btn-${app.bg} d-flex flex-column align-items-center justify-content-center text-white app-box`}
-                style={{ width: '140px', height: '140px', textDecoration: 'none' }}
+                style={{ textDecoration: 'none' }}
               >
                 <img src={app.logo} alt={app.name} width={40} height={40} />
                 <span className="mt-2" style={{ fontSize: '0.85rem', fontWeight: 600 }}>
@@ -92,16 +92,24 @@ const OfficialChannel = () => {
           </div>
 
           <div className="community-offers-grid">
-            <div className="community-offers-card">
+            <a
+              className="community-offers-card"
+              href="https://whatsapp.com/channel/0029VbCVtZ7Id7nSBLYXOQ1c"
+              target="_blank"
+              rel="noreferrer"
+            >
               <img src={communityImg} alt="Community" />
               <h5>Community</h5>
-              <p>Join our community for updates and support.</p>
-            </div>
-            <div className="community-offers-card">
+            </a>
+            <a
+              className="community-offers-card"
+              href="https://whatsapp.com/channel/0029VbCVtZ7Id7nSBLYXOQ1c"
+              target="_blank"
+              rel="noreferrer"
+            >
               <img src={offersImg} alt="Offers" />
               <h5>Offers</h5>
-              <p>Explore latest offers and rewards.</p>
-            </div>
+            </a>
           </div>
         </Card.Body>
       </Card>

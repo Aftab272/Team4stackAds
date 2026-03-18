@@ -29,11 +29,13 @@
 
 .official-card .app-box {
   border: 1px solid rgba(255, 255, 255, 0.35);
+  width: 140px;
+  height: 140px;
 }
 
 .community-offers-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1rem;
   margin-top: 1.5rem;
 }
@@ -47,13 +49,23 @@
 }
 
 .community-offers-card img {
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   object-fit: contain;
   margin-bottom: 0.75rem;
   background: #ffffff;
   border-radius: 12px;
   padding: 0.4rem;
+}
+
+.community-offers-card {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .community-offers-card h5 {
