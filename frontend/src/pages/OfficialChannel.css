@@ -47,6 +47,7 @@
   border-radius: 16px;
   padding: 1rem;
   text-align: center;
+  text-decoration: none;
 }
 
 .community-offers-card img {
@@ -72,6 +73,8 @@
 .community-offers-card h5 {
   margin: 0 0 0.35rem 0;
   color: #ffffff;
+  text-decoration: none;
+  border-bottom: none;
 }
 
 .community-offers-card p {
