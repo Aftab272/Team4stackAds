@@ -4,6 +4,7 @@ import { FiArrowLeft, FiMail, FiPhone, FiUser, FiBriefcase, FiHome, FiClock } fr
 import './Page.css'
 import './OwnerProfile.css'
 import ownerPhoto from '../assets/owner.jpeg'
+import botimLogo from '../assets/botim.png'
 
 const OwnerProfile = () => {
   const navigate = useNavigate()
@@ -87,6 +88,19 @@ const OwnerProfile = () => {
               <strong>{owner.website}</strong>
             </div>
           </div>
+
+          <a
+            className="owner-link-card"
+            href="https://g.botim.me/invite"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={botimLogo} alt="Botim" />
+            <div>
+              <h4>Download Botim</h4>
+              <p>Make free phone calls or message us for any query.</p>
+            </div>
+          </a>
         </div>
       </div>
     </div>
