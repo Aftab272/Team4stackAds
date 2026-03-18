@@ -14,6 +14,7 @@ import {
   FiShield,
   FiUser
 } from 'react-icons/fi'
+import team4StackLogo from '../../assets/team4stack-logo-14.jpeg'
 
 const Sidebar = ({ isOpen, onClose }) => {
   const navigate = useNavigate()
@@ -57,6 +58,7 @@ const Sidebar = ({ isOpen, onClose }) => {
     <div className={`sidebar ${isOpen ? 'active' : ''}`}>
       {/* Header */}
       <div className="sidebar-header">
+        <img src={team4StackLogo} alt="Team4Stack Ads" className="sidebar-logo" />
         <h3>Team4StackAds</h3>
         <p>{userRole === 'admin' ? 'Admin Panel' : 'User Panel'}</p>
       </div>

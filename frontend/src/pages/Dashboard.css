@@ -30,15 +30,16 @@
 
 .user-sidebar-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
 }
 
 .user-sidebar-logo {
-  width: 100px;
-  height: 100px;
-  border-radius: 24px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.35);
   background: rgba(255, 255, 255, 0.08);
@@ -68,6 +69,16 @@
   font-weight: 600;
   color: #ffffff;
 }
+
+.user-sidebar-welcome-box {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 14px;
+  padding: 0.6rem 0.85rem;
+  text-align: center;
+  width: 100%;
+}
+
 
 .user-sidebar-nav {
   display: flex;
@@ -497,6 +508,29 @@
   display: block;
   font-size: 0.75rem;
   color: var(--text-muted);
+}
+
+.brand-strip-logo {
+  justify-content: center;
+}
+
+.brand-strip-logo-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.brand-strip-logo-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brand-strip-text {
+  text-align: left;
 }
 
 @media (min-width: 768px) {

@@ -7,7 +7,7 @@ import {
   FiArrowUpRight, FiZap, FiBell, FiChevronRight, FiUser, FiSettings, FiCheckSquare
 } from 'react-icons/fi'
 import Logo from '../components/Logo'
-import team4StackLogo from '../assets/team4stack-logo.jpeg'
+import team4StackLogo from '../assets/team4stack-logo-14.jpeg'
 import './Dashboard.css'
 
 const Dashboard = () => {
@@ -179,8 +179,8 @@ const Dashboard = () => {
             <div className="user-sidebar-logo">
               <img src={team4StackLogo} alt="Team4Stack Ads" />
             </div>
-            <div>
-              <p className="user-sidebar-kicker">User Panel</p>
+            <div className="user-sidebar-welcome-box">
+              <p className="user-sidebar-kicker">Welcome</p>
               <h2 className="user-sidebar-title">{displayName}</h2>
             </div>
           </div>
@@ -347,15 +347,17 @@ const Dashboard = () => {
         </motion.section>
 
         <motion.div
-          className="brand-strip"
+          className="brand-strip brand-strip-logo"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.35 }}
         >
-          <Logo size="small" />
-          <div>
+          <div className="brand-strip-logo-img">
+            <img src={team4StackLogo} alt="Team4Stack Ads" />
+          </div>
+          <div className="brand-strip-text">
             <p>Team4Stack Ads</p>
-            <span>Mobile-first workspace</span>
+            <span>Watch ads. Earn daily.</span>
           </div>
         </motion.div>
         </div>
