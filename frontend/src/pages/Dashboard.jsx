@@ -199,7 +199,7 @@ const Dashboard = () => {
               onClick={() => handleNavigation('/quick-actions')}
             >
               <FiArrowUpRight />
-              View All Actions
+              Dashboard
             </button>
             <button
               type="button"

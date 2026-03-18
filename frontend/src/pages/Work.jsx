@@ -11,7 +11,6 @@ const Work = () => {
   const [tasks, setTasks] = useState([])
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState({ type: '', text: '' })
-  const isAdmin = (localStorage.getItem('userRole') || '').toLowerCase() === 'admin'
   const packages = [
     {
       name: 'Starter Package',
@@ -20,7 +19,6 @@ const Work = () => {
       earningPerAd: 'Rs. 0.20',
       dailyEarning: 'Rs. 100',
       weeklyEarning: 'Rs. 700',
-      ownerProfit: 'Rs. 50/day',
       accent: 'starter'
     },
     {
@@ -30,7 +28,6 @@ const Work = () => {
       earningPerAd: 'Rs. 0.25',
       dailyEarning: 'Rs. 200',
       weeklyEarning: 'Rs. 1,400',
-      ownerProfit: 'Rs. 80/day',
       accent: 'basic'
     },
     {
@@ -40,7 +37,6 @@ const Work = () => {
       earningPerAd: 'Rs. 0.30',
       dailyEarning: 'Rs. 360',
       weeklyEarning: 'Rs. 2,520',
-      ownerProfit: 'Rs. 120/day',
       accent: 'standard'
     },
     {
@@ -50,7 +46,6 @@ const Work = () => {
       earningPerAd: 'Rs. 0.35',
       dailyEarning: 'Rs. 700',
       weeklyEarning: 'Rs. 4,900',
-      ownerProfit: 'Rs. 200/day',
       accent: 'premium'
     },
     {
@@ -60,7 +55,6 @@ const Work = () => {
       earningPerAd: 'Rs. 0.40',
       dailyEarning: 'Rs. 1,200',
       weeklyEarning: 'Rs. 8,400',
-      ownerProfit: 'Rs. 300/day',
       accent: 'vip'
     },
     {
@@ -70,7 +64,6 @@ const Work = () => {
       earningPerAd: 'Rs. 0.45',
       dailyEarning: 'Rs. 1,800',
       weeklyEarning: 'Rs. 12,600',
-      ownerProfit: 'Rs. 450/day',
       accent: 'elite'
     }
   ]
@@ -148,12 +141,6 @@ const Work = () => {
                       <strong>{pkg.weeklyEarning}</strong>
                     </div>
                   </div>
-                  {isAdmin && (
-                    <div className="package-footer">
-                      <span>Owner Profit</span>
-                      <strong>{pkg.ownerProfit}</strong>
-                    </div>
-                  )}
                   <button
                     type="button"
                     className="package-cta"

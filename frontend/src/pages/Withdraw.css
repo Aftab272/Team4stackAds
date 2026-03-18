@@ -13,3 +13,7 @@
   color: #ffffff;
   text-shadow: none;
 }
+
+.withdraw-wide {
+  max-width: 1200px;
+}

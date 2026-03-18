@@ -110,7 +110,7 @@ const Withdraw = () => {
           </div>
 
           <Row>
-            <Col md={8} className="mx-auto">
+            <Col md={10} className="mx-auto withdraw-wide">
               <Card className="shadow mb-4">
                 <Card.Body>
                   <div className="d-flex justify-content-between align-items-center mb-3">

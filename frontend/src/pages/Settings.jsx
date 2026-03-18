@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { Container, Card, Button, Row, Col, Form, ListGroup } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import './Settings.css'
 
 const Settings = () => {
   const navigate = useNavigate()
@@ -21,7 +22,7 @@ const Settings = () => {
 
   return (
     <div className="app-page">
-      <div className="app-container">
+      <div className="app-container settings-container">
         <div className="back-button-container mb-3">
           <Button variant="outline-primary" onClick={() => navigate('/dashboard')}>
             ← Back to Dashboard
@@ -34,7 +35,7 @@ const Settings = () => {
           </div>
           
           <Row>
-            <Col md={8} className="mx-auto">
+            <Col md={10} className="mx-auto">
               <Card className="shadow mb-4">
                 <Card.Body>
                   <Form ref={formRef} onSubmit={(e) => { e.preventDefault(); alert('Settings saved!'); }}>
