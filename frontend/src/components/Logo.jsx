@@ -1,22 +1,13 @@
 import React from 'react'
 import './Logo.css'
+import t4sLogoSvg from '../assets/T4S_Logo/T4S_Logoo.svg'
 
 const Logo = ({ size = 'medium' }) => {
   return (
     <div className={`logo-container logo-${size}`}>
       <div className="logo-circle">
         <div className="logo-wrapper">
-          {/* T Shape Base - Dark Blue */}
-          <div className="logo-t-base"></div>
-          
-          {/* Top Chevron - Dark Blue */}
-          <div className="logo-chevron-top"></div>
-          
-          {/* Bottom Chevron - Gold/Bronze */}
-          <div className="logo-chevron-bottom"></div>
-          
-          {/* Arrow - Gold/Bronze */}
-          <div className="logo-arrow"></div>
+          <img className="logo-svg" src={t4sLogoSvg} alt="Team4Stack Ads" />
         </div>
       </div>
     </div>

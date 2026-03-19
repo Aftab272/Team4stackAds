@@ -12,19 +12,22 @@ const Notifications = () => {
       id: 1,
       title: 'System Update',
       message: 'The system will be down for maintenance between 02:00-03:00 AM.',
-      time: 'Just now'
+      time: 'Just now',
+      emoji: '⚙️'
     },
     {
       id: 2,
       title: 'New Feature',
       message: 'You can now track withdrawals directly from the dashboard.',
-      time: '1 hour ago'
+      time: '1 hour ago',
+      emoji: '✨'
     },
     {
       id: 3,
       title: 'Reminder',
       message: "Don't forget to verify your email to secure your account.",
-      time: 'Yesterday'
+      time: 'Yesterday',
+      emoji: '🔔'
     }
   ]
 
@@ -56,7 +59,12 @@ const Notifications = () => {
               <div key={note.id} className="list-item">
                 <div className="transaction-row">
                   <div>
-                    <h4>{note.title}</h4>
+                    <div className="notification-title-row">
+                      <span className="notification-emoji">
+                        {note.emoji}
+                      </span>
+                      <h4>{note.title}</h4>
+                    </div>
                     <p>{note.message}</p>
                   </div>
                   <span className="page-subtitle">{note.time}</span>

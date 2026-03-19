@@ -3,7 +3,7 @@ import { Card, Button, Form, Modal, Badge } from 'react-bootstrap'
 import DataTable from '../components/DataTable'
 import ConfirmationDialog from '../components/ConfirmationDialog'
 import { getAllAnnouncements, createAnnouncement, updateAnnouncement, deleteAnnouncement } from '../services/adminApi'
-import { toast } from 'react-toastify'
+import { showError, showSuccess } from '../../services/notify'
 
 const Announcements = () => {
   const [loading, setLoading] = useState(true)
@@ -24,7 +24,7 @@ const Announcements = () => {
       const response = await getAllAnnouncements()
       setAnnouncements(response.data.announcements)
     } catch (error) {
-      toast.error('Failed to load announcements')
+      showError(error, 'Failed to load announcements')
     } finally {
       setLoading(false)
     }
@@ -53,26 +53,30 @@ const Announcements = () => {
     try {
       if (editingAnnouncement) {
         await updateAnnouncement(editingAnnouncement.id, formData)
-        toast.success('Announcement updated')
+        showSuccess('Announcement updated')
       } else {
         await createAnnouncement(formData)
-        toast.success('Announcement created')
+        showSuccess('Announcement created')
       }
       setShowModal(false)
       fetchAnnouncements()
     } catch (error) {
-      toast.error('Operation failed')
+      showError(error, 'Operation failed')
     }
   }
 
   const handleDelete = async () => {
+    if (!announcementToDelete) {
+      showError(null, 'No announcement selected')
+      return
+    }
     try {
       await deleteAnnouncement(announcementToDelete.id)
-      toast.success('Announcement deleted')
+      showSuccess('Announcement deleted')
       setShowConfirm(false)
       fetchAnnouncements()
     } catch (error) {
-      toast.error('Failed to delete')
+      showError(error, 'Failed to delete')
     }
   }
 

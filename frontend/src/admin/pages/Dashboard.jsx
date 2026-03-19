@@ -7,7 +7,7 @@ import StatCard from '../components/StatCard'
 import DataTable from '../components/DataTable'
 import LoadingSpinner from '../components/LoadingSpinner'
 import { getDashboardStats } from '../services/adminApi'
-import { toast } from 'react-toastify'
+import { showError } from '../../services/notify'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend)
 
@@ -46,8 +46,7 @@ const AdminDashboard = () => {
         }],
       })
     } catch (error) {
-      console.error('Dashboard error:', error)
-      toast.error('Failed to load dashboard data')
+      showError(error, 'Failed to load dashboard data')
     } finally {
       setLoading(false)
     }

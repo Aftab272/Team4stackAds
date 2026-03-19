@@ -60,7 +60,7 @@ npm install
 
 3. Create a `.env` file:
 ```env
-VITE_API_URL=http://localhost:3001
+VITE_API_URL=http://localhost:5000
 VITE_SUPABASE_URL=your-supabase-url
 VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
@@ -96,7 +96,7 @@ JWT_SECRET=your-jwt-secret-key
 npm run dev
 ```
 
-The backend API will run on `http://localhost:3001`
+The backend API will run on `http://localhost:5000`
 
 ## Database Setup (Supabase)
 

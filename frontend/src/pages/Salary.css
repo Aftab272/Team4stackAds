@@ -1,29 +1,170 @@
-.salary-card {
-  background: #f97316 !important;
-  border: 1px solid #ea580c !important;
-  color: #ffffff;
+/* Master Orange Salary Hero */
+.salary-hero-card {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(15, 23, 42, 0.8) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  border-radius: 20px;
+  padding: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
-.salary-card h3,
-.salary-card p,
-.salary-card th,
-.salary-card td,
-.salary-card .text-muted {
-  color: #ffffff !important;
+.salary-hero-icon {
+  width: 70px;
+  height: 70px;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(16, 185, 129, 0.5);
 }
 
-.salary-title-box {
-  background: #f97316;
-  border: 1px solid #ea580c;
-  border-radius: 18px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  box-shadow: 0 16px 28px rgba(249, 115, 22, 0.35);
+.salary-hero-icon svg {
+  font-size: 2.2rem;
+  color: #10b981;
 }
 
-.salary-title {
+.salary-hero-texts {
+  display: flex;
+  flex-direction: column;
+}
+
+.kicker-sub {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.25rem;
+}
+
+.salary-hero-texts h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
   margin: 0;
-  color: #ffffff;
-  text-shadow: none;
+  color: #fff;
+  line-height: 1.1;
+}
+
+/* Stats Grid */
+.salary-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.salary-stat-box {
+  background: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  transition: transform 0.2s;
+}
+
+.salary-stat-box:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* List Wrapper */
+.salary-mapped-list {
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.salary-empty-state {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.salary-empty-state h4 {
+  color: #fff;
+  margin-top: 1rem;
+}
+
+.salary-empty-state p {
+  opacity: 0.6;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.salary-member-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background 0.2s;
+}
+
+.salary-member-row:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.salary-member-row:last-child {
+  border-bottom: none;
+}
+
+.transaction-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.salary-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tag-task {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.tag-referral {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.tag-team {
+  background: rgba(249, 115, 22, 0.15);
+  color: #f97316;
+  border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+@media (max-width: 768px) {
+  .salary-member-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .member-id-col {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .member-bonus-col {
+    align-items: center;
+  }
 }

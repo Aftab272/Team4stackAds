@@ -53,6 +53,17 @@
   z-index: 1;
 }
 
+/* SVG logo (from `src/assets/T4S_Logo`) */
+.logo-svg {
+  width: 56px;
+  height: auto;
+  display: block;
+  z-index: 2;
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.35));
+  user-select: none;
+  pointer-events: none;
+}
+
 /* T Shape Base - Dark Blue Metallic */
 .logo-t-base {
   position: absolute;
@@ -178,6 +189,10 @@
   height: 50px;
 }
 
+.logo-small .logo-svg {
+  width: 38px;
+}
+
 .logo-small .logo-t-base {
   width: 30px;
   height: 38px;
@@ -200,6 +215,10 @@
   height: 75px;
 }
 
+.logo-medium .logo-svg {
+  width: 58px;
+}
+
 .logo-medium .logo-t-base {
   width: 50px;
   height: 62px;
@@ -220,6 +239,10 @@
 .logo-large .logo-wrapper {
   width: 100px;
   height: 125px;
+}
+
+.logo-large .logo-svg {
+  width: 98px;
 }
 
 .logo-large .logo-t-base {

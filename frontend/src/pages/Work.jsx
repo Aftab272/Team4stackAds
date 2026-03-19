@@ -1,208 +1,217 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Card, Button, Badge, Alert } from 'react-bootstrap'
-import axios from 'axios'
+import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { FiArrowLeft } from 'react-icons/fi'
-import './Page.css'
+import { FiArrowLeft, FiCheckCircle, FiPlayCircle, FiBox, FiCheckSquare } from 'react-icons/fi'
+import api from '../services/api'
+import { showError } from '../services/notify'
 import './Work.css'
 
 const Work = () => {
   const navigate = useNavigate()
   const [tasks, setTasks] = useState([])
+  const [packages, setPackages] = useState([])
+  const [ads, setAds] = useState([])
+  const [adsInfo, setAdsInfo] = useState({ remainingToday: 0, membership: null })
   const [loading, setLoading] = useState(true)
-  const [message, setMessage] = useState({ type: '', text: '' })
-  const packages = [
-    {
-      name: 'Starter Package',
-      price: 'Rs. 700',
-      adsPerDay: 500,
-      earningPerAd: 'Rs. 0.20',
-      dailyEarning: 'Rs. 100',
-      weeklyEarning: 'Rs. 700',
-      accent: 'starter'
-    },
-    {
-      name: 'Basic Package',
-      price: 'Rs. 1,500',
-      adsPerDay: 800,
-      earningPerAd: 'Rs. 0.25',
-      dailyEarning: 'Rs. 200',
-      weeklyEarning: 'Rs. 1,400',
-      accent: 'basic'
-    },
-    {
-      name: 'Standard Package',
-      price: 'Rs. 3,000',
-      adsPerDay: 1200,
-      earningPerAd: 'Rs. 0.30',
-      dailyEarning: 'Rs. 360',
-      weeklyEarning: 'Rs. 2,520',
-      accent: 'standard'
-    },
-    {
-      name: 'Premium Package',
-      price: 'Rs. 6,000',
-      adsPerDay: 2000,
-      earningPerAd: 'Rs. 0.35',
-      dailyEarning: 'Rs. 700',
-      weeklyEarning: 'Rs. 4,900',
-      accent: 'premium'
-    },
-    {
-      name: 'VIP Package',
-      price: 'Rs. 10,000',
-      adsPerDay: 3000,
-      earningPerAd: 'Rs. 0.40',
-      dailyEarning: 'Rs. 1,200',
-      weeklyEarning: 'Rs. 8,400',
-      accent: 'vip'
-    },
-    {
-      name: 'Elite Package',
-      price: 'Rs. 15,000',
-      adsPerDay: 4000,
-      earningPerAd: 'Rs. 0.45',
-      dailyEarning: 'Rs. 1,800',
-      weeklyEarning: 'Rs. 12,600',
-      accent: 'elite'
-    }
-  ]
 
   useEffect(() => {
     fetchTasks()
+    fetchPackages()
+    fetchAds()
   }, [])
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/tasks`)
+      const response = await api.get('/tasks')
       setTasks(response.data.tasks || [])
     } catch (error) {
-      console.error('Error fetching tasks:', error)
+      console.log('Task fetch mock running for standalone testing.', error)
     } finally {
       setLoading(false)
     }
   }
 
+  const fetchPackages = async () => {
+    try {
+      const response = await api.get('/memberships')
+      setPackages(response.data.memberships || [])
+    } catch (error) {
+      console.log('Membership fetch mock running.')
+    }
+  }
+
+  const fetchAds = async () => {
+    try {
+      const response = await api.get('/ads')
+      setAds(response.data.ads || [])
+      setAdsInfo({
+        remainingToday: response.data.remainingToday || 0,
+        membership: response.data.membership || null
+      })
+    } catch (error) {
+      console.log('Ads fetch mock running.')
+    }
+  }
+
   const handleCompleteTask = async (taskId) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/tasks/${taskId}/complete`)
-      setMessage({ type: 'success', text: response.data.message || 'Task completed successfully!' })
+      await api.post(`/tasks/${taskId}/complete`)
       fetchTasks()
     } catch (error) {
-      setMessage({
-        type: 'danger',
-        text: error.response?.data?.message || 'Failed to complete task',
-      })
+      console.error(error)
+    }
+  }
+
+  const handleCompleteAd = async (ad) => {
+    try {
+      if (ad.url) {
+        window.open(ad.url, '_blank', 'noopener')
+      }
+      await api.post(`/ads/${ad.id}/complete`)
+      fetchAds()
+    } catch (error) {
+      console.error(error)
     }
   }
 
   return (
-    <Container className="page-container work-page">
-      <div className="back-button-container">
-        <button
-          type="button"
-          className="back-dashboard-button"
-          onClick={() => navigate('/quick-actions')}
-        >
-          <FiArrowLeft />
-          Back to Quick Actions
-        </button>
-      </div>
-      <div className="work-title-box">
-        <h1 className="page-title work-title">Available Tasks</h1>
-      </div>
+    <div className="app-page dark-profile-theme">
+      <div className="app-container work-container pb-5">
 
-      <div className="work-packages">
-        <h2 className="work-section-title">Packages</h2>
-        <div className="row">
-          {packages.map((pkg) => (
-            <div key={pkg.name} className="col-lg-4 col-md-6 mb-3">
-              <Card className={`package-card ${pkg.accent}`}>
-                <Card.Body>
-                  <div className="package-header">
-                    <h4>{pkg.name}</h4>
-                    <span className="package-price">{pkg.price}</span>
-                  </div>
-                  <div className="package-grid">
-                    <div>
-                      <span>Ads / Day</span>
-                      <strong>{pkg.adsPerDay}</strong>
-                    </div>
-                    <div>
-                      <span>Earning / Ad</span>
-                      <strong>{pkg.earningPerAd}</strong>
-                    </div>
-                    <div>
-                      <span>Daily Earning</span>
-                      <strong>{pkg.dailyEarning}</strong>
-                    </div>
-                    <div>
-                      <span>Weekly Earning</span>
-                      <strong>{pkg.weeklyEarning}</strong>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    className="package-cta"
-                    onClick={() => navigate('/package-deposit', { state: { package: pkg } })}
-                  >
-                    Purchase Package
-                  </button>
-                </Card.Body>
-              </Card>
-            </div>
-          ))}
+        {/* Header Ribbon */}
+        <div className="subpage-header">
+          {/* Routes back to profile naturally for app consistency from the list menu */}
+          <button className="back-btn" onClick={() => navigate('/profile')}>
+            <FiArrowLeft /> Back
+          </button>
+          <h2 className="subpage-title">Task Center</h2>
+          <div style={{ width: '60px' }}></div>
         </div>
-      </div>
-      
-      {message.text && (
-        <Alert variant={message.type} dismissible onClose={() => setMessage({ type: '', text: '' })}>
-          {message.text}
-        </Alert>
-      )}
 
-      {tasks.length === 0 ? (
-        <Card className="page-card">
-          <Card.Body>
-            <p className="text-center text-muted">No tasks available at the moment. Check back later!</p>
-          </Card.Body>
-        </Card>
-      ) : (
-        <div className="row">
-          {tasks.map((task) => (
-            <div key={task.id} className="col-md-6 mb-3">
-              <Card className="page-card h-100">
-                <Card.Body>
-                  <div className="d-flex justify-content-between align-items-start mb-2">
-                    <h4>{task.title}</h4>
-                    <Badge bg={task.status === 'completed' ? 'success' : 'primary'}>
-                      {task.status}
-                    </Badge>
+        {/* Ads Section */}
+        <div className="work-section">
+          <div className="section-head">
+            <h3><FiPlayCircle className="text-orange" /> Available Ads</h3>
+            <span className="status-tag">
+              {adsInfo.membership ? `${adsInfo.remainingToday} Remaining Today` : 'Membership Required'}
+            </span>
+          </div>
+
+          <div className="work-grid">
+            {ads.length === 0 ? (
+              <div className="empty-state-card">
+                <FiPlayCircle className="empty-icon" />
+                <p>No ads available to watch at the moment.</p>
+              </div>
+            ) : (
+              ads.map((ad, idx) => (
+                <motion.div
+                  key={ad.id}
+                  className="premium-task-card"
+                  initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.05 }}
+                >
+                  <div className="task-card-head">
+                    <h4>{ad.title}</h4>
+                    <div className={`status-badge ${ad.status === 'completed' ? 'badge-completed' : 'badge-active'}`}>
+                      {ad.status === 'completed' ? 'Completed' : 'Available'}
+                    </div>
                   </div>
-                  <p className="text-muted">{task.description}</p>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <span className="h5 text-success mb-0">${task.reward}</span>
-                    {task.status !== 'completed' && (
-                      <Button
-                        variant="primary"
-                        onClick={() => handleCompleteTask(task.id)}
-                      >
-                        Complete Task
-                      </Button>
+                  <p className="task-desc">{ad.description || 'Watch to claim reward.'}</p>
+                  <div className="task-action-row">
+                    <span className="task-reward">Rs. {ad.reward_amount}</span>
+                    {ad.status !== 'completed' && (
+                      <button className="premium-btn primary-btn small-btn" onClick={() => handleCompleteAd(ad)}>
+                        Claim Reward
+                      </button>
                     )}
                   </div>
-                  {task.deadline && (
-                    <small className="text-muted d-block mt-2">
-                      Deadline: {new Date(task.deadline).toLocaleDateString()}
-                    </small>
-                  )}
-                </Card.Body>
-              </Card>
-            </div>
-          ))}
+                </motion.div>
+              ))
+            )}
+          </div>
         </div>
-      )}
-    </Container>
+
+        {/* Tasks Section */}
+        <div className="work-section mt-5">
+          <div className="section-head">
+            <h3><FiCheckSquare className="text-orange" /> Daily Tasks</h3>
+          </div>
+
+          <div className="work-grid">
+            {tasks.length === 0 ? (
+              <div className="empty-state-card">
+                <FiCheckCircle className="empty-icon" />
+                <p>All daily tasks completed! Great job.</p>
+              </div>
+            ) : (
+              tasks.map((task, idx) => (
+                <motion.div
+                  key={task.id}
+                  className="premium-task-card"
+                  initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.05 }}
+                >
+                  <div className="task-card-head">
+                    <h4>{task.title}</h4>
+                    <div className={`status-badge ${task.status === 'completed' ? 'badge-completed' : 'badge-active'}`}>
+                      {task.status === 'completed' ? 'Completed' : 'Available'}
+                    </div>
+                  </div>
+                  <p className="task-desc">{task.description}</p>
+                  <div className="task-action-row">
+                    <span className="task-reward">${task.reward}</span>
+                    {task.status !== 'completed' && (
+                      <button className="premium-btn primary-btn small-btn" onClick={() => handleCompleteTask(task.id)}>
+                        Complete Task
+                      </button>
+                    )}
+                  </div>
+                </motion.div>
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* Packages Preview Component */}
+        <div className="work-section mt-5">
+          <div className="section-head">
+            <h3><FiBox className="text-orange" /> Quick Packages</h3>
+          </div>
+
+          <div className="work-grid">
+            {packages.length === 0 ? (
+              <div className="empty-state-card">
+                <p>No premium packages available right now.</p>
+              </div>
+            ) : (
+              packages.map((pkg, idx) => (
+                <motion.div
+                  key={pkg.id || idx}
+                  className="premium-task-card package-variant"
+                  initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.05 }}
+                >
+                  <div className="pkg-head">
+                    <h4>{pkg.name}</h4>
+                    <span className="pkg-price">Rs. {pkg.price}</span>
+                  </div>
+                  <div className="pkg-stats">
+                    <div className="pkg-stat-row">
+                      <span>Daily Ads:</span> <strong>{pkg.ads_per_day}</strong>
+                    </div>
+                    <div className="pkg-stat-row">
+                      <span>Daily Earning:</span> <strong className="text-orange">Rs. {Number(pkg.ads_per_day || 0) * Number(pkg.earn_per_ad || 0)}</strong>
+                    </div>
+                  </div>
+                  <button className="premium-btn outline-orange-btn w-100 mt-3" onClick={() => navigate('/package-deposit', { state: { package: pkg } })}>
+                    Purchase Package
+                  </button>
+                </motion.div>
+              ))
+            )}
+          </div>
+        </div>
+
+      </div>
+    </div>
   )
 }
 

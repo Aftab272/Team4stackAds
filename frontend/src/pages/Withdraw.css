@@ -1,19 +1,257 @@
-.withdraw-title-box {
+.withdraw-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.withdraw-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Premium Orange Balance Card */
+.premium-balance-card {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.2) 0%, rgba(15, 23, 42, 0.8) 100%);
+  border: 1px solid rgba(249, 115, 22, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.balance-icon-box {
+  width: 60px;
+  height: 60px;
   background: #f97316;
-  border: 1px solid #ea580c;
-  border-radius: 18px;
-  padding: 1rem 1.25rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  box-shadow: 0 16px 28px rgba(249, 115, 22, 0.35);
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  box-shadow: 0 5px 15px rgba(249, 115, 22, 0.4);
 }
 
-.withdraw-title {
+.balance-icon-box svg {
+  font-size: 2rem;
+  color: #fff;
+}
+
+.balance-texts {
+  display: flex;
+  flex-direction: column;
+}
+
+.balance-texts p {
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+}
+
+.balance-texts h2 {
+  color: #fff;
+  font-size: 2.2rem;
+  font-weight: 800;
   margin: 0;
-  color: #ffffff;
-  text-shadow: none;
+  line-height: 1.1;
 }
 
-.withdraw-wide {
-  max-width: 1200px;
+/* Base Form Wrapper */
+.withdraw-form-card {
+  background: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-heading {
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+}
+
+/* Custom Interactive Method Selectors */
+.method-selector-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.method-card {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+  overflow: hidden;
+}
+
+.method-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.method-card.active {
+  background: rgba(249, 115, 22, 0.1);
+  border-color: #f97316;
+}
+
+.method-indicator {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s;
+}
+
+.method-card.active .method-indicator {
+  border-color: #f97316;
+  background: #f97316;
+  box-shadow: 0 0 10px #f97316;
+}
+
+.method-logo {
+  height: 24px;
+  object-fit: contain;
+  filter: grayscale(100%) brightness(200%);
+  transition: all 0.3s;
+}
+
+.method-logo.jc {
+  height: 16px;
+  margin-right: 5px;
+}
+
+.method-card.active .method-logo {
+  filter: none;
+}
+
+.method-card span {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.method-card.active span {
+  color: #fff;
+}
+
+/* Ledger List Elements */
+.ledger-card {
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  height: 100%;
+}
+
+.ledger-empty {
+  text-align: center;
+  padding: 4rem 1rem;
+  opacity: 0.6;
+}
+
+.empty-clock {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.ledger-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ledger-row:last-child {
+  border-bottom: none;
+}
+
+.ledger-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.ledger-method {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.5px;
+}
+
+.ledger-date {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+}
+
+.ledger-status-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
+}
+
+.ledger-amount {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #f97316;
+}
+
+.ledger-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 8px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.badge-success {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+
+.badge-pending {
+  background: rgba(234, 179, 8, 0.15);
+  color: #eab308;
+}
+
+.badge-danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+/* Responsive Grid Fallbacks */
+@media (max-width: 900px) {
+  .withdraw-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .method-selector-row {
+    flex-direction: column;
+  }
 }

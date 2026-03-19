@@ -1,10 +1,9 @@
 import axios from 'axios'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
-
 // Create axios instance for admin API calls
 const adminApi = axios.create({
-  baseURL: `${API_BASE_URL}/admin`,
+  // Use Vite dev proxy so it always points to the backend running on 5000
+  baseURL: '/api/admin',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -80,5 +79,22 @@ export const deleteAnnouncement = (id) => adminApi.delete(`/announcements/${id}`
 // Reports & Analytics APIs
 export const getReports = (type = 'overview', params = {}) => 
   adminApi.get(`/reports?type=${type}`, { params })
+
+// Membership APIs
+export const getAllMemberships = () => adminApi.get('/memberships')
+export const createMembership = (data) => adminApi.post('/memberships', data)
+export const updateMembership = (id, data) => adminApi.put(`/memberships/${id}`, data)
+export const deleteMembership = (id) => adminApi.delete(`/memberships/${id}`)
+
+// Payments APIs
+export const getAllPayments = (params = {}) => adminApi.get('/payments', { params })
+export const approvePayment = (id) => adminApi.post(`/payments/${id}/approve`)
+export const rejectPayment = (id, reason) => adminApi.post(`/payments/${id}/reject`, { reason })
+
+// Ads APIs
+export const getAllAds = () => adminApi.get('/ads')
+export const createAd = (data) => adminApi.post('/ads', data)
+export const updateAd = (id, data) => adminApi.put(`/ads/${id}`, data)
+export const deleteAd = (id) => adminApi.delete(`/ads/${id}`)
 
 export default adminApi

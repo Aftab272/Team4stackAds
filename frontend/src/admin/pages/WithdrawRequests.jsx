@@ -4,7 +4,7 @@ import DataTable from '../components/DataTable'
 import ConfirmationDialog from '../components/ConfirmationDialog'
 import LoadingSpinner from '../components/LoadingSpinner'
 import { getAllWithdrawRequests, approveWithdrawal, rejectWithdrawal } from '../services/adminApi'
-import { toast } from 'react-toastify'
+import { showError, showSuccess } from '../../services/notify'
 
 const WithdrawRequests = () => {
   const [loading, setLoading] = useState(true)
@@ -26,7 +26,7 @@ const WithdrawRequests = () => {
       setRequests(response.data.requests)
       setPagination(response.data.pagination)
     } catch (error) {
-      toast.error('Failed to load withdrawal requests')
+      showError(error, 'Failed to load withdrawal requests')
     } finally {
       setLoading(false)
     }
@@ -39,22 +39,26 @@ const WithdrawRequests = () => {
   const handleApprove = async (id) => {
     try {
       await approveWithdrawal(id)
-      toast.success('Withdrawal approved successfully')
+      showSuccess('Withdrawal approved successfully')
       fetchRequests()
     } catch (error) {
-      toast.error('Failed to approve withdrawal')
+      showError(error, 'Failed to approve withdrawal')
     }
   }
 
   const handleReject = async () => {
+    if (!selectedRequest) {
+      showError(null, 'No withdrawal selected')
+      return
+    }
     try {
       await rejectWithdrawal(selectedRequest.id, rejectReason)
-      toast.success('Withdrawal rejected')
+      showSuccess('Withdrawal rejected')
       setShowRejectModal(false)
       setRejectReason('')
       fetchRequests()
     } catch (error) {
-      toast.error('Failed to reject withdrawal')
+      showError(error, 'Failed to reject withdrawal')
     }
   }
 

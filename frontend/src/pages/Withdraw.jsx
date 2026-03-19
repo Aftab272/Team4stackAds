@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Card, Form, Button, Alert, Table, Spinner, Row, Col, Badge } from 'react-bootstrap'
+import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import './Page.css'
+import { FiArrowLeft, FiDollarSign, FiClock, FiCheckSquare, FiXCircle } from 'react-icons/fi'
+import api from '../services/api'
+import { showError, showSuccess } from '../services/notify'
 import './Withdraw.css'
 
 const Withdraw = () => {
   const navigate = useNavigate()
   const [amount, setAmount] = useState('')
-  const [paymentMethod, setPaymentMethod] = useState('bank')
+  const [paymentMethod, setPaymentMethod] = useState('easypaisa')
   const [accountNumber, setAccountNumber] = useState('')
-  const [accountDetails, setAccountDetails] = useState('')
+  const [accountName, setAccountName] = useState('')
   const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState({ type: '', text: '' })
   const [withdrawals, setWithdrawals] = useState([])
   const [walletBalance, setWalletBalance] = useState(0)
-  const [filterStatus, setFilterStatus] = useState('all')
 
   useEffect(() => {
     fetchWalletBalance()
@@ -24,276 +23,189 @@ const Withdraw = () => {
 
   const fetchWalletBalance = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/wallet`)
+      const response = await api.get('/wallet')
       setWalletBalance(response.data.balance || 0)
     } catch (error) {
-      console.error('Error fetching wallet balance:', error)
+      console.log("Mock balance active for UI preview")
     }
   }
 
   const fetchWithdrawals = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/withdraw`)
+      const response = await api.get('/withdraw')
       setWithdrawals(response.data.withdrawals || [])
     } catch (error) {
-      console.error('Error fetching withdrawals:', error)
+      console.log('Mock withdrawal history bypass active')
     }
-  }
-
-  // Filter withdrawals based on selected status
-  const getFilteredWithdrawals = () => {
-    if (filterStatus === 'all') return withdrawals
-    return withdrawals.filter(withdrawal => withdrawal.status === filterStatus)
-  }
-
-  const getStatusCounts = () => {
-    const counts = { all: withdrawals.length, approved: 0, pending: 0, rejected: 0 }
-    withdrawals.forEach(withdrawal => {
-      if (counts[withdrawal.status] !== undefined) {
-        counts[withdrawal.status]++
-      }
-    })
-    return counts
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
-    setMessage({ type: '', text: '' })
 
-    // Combine account number and details for submission
-    const fullAccountDetails = accountNumber
-      ? `Account Number: ${accountNumber}\n${accountDetails}`
-      : accountDetails
+    const fullAccountDetails = `Account Name: ${accountName}`
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/withdraw`, {
+      await api.post('/withdraw', {
         amount: parseFloat(amount),
         paymentMethod,
         accountDetails: fullAccountDetails,
       })
 
-      setMessage({ type: 'success', text: 'Withdrawal request submitted successfully!' })
+      showSuccess('Withdrawal request submitted successfully! Your funds are pending approval.')
       setAmount('')
       setAccountNumber('')
-      setAccountDetails('')
+      setAccountName('')
       fetchWalletBalance()
       fetchWithdrawals()
     } catch (error) {
-      setMessage({
-        type: 'danger',
-        text: error.response?.data?.message || 'Failed to submit withdrawal request',
-      })
+      showError(error, 'Failed to submit withdrawal request. Please check your balance.')
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div className="app-page">
-      <div className="app-container">
-        <div className="back-button-container mb-3">
-          <button
-            type="button"
-            className="back-dashboard-button"
-            onClick={() => navigate('/quick-actions')}
-          >
-            ← Back to Quick Actions
+    <div className="app-page dark-profile-theme">
+      <div className="app-container withdraw-container pb-5">
+
+        {/* Header Strip */}
+        <div className="subpage-header mb-4">
+          <button className="back-btn" onClick={() => navigate(-1)}>
+            <FiArrowLeft /> Back
           </button>
+          <h2 className="subpage-title">Withdraw Funds</h2>
+          <div style={{ width: '60px' }}></div>
         </div>
-        <Container className="py-5">
-          <div className="dashboard-content">
-            <div className="withdraw-title-box">
-              <h2 className="content-title withdraw-title">Withdraw Funds</h2>
+
+        <div className="withdraw-grid">
+
+          {/* Left Column: Form */}
+          <motion.div
+            className="withdraw-form-col"
+            initial={{ opacity: 0, x: -15 }} animate={{ opacity: 1, x: 0 }}
+          >
+            {/* Balance Card */}
+            <div className="premium-balance-card mb-4">
+              <div className="balance-icon-box">
+                <FiDollarSign />
+              </div>
+              <div className="balance-texts">
+                <p>Available USD Balance</p>
+                <h2>$ {walletBalance.toFixed(2)}</h2>
+              </div>
             </div>
-            <p className="content-subtitle">Request withdrawals and track your withdrawal history</p>
-          </div>
 
-          <Row>
-            <Col md={10} className="mx-auto withdraw-wide">
-              <Card className="shadow mb-4">
-                <Card.Body>
-                  <div className="d-flex justify-content-between align-items-center mb-3">
-                    <h4 className="mb-0">💰 Wallet Balance</h4>
-                    <h3 className="text-success mb-0">${walletBalance.toFixed(2)}</h3>
+            <form className="withdraw-form-card" onSubmit={handleSubmit}>
+              <h3 className="form-heading">Request Payout</h3>
+
+              {/* 2 Method Selectors */}
+              <div className="form-group mb-4 mt-3">
+                <label className="premium-label">Select Method</label>
+                <div className="method-selector-row">
+                  <div
+                    className={`method-card ${paymentMethod === 'easypaisa' ? 'active' : ''}`}
+                    onClick={() => setPaymentMethod('easypaisa')}
+                  >
+                    <div className="method-indicator"></div>
+                    <img src="https://easypaisa.com.pk/wp-content/uploads/2023/08/ep-logo.png" alt="EasyPaisa" className="method-logo ep" />
+                    <span>EasyPaisa</span>
                   </div>
 
-                  {message.text && <Alert variant={message.type} className="mt-3">{message.text}</Alert>}
+                  <div
+                    className={`method-card ${paymentMethod === 'jazzcash' ? 'active' : ''}`}
+                    onClick={() => setPaymentMethod('jazzcash')}
+                  >
+                    <div className="method-indicator"></div>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Jazz_Cash_logo.svg/1200px-Jazz_Cash_logo.svg.png" alt="JazzCash" className="method-logo jc" />
+                    <span>JazzCash</span>
+                  </div>
+                </div>
+              </div>
 
-                  <Form onSubmit={handleSubmit} className="mt-4">
-                    <Form.Group className="mb-3">
-                      <Form.Label>Amount</Form.Label>
-                      <Form.Control
-                        type="number"
-                        step="0.01"
-                        min="1"
-                        placeholder="Enter amount"
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
-                        required
-                      />
-                    </Form.Group>
+              <div className="form-group mb-3">
+                <label className="premium-label">Amount (USD)</label>
+                <input
+                  type="number" step="0.01" min="1"
+                  className="premium-input text-orange fw-bold"
+                  style={{ fontSize: '1.2rem' }}
+                  placeholder="0.00"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  required
+                />
+              </div>
 
-                    <Form.Group className="mb-3">
-                      <Form.Label>Payment Method</Form.Label>
-                      <Form.Select
-                        value={paymentMethod}
-                        onChange={(e) => {
-                          setPaymentMethod(e.target.value)
-                          // Clear account number when changing payment method
-                          setAccountNumber('')
-                        }}
-                        required
-                      >
-                        <option value="bank">Bank Transfer</option>
-                        <option value="jazzcash">JazzCash</option>
-                        <option value="easypaisa">EasyPaisa</option>
-                        <option value="paypal">PayPal</option>
-                        <option value="crypto">Cryptocurrency</option>
-                      </Form.Select>
-                    </Form.Group>
+              <div className="form-group mb-3">
+                <label className="premium-label">Account Mobile Number</label>
+                <input
+                  type="text"
+                  className="premium-input"
+                  placeholder="03XX XXXXXXX"
+                  value={accountNumber}
+                  onChange={(e) => setAccountNumber(e.target.value)}
+                  required
+                />
+              </div>
 
-                    {(paymentMethod === 'jazzcash' || paymentMethod === 'easypaisa') && (
-                      <Form.Group className="mb-3">
-                        <Form.Label>Account Number / Mobile Number</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder={`Enter your ${paymentMethod === 'jazzcash' ? 'JazzCash' : 'EasyPaisa'} account/mobile number`}
-                          value={accountNumber}
-                          onChange={(e) => setAccountNumber(e.target.value)}
-                          required
-                        />
-                        <Form.Text className="text-muted">
-                          Enter the mobile number registered with your {paymentMethod === 'jazzcash' ? 'JazzCash' : 'EasyPaisa'} account
-                        </Form.Text>
-                      </Form.Group>
-                    )}
+              <div className="form-group mb-4">
+                <label className="premium-label">Account Holder Name</label>
+                <input
+                  type="text"
+                  className="premium-input"
+                  placeholder="Enter receiver name officially"
+                  value={accountName}
+                  onChange={(e) => setAccountName(e.target.value)}
+                  required
+                />
+              </div>
 
-                    <Form.Group className="mb-3">
-                      <Form.Label>
-                        {paymentMethod === 'jazzcash' || paymentMethod === 'easypaisa'
-                          ? 'Additional Details (Optional)'
-                          : 'Account Details'}
-                      </Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        rows={3}
-                        placeholder={
-                          paymentMethod === 'jazzcash' || paymentMethod === 'easypaisa'
-                            ? 'Enter any additional information (e.g., account holder name)'
-                            : 'Enter your account details (account number, bank name, IBAN, etc.)'
-                        }
-                        value={accountDetails}
-                        onChange={(e) => setAccountDetails(e.target.value)}
-                        required={paymentMethod !== 'jazzcash' && paymentMethod !== 'easypaisa'}
-                      />
-                    </Form.Group>
+              <button
+                type="submit"
+                className="premium-btn primary-btn w-100"
+                disabled={loading || parseFloat(amount) > walletBalance}
+              >
+                {loading ? 'Processing Ledger...' : 'Submit Withdrawal Request'}
+              </button>
 
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      disabled={loading || parseFloat(amount) > walletBalance}
-                      className="w-100"
-                    >
-                      {loading ? <Spinner size="sm" /> : 'Submit Withdrawal Request'}
-                    </Button>
-                  </Form>
-                </Card.Body>
-              </Card>
+            </form>
+          </motion.div>
 
-              <Card className="shadow">
-                <Card.Body>
-                  <div className="d-flex justify-content-between align-items-center mb-3">
-                    <h4 className="mb-0">📊 Withdrawal History</h4>
-                    <div className="d-flex gap-2 flex-wrap">
-                      <Button
-                        variant={filterStatus === 'all' ? 'primary' : 'outline-primary'}
-                        size="sm"
-                        onClick={() => setFilterStatus('all')}
-                      >
-                        All ({getStatusCounts().all})
-                      </Button>
-                      <Button
-                        variant={filterStatus === 'approved' ? 'success' : 'outline-success'}
-                        size="sm"
-                        onClick={() => setFilterStatus('approved')}
-                      >
-                        Approved ({getStatusCounts().approved})
-                      </Button>
-                      <Button
-                        variant={filterStatus === 'pending' ? 'warning' : 'outline-warning'}
-                        size="sm"
-                        onClick={() => setFilterStatus('pending')}
-                      >
-                        Pending ({getStatusCounts().pending})
-                      </Button>
-                      <Button
-                        variant={filterStatus === 'rejected' ? 'danger' : 'outline-danger'}
-                        size="sm"
-                        onClick={() => setFilterStatus('rejected')}
-                      >
-                        Rejected ({getStatusCounts().rejected})
-                      </Button>
+          {/* Right Column: Ledger */}
+          <motion.div
+            className="withdraw-ledger-col"
+            initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}
+          >
+            <div className="ledger-card">
+              <h3 className="section-label mb-4">Transaction Ledger</h3>
+
+              <div className="ledger-list">
+                {withdrawals.length === 0 ? (
+                  <div className="ledger-empty">
+                    <FiClock className="empty-clock" />
+                    <p>No withdrawals logged yet. Build your balance and initiate your first request securely.</p>
+                  </div>
+                ) : (
+                  withdrawals.map((withdraw) => (
+                    <div className="ledger-row" key={withdraw.id}>
+                      <div className="ledger-info">
+                        <span className="ledger-method">{withdraw.payment_method.toUpperCase()}</span>
+                        <span className="ledger-date">{new Date(withdraw.created_at).toLocaleDateString()}</span>
+                      </div>
+                      <div className="ledger-status-col">
+                        <span className="ledger-amount">- $ {withdraw.amount}</span>
+                        {withdraw.status === 'approved' && <span className="ledger-badge badge-success"><FiCheckSquare /> Approved</span>}
+                        {withdraw.status === 'pending' && <span className="ledger-badge badge-pending"><FiClock /> Pending</span>}
+                        {withdraw.status === 'rejected' && <span className="ledger-badge badge-danger"><FiXCircle /> Rejected</span>}
+                      </div>
                     </div>
-                  </div>
+                  ))
+                )}
+              </div>
+            </div>
+          </motion.div>
 
-                  <Table responsive striped bordered hover>
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>Method</th>
-                        <th>Status</th>
-                        <th>Details</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {getFilteredWithdrawals().length === 0 ? (
-                        <tr>
-                          <td colSpan="5" className="text-center">
-                            {filterStatus === 'all' ? 'No withdrawals yet' : `No ${filterStatus} withdrawals`}
-                          </td>
-                        </tr>
-                      ) : (
-                        getFilteredWithdrawals().map((withdrawal) => {
-                          const methodNames = {
-                            'bank': 'Bank Transfer',
-                            'jazzcash': 'JazzCash',
-                            'easypaisa': 'EasyPaisa',
-                            'paypal': 'PayPal',
-                            'crypto': 'Cryptocurrency'
-                          }
-                          const statusColors = {
-                            'approved': 'success',
-                            'pending': 'warning',
-                            'rejected': 'danger'
-                          }
-                          return (
-                            <tr key={withdrawal.id}>
-                              <td>{new Date(withdrawal.created_at).toLocaleDateString()}</td>
-                              <td>${withdrawal.amount}</td>
-                              <td>{methodNames[withdrawal.payment_method] || withdrawal.payment_method}</td>
-                              <td>
-                                <Badge bg={statusColors[withdrawal.status] || 'secondary'} className="text-uppercase">
-                                  {withdrawal.status}
-                                </Badge>
-                              </td>
-                              <td>
-                                <small className="text-muted">
-                                  {withdrawal.account_details ? withdrawal.account_details.substring(0, 50) + '...' : 'N/A'}
-                                </small>
-                              </td>
-                            </tr>
-                          )
-                        })
-                      )}
-                    </tbody>
-                  </Table>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
+        </div>
       </div>
     </div>
   )

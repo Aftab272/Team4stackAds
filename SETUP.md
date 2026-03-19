@@ -22,7 +22,7 @@ Before setting up the project, ensure you have:
 Create a `.env` file in the `frontend/` directory:
 
 ```env
-VITE_API_URL=http://localhost:3001
+VITE_API_URL=http://localhost:5000
 VITE_SUPABASE_URL=your-supabase-project-url
 VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
@@ -72,7 +72,7 @@ cd backend
 npm run dev
 ```
 
-The backend will run on `http://localhost:3001`
+The backend will run on `http://localhost:5000`
 
 ### Start Frontend (Terminal 2)
 

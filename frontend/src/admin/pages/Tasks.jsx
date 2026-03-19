@@ -4,7 +4,7 @@ import DataTable from '../components/DataTable'
 import ConfirmationDialog from '../components/ConfirmationDialog'
 import LoadingSpinner from '../components/LoadingSpinner'
 import { getAllTasks, createTask, updateTask, deleteTask } from '../services/adminApi'
-import { toast } from 'react-toastify'
+import { showError, showSuccess } from '../../services/notify'
 
 const Tasks = () => {
   const [loading, setLoading] = useState(true)
@@ -28,7 +28,7 @@ const Tasks = () => {
       setTasks(response.data.tasks)
       setPagination(response.data.pagination)
     } catch (error) {
-      toast.error('Failed to load tasks')
+      showError(error, 'Failed to load tasks')
     } finally {
       setLoading(false)
     }
@@ -63,26 +63,30 @@ const Tasks = () => {
     try {
       if (editingTask) {
         await updateTask(editingTask.id, formData)
-        toast.success('Task updated successfully')
+        showSuccess('Task updated successfully')
       } else {
         await createTask(formData)
-        toast.success('Task created successfully')
+        showSuccess('Task created successfully')
       }
       setShowModal(false)
       fetchTasks()
     } catch (error) {
-      toast.error(editingTask ? 'Failed to update task' : 'Failed to create task')
+      showError(error, editingTask ? 'Failed to update task' : 'Failed to create task')
     }
   }
 
   const handleDelete = async () => {
+    if (!taskToDelete) {
+      showError(null, 'No task selected')
+      return
+    }
     try {
       await deleteTask(taskToDelete.id)
-      toast.success('Task deleted successfully')
+      showSuccess('Task deleted successfully')
       setShowConfirm(false)
       fetchTasks()
     } catch (error) {
-      toast.error('Failed to delete task')
+      showError(error, 'Failed to delete task')
     }
   }
 

@@ -1,176 +1,126 @@
 import React, { useState } from 'react'
-import { Container, Card, Button, Row, Col, Form, Alert } from 'react-bootstrap'
+import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import Logo from '../components/Logo'
+import { FiArrowLeft, FiSend, FiMessageCircle, FiPhoneCall, FiMail } from 'react-icons/fi'
+import { Form, Alert } from 'react-bootstrap'
+import './Support.css'
 
 const Support = () => {
   const navigate = useNavigate()
-  const [formData, setFormData] = useState({
-    subject: '',
-    message: '',
-    priority: 'normal'
-  })
+  const [formData, setFormData] = useState({ subject: '', message: '', priority: 'normal' })
   const [submitted, setSubmitted] = useState(false)
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+    setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Here you would typically send the support request to your backend
     console.log('Support request:', formData)
     setSubmitted(true)
     setTimeout(() => setSubmitted(false), 3000)
+    setFormData({ subject: '', message: '', priority: 'normal' })
   }
 
   return (
-    <div className="dashboard-layout">
-      {/* Left Sidebar */}
-      <div className="dashboard-sidebar">
-        <div className="sidebar-header">
-          <Logo size="small" />
-          <h5 className="sidebar-title">Team4stack Ads</h5>
-        </div>
-        
-        <div className="sidebar-nav">
-          <Button 
-            variant="outline-light" 
-            className="sidebar-btn"
-            onClick={() => navigate('/dashboard')}
-          >
-            🏠 Dashboard
-          </Button>
-          
-          <Button 
-            variant="outline-light" 
-            className="sidebar-btn"
-            onClick={() => navigate('/profile')}
-          >
-            👤 User Profile
-          </Button>
-          
-          <Button 
-            variant="outline-light" 
-            className="sidebar-btn"
-            onClick={() => navigate('/settings')}
-          >
-            ⚙️ Settings
-          </Button>
-          
-          <Button 
-            variant="outline-light" 
-            className="sidebar-btn active"
-            onClick={() => navigate('/support')}
-          >
-            🆘 Support
-          </Button>
-        </div>
-      </div>
+    <div className="app-page dark-profile-theme">
+      <div className="app-container support-container pb-5">
 
-      {/* Main Content */}
-      <div className="dashboard-main">
-        <div className="back-button-container mb-3">
-          <Button variant="outline-primary" onClick={() => navigate('/dashboard')}>
-            ← Back to Dashboard
-          </Button>
+        {/* Header Ribbon */}
+        <div className="subpage-header">
+          <button className="back-btn" onClick={() => navigate('/profile')}>
+            <FiArrowLeft /> Back
+          </button>
+          <h2 className="subpage-title">Help & Support</h2>
+          <div style={{ width: '60px' }}></div>
         </div>
-        <Container className="py-5">
-          <div className="dashboard-content">
-            <h2 className="content-title">🆘 Support Center</h2>
-            <p className="content-subtitle">Get help and assistance with your account</p>
-          </div>
-          
-          <Row>
-            <Col md={8} className="mx-auto">
-              <Card className="shadow">
-                <Card.Body>
-                  {submitted && (
-                    <Alert variant="success" className="mb-4">
-                      ✅ Your support request has been submitted successfully! We'll get back to you soon.
-                    </Alert>
-                  )}
-                  
-                  <div className="mb-4">
-                    <h5>Need Help?</h5>
-                    <p className="text-muted">
-                      Our support team is here to help you with any questions or issues you may have.
-                      Please fill out the form below and we'll respond as quickly as possible.
-                    </p>
-                  </div>
-                  
-                  <Form onSubmit={handleSubmit}>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Subject</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="subject"
-                        placeholder="Brief description of your issue"
-                        value={formData.subject}
-                        onChange={handleChange}
-                        required
-                      />
-                    </Form.Group>
-                    
-                    <Form.Group className="mb-3">
-                      <Form.Label>Priority</Form.Label>
-                      <Form.Select 
-                        name="priority" 
-                        value={formData.priority}
-                        onChange={handleChange}
-                      >
-                        <option value="low">Low - General inquiry</option>
-                        <option value="normal">Normal - Standard support</option>
-                        <option value="high">High - Urgent issue</option>
-                        <option value="critical">Critical - System down</option>
-                      </Form.Select>
-                    </Form.Group>
-                    
-                    <Form.Group className="mb-3">
-                      <Form.Label>Message</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        rows={5}
-                        name="message"
-                        placeholder="Please describe your issue in detail..."
-                        value={formData.message}
-                        onChange={handleChange}
-                        required
-                      />
-                    </Form.Group>
-                    
-                    <div className="text-center mt-4">
-                      <Button variant="warning" type="submit" className="me-2">
-                        Submit Support Request
-                      </Button>
-                      <Button variant="secondary" onClick={() => navigate('/dashboard')}>
-                        Back to Dashboard
-                      </Button>
-                    </div>
-                  </Form>
-                  
-                  <hr className="my-4" />
-                  
-                  <div className="text-center">
-                    <h6>Other Ways to Contact Us</h6>
-                    <p className="mb-1">
-                      <strong>Email:</strong> kk34samikhan@gmail.com, ranaaftabakram9@gmail.com, team4stack@gmail.com
-                    </p>
-                    <p className="mb-1">
-                      <strong>Phone:</strong> 03027434569, 03083266634
-                    </p>
-                    <p className="mb-0">
-                      <strong>Response Time:</strong> 24-48 hours
-                    </p>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
+
+        {submitted && (
+          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+            <Alert variant="success" className="support-alert">
+              ✅ Your support request has been submitted securely! Our team will respond shortly.
+            </Alert>
+          </motion.div>
+        )}
+
+        <div className="support-grid">
+
+          <motion.div
+            className="support-card form-card"
+            initial={{ opacity: 0, x: -15 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
+            <div className="support-card-head mb-4">
+              <FiMessageCircle className="head-icon" />
+              <div>
+                <h3>Submit a Ticket</h3>
+                <p>Fill out the form below to reach our dedicated support team directly.</p>
+              </div>
+            </div>
+
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-4">
+                <Form.Label className="premium-label">Subject</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="subject"
+                  placeholder="Tell us what you need help with"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  className="premium-input"
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-4">
+                <Form.Label className="premium-label">Priority Level</Form.Label>
+                <Form.Select
+                  name="priority"
+                  value={formData.priority}
+                  onChange={handleChange}
+                  className="premium-input select-input"
+                >
+                  <option value="low">Low - General Inquiry</option>
+                  <option value="normal">Normal - Standard Issue</option>
+                  <option value="high">High - Urgent Assistance</option>
+                </Form.Select>
+              </Form.Group>
+
+              <Form.Group className="mb-4">
+                <Form.Label className="premium-label">Detailed Message</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={5}
+                  name="message"
+                  placeholder="Please describe your issue here..."
+                  value={formData.message}
+                  onChange={handleChange}
+                  className="premium-input text-area"
+                  required
+                />
+              </Form.Group>
+
+              <button type="submit" className="premium-btn primary-btn w-100">
+                <FiSend style={{ marginRight: '8px' }} /> Send Message
+              </button>
+            </Form>
+          </motion.div>
+
+          {/* Contact Details Column */}
+          <motion.div
+            className="support-details-col"
+            initial={{ opacity: 0, x: 15 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
+            <div className="support-card detail-card mb-4" style={{ height: '100%', justifyContent: 'center' }}>
+              <div className="detail-icon-box"><FiMail /></div>
+              <h4>Email Support</h4>
+              <p>team4stack@gmail.com</p>
+            </div>
+          </motion.div>
+
+        </div>
+
       </div>
     </div>
   )

@@ -1,0 +1,178 @@
+.history-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.history-card {
+    background: rgba(30, 41, 59, 0.5);
+    /* Slate 800 */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.history-icon-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.activity-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    background: rgba(59, 130, 246, 0.15);
+    /* Blue */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+.activity-icon {
+    font-size: 2.5rem;
+    color: #3b82f6;
+}
+
+.history-icon-header h3 {
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.history-icon-header p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.history-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: background 0.2s;
+}
+
+.history-list-item:hover {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+    padding: 1.25rem 1rem;
+    margin: 0 -1rem;
+}
+
+.history-list-item:last-child {
+    border-bottom: none;
+}
+
+.hist-info {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.hist-icon-box {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
+    color: #fff;
+}
+
+.hist-icon-box.login {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+}
+
+.hist-icon-box.task {
+    background: rgba(249, 115, 22, 0.2);
+    color: #f97316;
+}
+
+.hist-icon-box.withdraw {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.hist-icon-box.package {
+    background: rgba(168, 85, 247, 0.2);
+    color: #a855f7;
+}
+
+.hist-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.hist-text h5 {
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 0.3rem 0;
+}
+
+.hist-text p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.hist-status-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.4rem;
+}
+
+.hist-amount {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.text-green {
+    color: #22c55e;
+}
+
+.text-red {
+    color: #ef4444;
+}
+
+.hist-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-success,
+.badge-completed,
+.badge-active {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-processing {
+    background: rgba(234, 179, 8, 0.15);
+    color: #eab308;
+    border: 1px solid rgba(234, 179, 8, 0.3);
+}

@@ -4,12 +4,14 @@ import './Footer.css'
 
 const Footer = () => {
   const location = useLocation()
+
+  // Re-ordered and updated with Packages before Profile, using -fill icons for richer look
   const navItems = [
-    { to: '/dashboard', icon: 'bi-house', label: 'Home' },
-    { to: '/notifications', icon: 'bi-bell', label: 'Alerts' },
-    { to: '/wallet', icon: 'bi-cash', label: 'Wallet' },
-    { to: '/profile', icon: 'bi-person', label: 'Profile' },
-    { to: '/owner-profile', icon: 'bi-person-circle', label: 'Owner' }
+    { to: '/dashboard', icon: 'bi-house-fill', label: 'Home' },
+    { to: '/notifications', icon: 'bi-bell-fill', label: 'Alerts' },
+    { to: '/wallet', icon: 'bi-wallet-fill', label: 'Wallet' },
+    { to: '/package-deposit', icon: 'bi-box-seam-fill', label: 'Packages' },
+    { to: '/profile', icon: 'bi-person-fill', label: 'Profile' },
   ]
 
   return (

@@ -1,135 +1,117 @@
-import React, { useRef } from 'react'
-import { Container, Card, Button, Row, Col, Form, ListGroup } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Container, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { FiArrowLeft, FiSave, FiLogOut } from 'react-icons/fi'
 import './Settings.css'
 
 const Settings = () => {
   const navigate = useNavigate()
-  const formRef = useRef(null)
+  const [formData, setFormData] = useState({
+    name: localStorage.getItem('userName') || 'Team4Stack Member',
+    email: localStorage.getItem('userEmail') || 'user@team4stack.com',
+    notifications: true,
+    language: 'English'
+  })
 
-  const handleLogout = () => {
-    // Placeholder: implement real logout flow
-    alert('Logged out successfully')
-    navigate('/dashboard')
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSaveChanges = () => {
-    // Trigger form submission
-    if (formRef.current) {
-      formRef.current.requestSubmit()
-    }
+  const handleToggle = () => {
+    setFormData({ ...formData, notifications: !formData.notifications })
+  }
+
+  const handleSaveChanges = (e) => {
+    e.preventDefault()
+    // Trigger save
+    alert('Settings successfully updated!')
   }
 
   return (
-    <div className="app-page">
-      <div className="app-container settings-container">
-        <div className="back-button-container mb-3">
-          <Button variant="outline-primary" onClick={() => navigate('/dashboard')}>
-            ← Back to Dashboard
-          </Button>
+    <div className="app-page dark-profile-theme">
+      <div className="app-container settings-container pb-5">
+
+        {/* Header Ribbon */}
+        <div className="subpage-header">
+          <button className="back-btn" onClick={() => navigate('/profile')}>
+            <FiArrowLeft /> Back
+          </button>
+          <h2 className="subpage-title">Personal Information</h2>
+          <div style={{ width: '60px' }}></div> {/* Spacer for alignment */}
         </div>
-        <Container className="py-5">
-          <div className="dashboard-content">
-            <h2 className="content-title">⚙️ Settings</h2>
-            <p className="content-subtitle">Configure your account and application preferences</p>
-          </div>
-          
-          <Row>
-            <Col md={10} className="mx-auto">
-              <Card className="shadow mb-4">
-                <Card.Body>
-                  <Form ref={formRef} onSubmit={(e) => { e.preventDefault(); alert('Settings saved!'); }}>
-                    <h5 className="mb-3">Account Settings</h5>
 
-                    <Form.Group className="mb-3">
-                      <Form.Label>Email Notifications</Form.Label>
-                      <Form.Check 
-                        type="switch"
-                        id="email-notifications"
-                        label="Receive email notifications"
-                        defaultChecked
-                      />
-                    </Form.Group>
+        <motion.div
+          className="settings-card"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <Form onSubmit={handleSaveChanges}>
+            <div className="settings-section">
+              <h5 className="section-title">Account Details</h5>
 
-                    <Form.Group className="mb-3">
-                      <Form.Label>Language</Form.Label>
-                      <Form.Select>
-                        <option>English</option>
-                        <option>Urdu</option>
-                        <option>Hindi</option>
-                      </Form.Select>
-                    </Form.Group>
+              <Form.Group className="mb-4">
+                <Form.Label className="premium-label">Full Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="premium-input"
+                />
+              </Form.Group>
 
-                    <hr className="my-4" />
+              <Form.Group className="mb-4">
+                <Form.Label className="premium-label">Email Address</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  readOnly
+                  className="premium-input read-only"
+                />
+                <Form.Text className="text-muted" style={{ opacity: 0.6 }}>
+                  Email addresses cannot be changed directly for security purposes.
+                </Form.Text>
+              </Form.Group>
+            </div>
 
-                    <h5 className="mb-3">Security Settings</h5>
+            <div className="settings-section">
+              <h5 className="section-title">Preferences</h5>
 
-                    <Form.Group className="mb-3">
-                      <Form.Label>Current Password</Form.Label>
-                      <Form.Control type="password" placeholder="Enter current password" />
-                    </Form.Group>
+              <div className="premium-toggle-row">
+                <div className="toggle-info">
+                  <span className="toggle-label">Email Notifications</span>
+                  <span className="toggle-desc">Receive updates on tasks and withdrawals.</span>
+                </div>
+                <div className={`premium-toggle ${formData.notifications ? 'active' : ''}`} onClick={handleToggle}>
+                  <div className="toggle-knob"></div>
+                </div>
+              </div>
 
-                    <Form.Group className="mb-3">
-                      <Form.Label>New Password</Form.Label>
-                      <Form.Control type="password" placeholder="Enter new password" />
-                    </Form.Group>
+              <Form.Group className="mt-4">
+                <Form.Label className="premium-label">Language / Region</Form.Label>
+                <Form.Select
+                  name="language"
+                  value={formData.language}
+                  onChange={handleChange}
+                  className="premium-input select-input"
+                >
+                  <option>English</option>
+                  <option>Urdu</option>
+                  <option>Hindi</option>
+                </Form.Select>
+              </Form.Group>
+            </div>
 
-                    <Form.Group className="mb-3">
-                      <Form.Label>Confirm New Password</Form.Label>
-                      <Form.Control type="password" placeholder="Confirm new password" />
-                    </Form.Group>
+            <div className="settings-action-row">
+              <button type="submit" className="premium-btn primary-btn">
+                <FiSave style={{ marginRight: '8px' }} /> Save Changes
+              </button>
+            </div>
+          </Form>
+        </motion.div>
 
-                  </Form>
-                </Card.Body>
-              </Card>
-
-              <Card className="shadow">
-                <Card.Body>
-                  <h5 className="mb-3">More Settings</h5>
-                  <ListGroup variant="flush">
-                    <ListGroup.Item action onClick={() => navigate('/privacy-policy')}>
-                      Privacy Policy
-                    </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => navigate('/terms')}>
-                      Terms & Conditions
-                    </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => navigate('/account-history')}>
-                      Account History
-                    </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => navigate('/search-history')}>
-                      Search History
-                    </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => navigate('/security-permissions')}>
-                      Security & Permissions
-                    </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => navigate('/accessibility')}>
-                      Accessibility
-                    </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => navigate('/help-center')}>
-                      Help Center
-                    </ListGroup.Item>
-                    <ListGroup.Item action onClick={() => navigate('/terms-policies')}>
-                      Terms & Policies
-                    </ListGroup.Item>
-                    <ListGroup.Item action onClick={handleLogout} className="text-danger">
-                      Logout
-                    </ListGroup.Item>
-                  </ListGroup>
-
-                  <div className="d-flex justify-content-end gap-2 mt-3">
-                    <Button variant="success" onClick={handleSaveChanges}>
-                      Save Changes
-                    </Button>
-                    <Button variant="secondary" onClick={() => navigate('/dashboard')}>
-                      Back to Dashboard
-                    </Button>
-                  </div>
-                </Card.Body>
-              </Card>
-
-            </Col>
-          </Row>
-        </Container>
       </div>
     </div>
   )

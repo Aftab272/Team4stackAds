@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
   password_hash VARCHAR(255) NOT NULL,
   referral_code VARCHAR(50) UNIQUE NOT NULL,
   referred_by UUID REFERENCES users(id),
+  membership_id UUID,
   role VARCHAR(20) DEFAULT 'user' CHECK (role IN ('user', 'admin')),
   status VARCHAR(20) DEFAULT 'active' CHECK (status IN ('active', 'suspended', 'deleted')),
   created_at TIMESTAMP DEFAULT NOW(),
@@ -39,6 +40,7 @@ CREATE TABLE IF NOT EXISTS withdraw_requests (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES users(id) ON DELETE CASCADE,
   amount DECIMAL(10, 2) NOT NULL,
+  fee_amount DECIMAL(10, 2) DEFAULT 0,
   payment_method VARCHAR(50) NOT NULL,
   account_details TEXT NOT NULL,
   status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected')),
@@ -145,3 +147,102 @@ CREATE INDEX IF NOT EXISTS idx_earnings_user_id ON earnings(user_id);
 CREATE INDEX IF NOT EXISTS idx_notifications_user_id ON notifications(user_id);
 CREATE INDEX IF NOT EXISTS idx_admin_activity_admin_id ON admin_activity_logs(admin_id);
 CREATE INDEX IF NOT EXISTS idx_admin_activity_created_at ON admin_activity_logs(created_at);
+
+-- Membership packages
+CREATE TABLE IF NOT EXISTS memberships (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name VARCHAR(120) NOT NULL,
+  price DECIMAL(10, 2) NOT NULL,
+  ads_per_day INTEGER NOT NULL DEFAULT 0,
+  earn_per_ad DECIMAL(10, 2) NOT NULL DEFAULT 0,
+  duration_days INTEGER NOT NULL DEFAULT 30,
+  min_withdraw DECIMAL(10, 2) NOT NULL DEFAULT 200,
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- User memberships
+CREATE TABLE IF NOT EXISTS user_memberships (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  membership_id UUID REFERENCES memberships(id) ON DELETE SET NULL,
+  status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'active', 'expired', 'cancelled')),
+  started_at TIMESTAMP,
+  expires_at TIMESTAMP,
+  approved_at TIMESTAMP,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Payments
+CREATE TABLE IF NOT EXISTS payments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  membership_id UUID REFERENCES memberships(id) ON DELETE SET NULL,
+  amount DECIMAL(10, 2) NOT NULL,
+  currency VARCHAR(10) DEFAULT 'PKR',
+  gateway VARCHAR(50) NOT NULL,
+  status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'paid', 'failed', 'refunded')),
+  reference VARCHAR(100),
+  metadata JSONB,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Manual payment proof
+CREATE TABLE IF NOT EXISTS payment_proofs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  payment_id UUID REFERENCES payments(id) ON DELETE CASCADE,
+  transaction_id VARCHAR(100),
+  sender_phone VARCHAR(50),
+  proof_filename VARCHAR(255),
+  proof_data TEXT,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Ads table
+CREATE TABLE IF NOT EXISTS ads (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title VARCHAR(255) NOT NULL,
+  description TEXT,
+  reward_amount DECIMAL(10, 2) NOT NULL DEFAULT 0,
+  url TEXT NOT NULL,
+  provider VARCHAR(50) DEFAULT 'manual',
+  daily_cap INTEGER DEFAULT 0,
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- User ads tracking
+CREATE TABLE IF NOT EXISTS user_ads (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  ad_id UUID REFERENCES ads(id) ON DELETE CASCADE,
+  status VARCHAR(20) DEFAULT 'completed' CHECK (status IN ('clicked', 'completed', 'rejected')),
+  reward_amount DECIMAL(10, 2) NOT NULL DEFAULT 0,
+  clicked_at TIMESTAMP,
+  completed_at TIMESTAMP,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Offerwall callbacks log
+CREATE TABLE IF NOT EXISTS offerwall_events (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  provider VARCHAR(50) NOT NULL,
+  user_id UUID REFERENCES users(id) ON DELETE SET NULL,
+  event_type VARCHAR(50),
+  amount DECIMAL(10, 2),
+  raw_payload JSONB,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_memberships_active ON memberships(is_active);
+CREATE INDEX IF NOT EXISTS idx_user_memberships_user_id ON user_memberships(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_memberships_status ON user_memberships(status);
+CREATE INDEX IF NOT EXISTS idx_payments_user_id ON payments(user_id);
+CREATE INDEX IF NOT EXISTS idx_payments_status ON payments(status);
+CREATE INDEX IF NOT EXISTS idx_ads_active ON ads(is_active);
+CREATE INDEX IF NOT EXISTS idx_user_ads_user_id ON user_ads(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_ads_ad_id ON user_ads(ad_id);

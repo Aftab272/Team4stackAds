@@ -4,6 +4,7 @@ import { Container, Card, Form, Button, Alert } from 'react-bootstrap'
 import { FiShield, FiMail, FiLock } from 'react-icons/fi'
 import '../Admin.css'
 import '../../pages/Auth.css'
+import api from '../../services/api'
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('')
@@ -17,26 +18,32 @@ const AdminLogin = () => {
     setError('')
     setLoading(true)
 
-    // Hardcoded admin credentials
-    const ADMIN_EMAIL = 'admin123@gmail.com'
-    const ADMIN_PASSWORD = 'password123'
+    try {
+      const response = await api.post('/auth/login', {
+        email,
+        password,
+      })
 
-    // Simulate API call delay
-    setTimeout(() => {
-      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-        // Store admin authentication
-        localStorage.setItem('token', 'admin-token-' + Date.now())
-        localStorage.setItem('userRole', 'admin')
-        localStorage.setItem('userName', 'Admin')
-        localStorage.setItem('userEmail', ADMIN_EMAIL)
+      const { token, user } = response.data
 
-        // Redirect to admin dashboard
-        navigate('/admin/dashboard')
-      } else {
-        setError('Invalid email or password. Please check your credentials and try again.')
-        setLoading(false)
+      if (!user || user.role !== 'admin') {
+        setError('Access denied. Admin privileges required.')
+        localStorage.removeItem('token')
+        localStorage.removeItem('userRole')
+        return
       }
-    }, 500)
+
+      localStorage.setItem('token', token)
+      localStorage.setItem('userRole', user.role)
+      localStorage.setItem('userName', user.name || 'Admin')
+      localStorage.setItem('userEmail', user.email || '')
+
+      navigate('/admin/dashboard')
+    } catch (err) {
+      setError(err.response?.data?.message || 'Invalid email or password. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

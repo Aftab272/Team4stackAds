@@ -2,7 +2,10 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const supabase = require('../database/supabase')
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production'
+const JWT_SECRET = process.env.JWT_SECRET
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET is not set in environment variables')
+}
 
 const generateReferralCode = () => {
   return 'REF' + Math.random().toString(36).substring(2, 9).toUpperCase()
@@ -16,11 +19,13 @@ const register = async (req, res) => {
       return res.status(400).json({ message: 'All fields are required' })
     }
 
+    const normalizedEmail = String(email).trim().toLowerCase()
+
     // Check if user exists
     const { data: existingUser } = await supabase
       .from('users')
       .select('id')
-      .eq('email', email)
+      .eq('email', normalizedEmail)
       .single()
 
     if (existingUser) {
@@ -66,7 +71,7 @@ const register = async (req, res) => {
       .from('users')
       .insert({
         name,
-        email,
+        email: normalizedEmail,
         password_hash: passwordHash,
         referral_code: referralCodeUnique,
         referred_by: referredBy,
@@ -96,7 +101,7 @@ const register = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { userId: user.id, email: user.email },
+      { userId: user.id, email: user.email, role: user.role, status: user.status },
       JWT_SECRET,
       { expiresIn: '7d' }
     )
@@ -109,6 +114,8 @@ const register = async (req, res) => {
         name: user.name,
         email: user.email,
         referral_code: user.referral_code,
+        role: user.role,
+        status: user.status,
       },
     })
   } catch (error) {
@@ -125,11 +132,13 @@ const login = async (req, res) => {
       return res.status(400).json({ message: 'Email and password are required' })
     }
 
+    const normalizedEmail = String(email).trim().toLowerCase()
+
     // Find user
     const { data: user, error: userError } = await supabase
       .from('users')
       .select('*')
-      .eq('email', email)
+      .eq('email', normalizedEmail)
       .single()
 
     if (userError || !user) {
@@ -144,7 +153,7 @@ const login = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { userId: user.id, email: user.email },
+      { userId: user.id, email: user.email, role: user.role, status: user.status },
       JWT_SECRET,
       { expiresIn: '7d' }
     )
@@ -157,6 +166,8 @@ const login = async (req, res) => {
         name: user.name,
         email: user.email,
         referral_code: user.referral_code,
+        role: user.role,
+        status: user.status,
       },
     })
   } catch (error) {

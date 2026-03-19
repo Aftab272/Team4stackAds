@@ -28,7 +28,7 @@
 
 Create `frontend/.env`:
 ```env
-VITE_API_URL=http://localhost:3001
+VITE_API_URL=http://localhost:5000
 VITE_SUPABASE_URL=paste-your-project-url-here
 VITE_SUPABASE_ANON_KEY=paste-your-anon-key-here
 ```
@@ -70,7 +70,7 @@ npm install
 cd backend
 npm run dev
 ```
-✅ Backend running on http://localhost:3001
+✅ Backend running on http://localhost:5000
 
 **Terminal 2 - Start Frontend:**
 ```bash

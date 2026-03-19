@@ -1,0 +1,150 @@
+/* Inherits .dark-profile-theme from Settings.css or app specifics */
+
+.security-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.security-card {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.security-icon-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.shield-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    background: rgba(249, 115, 22, 0.15);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+.shield-icon {
+    font-size: 2.5rem;
+    color: #f97316;
+}
+
+.security-icon-header h3 {
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.security-icon-header p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    max-width: 80%;
+}
+
+.security-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sec-info {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.sec-icon-box {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.yellow-box {
+    background: rgba(234, 179, 8, 0.2);
+    color: #eab308;
+}
+
+.green-box {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.red-box {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.sec-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.sec-text h5 {
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+}
+
+.sec-text p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.outline-orange-btn {
+    background: transparent;
+    border: 1px solid #f97316;
+    color: #f97316;
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.outline-orange-btn:hover {
+    background: rgba(249, 115, 22, 0.1);
+}
+
+.text-muted-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: underline;
+    padding: 0.5rem;
+    transition: color 0.2s;
+}
+
+.text-muted-btn:hover {
+    color: #fff;
+}
+
+/* Neon Active State Override for Security */
+.premium-toggle.active-neon {
+    background: #10b981;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+}
+
+.premium-toggle.active-neon .toggle-knob {
+    left: 27px;
+}

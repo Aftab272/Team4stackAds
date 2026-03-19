@@ -1,77 +1,77 @@
 import React from 'react'
-import { Container, Card, Row, Col } from 'react-bootstrap'
+import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { FiArrowLeft } from 'react-icons/fi'
-import './Page.css'
+import { FiArrowLeft, FiTarget, FiGlobe, FiAward } from 'react-icons/fi'
 import './AboutUs.css'
 
 const AboutUs = () => {
   const navigate = useNavigate()
-  return (
-    <Container className="page-container">
-      <div className="back-button-container">
-        <button
-          type="button"
-          className="back-dashboard-button"
-          onClick={() => navigate('/quick-actions')}
-        >
-          <FiArrowLeft />
-          Back to Quick Actions
-        </button>
-      </div>
-      <div className="about-title-box">
-        <h1 className="page-title about-title">About Us</h1>
-      </div>
-      
-      <Card className="page-card about-card mb-4">
-        <Card.Body>
-          <h2>Welcome to Team4StackAds</h2>
-          <p className="lead">
-            We are a leading platform that connects talented individuals with rewarding opportunities.
-          </p>
-          <p>
-            Team4StackAds was founded with a mission to create a fair and transparent ecosystem
-            where users can earn by completing tasks and building their teams. We believe in
-            rewarding hard work and dedication.
-          </p>
-        </Card.Body>
-      </Card>
 
-      <Row>
-        <Col md={4} className="mb-3">
-          <Card className="page-card about-card h-100">
-            <Card.Body className="text-center">
-              <h3>🎯 Our Mission</h3>
-              <p>
-                To provide a platform where everyone can earn by contributing their skills and
-                building a strong community.
-              </p>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4} className="mb-3">
-          <Card className="page-card about-card h-100">
-            <Card.Body className="text-center">
-              <h3>💡 Our Vision</h3>
-              <p>
-                To become the most trusted and rewarding platform for task completion and
-                team building.
-              </p>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4} className="mb-3">
-          <Card className="page-card about-card h-100">
-            <Card.Body className="text-center">
-              <h3>✨ Our Values</h3>
-              <p>
-                Transparency, fairness, and user satisfaction are at the core of everything we do.
-              </p>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  }
+
+  return (
+    <div className="app-page dark-profile-theme">
+      <div className="app-container about-container pb-5">
+
+        {/* Header Ribbon */}
+        <div className="subpage-header">
+          <button className="back-btn" onClick={() => navigate('/profile')}>
+            <FiArrowLeft /> Back
+          </button>
+          <div style={{ width: '60px' }}></div>
+        </div>
+
+        <div className="about-hero">
+          <div className="hero-gradient-text">Team4StackAds</div>
+          <p className="about-subtitle">Pioneering transparent rewards and global user empowerment.</p>
+        </div>
+
+        <motion.div
+          className="about-card main-mission-card mb-5"
+          initial="hidden" animate="visible" variants={cardVariants}
+        >
+          <h2>Who We Are</h2>
+          <p>
+            We are deeply committed to bridging the gap between talent and opportunity. Team4StackAds is designed from the ground up to create a fair, highly transparent ecosystem allowing users universally to earn heavily through completing tasks and structuring strong network teams. We believe raw dedication deserves unparalleled rewards.
+          </p>
+        </motion.div>
+
+        <div className="about-grid">
+
+          <motion.div
+            className="about-card value-card"
+            initial="hidden" animate="visible" variants={cardVariants} transition={{ delay: 0.1 }}
+          >
+            <div className="value-icon"><FiTarget /></div>
+            <h3>Our Mission</h3>
+            <p>To construct a limitless platform where anyone can scale their earnings continuously by contributing specific skills and maintaining a dynamic, tight-knit community network.</p>
+          </motion.div>
+
+          <motion.div
+            className="about-card value-card"
+            initial="hidden" animate="visible" variants={cardVariants} transition={{ delay: 0.2 }}
+          >
+            <div className="value-icon"><FiGlobe /></div>
+            <h3>Our Vision</h3>
+            <p>To be universally recognized as the absolute highest-trust, highest-reward platform globally for rapid task resolution and exponential team building algorithms.</p>
+          </motion.div>
+
+          <motion.div
+            className="about-card value-card"
+            initial="hidden" animate="visible" variants={cardVariants} transition={{ delay: 0.3 }}
+          >
+            <div className="value-icon"><FiAward /></div>
+            <h3>Core Values</h3>
+            <p>Absolute transparency structurally. We rigorously enforce fair payouts and obsess heavily over generating the best possible frictionless user flow in the industry.</p>
+          </motion.div>
+
+        </div>
+
+      </div>
+    </div>
   )
 }
 

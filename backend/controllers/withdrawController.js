@@ -1,4 +1,10 @@
 const supabase = require('../database/supabase')
+const { getActiveMembershipForUser } = require('./membershipController')
+
+const parseNumber = (value, fallback = 0) => {
+  const num = parseFloat(value)
+  return Number.isNaN(num) ? fallback : num
+}
 
 const createWithdrawRequest = async (req, res) => {
   try {
@@ -7,6 +13,38 @@ const createWithdrawRequest = async (req, res) => {
 
     if (!amount || !paymentMethod || !accountDetails) {
       return res.status(400).json({ message: 'All fields are required' })
+    }
+
+    const numericAmount = parseNumber(amount, 0)
+    if (numericAmount <= 0) {
+      return res.status(400).json({ message: 'Invalid amount' })
+    }
+
+    const activeMembership = await getActiveMembershipForUser(userId)
+    const minWithdrawDefault = parseNumber(process.env.MIN_WITHDRAW_DEFAULT, 200)
+    const minWithdraw = activeMembership?.memberships?.min_withdraw || minWithdrawDefault
+    if (numericAmount < minWithdraw) {
+      return res.status(400).json({ message: `Minimum withdrawal is ${minWithdraw}` })
+    }
+
+    const dailyLimit = parseNumber(process.env.WITHDRAW_DAILY_LIMIT, 0)
+    if (dailyLimit > 0 && numericAmount > dailyLimit) {
+      return res.status(400).json({ message: `Daily withdrawal limit is ${dailyLimit}` })
+    }
+
+    const dailyCountLimit = parseInt(process.env.WITHDRAW_DAILY_COUNT_LIMIT || '0', 10)
+    if (dailyCountLimit > 0) {
+      const startOfDay = new Date()
+      startOfDay.setHours(0, 0, 0, 0)
+      const { count: todayCount } = await supabase
+        .from('withdraw_requests')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', userId)
+        .gte('created_at', startOfDay.toISOString())
+
+      if (todayCount >= dailyCountLimit) {
+        return res.status(400).json({ message: 'Daily withdrawal request limit reached' })
+      }
     }
 
     // Check wallet balance
@@ -20,8 +58,16 @@ const createWithdrawRequest = async (req, res) => {
       return res.status(404).json({ message: 'Wallet not found' })
     }
 
-    if (parseFloat(amount) > parseFloat(wallet.balance)) {
+    if (numericAmount > parseFloat(wallet.balance)) {
       return res.status(400).json({ message: 'Insufficient balance' })
+    }
+
+    const feePercent = parseNumber(process.env.WITHDRAW_FEE_PERCENT, 0)
+    const feeAmount = feePercent > 0 ? (numericAmount * feePercent) / 100 : 0
+    const totalDebit = numericAmount + feeAmount
+
+    if (totalDebit > parseFloat(wallet.balance)) {
+      return res.status(400).json({ message: 'Insufficient balance for withdrawal fee' })
     }
 
     // Create withdraw request
@@ -29,7 +75,8 @@ const createWithdrawRequest = async (req, res) => {
       .from('withdraw_requests')
       .insert({
         user_id: userId,
-        amount: parseFloat(amount),
+        amount: numericAmount,
+        fee_amount: feeAmount,
         payment_method: paymentMethod,
         account_details: accountDetails,
         status: 'pending',
@@ -44,6 +91,7 @@ const createWithdrawRequest = async (req, res) => {
     res.status(201).json({
       message: 'Withdrawal request submitted successfully',
       withdrawRequest,
+      feeAmount,
     })
   } catch (error) {
     console.error('Create withdraw request error:', error)
@@ -168,7 +216,9 @@ const approveWithdrawal = async (req, res) => {
       .single()
 
     if (wallet) {
-      const newBalance = parseFloat(wallet.balance) - parseFloat(request.amount)
+      const feeAmount = parseFloat(request.fee_amount || 0)
+      const totalDebit = parseFloat(request.amount) + feeAmount
+      const newBalance = parseFloat(wallet.balance) - totalDebit
       
       await supabase
         .from('wallet')
@@ -182,8 +232,8 @@ const approveWithdrawal = async (req, res) => {
       await supabase.from('wallet_transactions').insert({
         wallet_id: wallet.id,
         type: 'debit',
-        amount: request.amount,
-        description: `Withdrawal approved: ${request.payment_method}`,
+        amount: totalDebit,
+        description: `Withdrawal approved: ${request.payment_method}${feeAmount ? ` (fee ${feeAmount})` : ''}`,
         balance_after: newBalance,
       })
     }

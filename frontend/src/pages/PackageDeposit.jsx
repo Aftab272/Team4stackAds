@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { FiArrowLeft, FiCheckCircle, FiImage } from 'react-icons/fi'
+import api from '../services/api'
+import { showError, showSuccess } from '../services/notify'
 import './Page.css'
 import './PackageDeposit.css'
 
@@ -14,6 +16,7 @@ const PackageDeposit = () => {
     proofImage: null
   })
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -32,8 +35,36 @@ const PackageDeposit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!canSubmit) return
-    setSubmitted(true)
+    if (!canSubmit || !selectedPackage?.id) return
+
+    const reader = new FileReader()
+    setSubmitting(true)
+
+    reader.onload = async () => {
+      try {
+        await api.post('/payments', {
+          membershipId: selectedPackage.id,
+          gateway: 'manual',
+          transactionId: formData.transactionId,
+          phoneNumber: formData.phoneNumber,
+          proofData: reader.result,
+          proofFilename: formData.proofImage?.name || null
+        })
+        setSubmitted(true)
+        showSuccess('Payment proof submitted. Awaiting approval.')
+      } catch (error) {
+        showError(error, 'Failed to submit payment proof')
+      } finally {
+        setSubmitting(false)
+      }
+    }
+
+    reader.onerror = () => {
+      setSubmitting(false)
+      showError(null, 'Failed to read image')
+    }
+
+    reader.readAsDataURL(formData.proofImage)
   }
 
   return (
@@ -55,6 +86,24 @@ const PackageDeposit = () => {
         </div>
 
         <div className="deposit-card">
+          {!selectedPackage && (
+            <div className="deposit-success">
+              <FiCheckCircle />
+              <div>
+                <h4>No package selected</h4>
+                <p>Please go back and choose a package before submitting payment.</p>
+                <button
+                  type="button"
+                  className="deposit-next"
+                  onClick={() => navigate('/work')}
+                >
+                  Choose Package
+                </button>
+              </div>
+            </div>
+          )}
+
+          {selectedPackage && (
           <div className="deposit-top">
             <div>
               <h3>Send Payment First</h3>
@@ -66,6 +115,7 @@ const PackageDeposit = () => {
               <span className="deposit-price">{selectedPackage?.price || '--'}</span>
             </div>
           </div>
+          )}
 
           <div className="deposit-account">
             <div className="jazzcash-icon">JC</div>
@@ -76,6 +126,7 @@ const PackageDeposit = () => {
             </div>
           </div>
 
+          {selectedPackage && (
           <form className="deposit-form" onSubmit={handleSubmit}>
             <div className="form-field">
               <label>Transaction ID</label>
@@ -111,9 +162,10 @@ const PackageDeposit = () => {
             </div>
 
             <button type="submit" className="deposit-submit" disabled={!canSubmit}>
-              Submit & Continue
+              {submitting ? 'Submitting...' : 'Submit & Continue'}
             </button>
           </form>
+          )}
 
           {submitted && (
             <div className="deposit-success">

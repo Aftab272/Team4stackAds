@@ -4,7 +4,7 @@ import DataTable from '../components/DataTable'
 import ConfirmationDialog from '../components/ConfirmationDialog'
 import LoadingSpinner from '../components/LoadingSpinner'
 import { getAllUsers, updateUserStatus, deleteUser } from '../services/adminApi'
-import { toast } from 'react-toastify'
+import { showError, showSuccess } from '../../services/notify'
 
 const Users = () => {
   const [loading, setLoading] = useState(true)
@@ -28,7 +28,7 @@ const Users = () => {
       setUsers(response.data.users)
       setPagination(response.data.pagination)
     } catch (error) {
-      toast.error('Failed to load users')
+      showError(error, 'Failed to load users')
     } finally {
       setLoading(false)
     }
@@ -45,21 +45,25 @@ const Users = () => {
   const handleStatusChange = async (userId, newStatus) => {
     try {
       await updateUserStatus(userId, newStatus)
-      toast.success(`User ${newStatus} successfully`)
+      showSuccess(`User ${newStatus} successfully`)
       fetchUsers()
     } catch (error) {
-      toast.error('Failed to update user status')
+      showError(error, 'Failed to update user status')
     }
   }
 
   const handleDelete = async () => {
+    if (!selectedUser) {
+      showError(null, 'No user selected')
+      return
+    }
     try {
       await deleteUser(selectedUser.id)
-      toast.success('User deleted successfully')
+      showSuccess('User deleted successfully')
       setShowConfirm(false)
       fetchUsers()
     } catch (error) {
-      toast.error('Failed to delete user')
+      showError(error, 'Failed to delete user')
     }
   }
 

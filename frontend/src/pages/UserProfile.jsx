@@ -1,142 +1,214 @@
 import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import {
-  FiArrowLeft,
-  FiEdit3,
-  FiCheck,
-  FiX,
-  FiMail,
-  FiUser,
-  FiHash,
-  FiCalendar
+  FiCopy, FiRefreshCw, FiBox, FiCreditCard, FiDownload,
+  FiUser, FiShield, FiCheckSquare, FiList, FiBookOpen, FiHelpCircle,
+  FiInfo, FiPower, FiChevronRight, FiAlertTriangle
 } from 'react-icons/fi'
-import './Page.css'
 import './UserProfile.css'
 
 const UserProfile = () => {
   const navigate = useNavigate()
-  const [isEditing, setIsEditing] = useState(false)
+  const [isRefreshing, setIsRefreshing] = useState(false)
+  const [copiedId, setCopiedId] = useState(null)
 
-  const [user, setUser] = useState({
-    name: 'Demo User',
-    email: 'demo@example.com',
-    referralCode: 'DEMO123',
-    memberSince: '14/03/2026'
-  })
+  // Interactive Feature States
+  const [showLogoutModal, setShowLogoutModal] = useState(false)
+  const [showAvatarModal, setShowAvatarModal] = useState(false)
 
-  const handleSave = () => {
-    setIsEditing(false)
-    alert('Profile updated successfully!')
+  // System State
+  const [avatar, setAvatar] = useState(localStorage.getItem('userAvatar') || null)
+  const user = {
+    name: localStorage.getItem('userName') || 'Team4Stack Member',
+    id: localStorage.getItem('userId') || Math.floor(100000000 + Math.random() * 900000000).toString(),
+    balance: localStorage.getItem('walletBalance') || '3.66'
   }
 
-  const handleCancel = () => {
-    setIsEditing(false)
+  const handleRefresh = () => {
+    setIsRefreshing(true)
+    setTimeout(() => setIsRefreshing(false), 800)
   }
 
-  const handleChange = (e) => {
-    setUser({
-      ...user,
-      [e.target.name]: e.target.value
-    })
+  const handleCopy = (text, type) => {
+    navigator.clipboard.writeText(text)
+    setCopiedId(type)
+    setTimeout(() => setCopiedId(null), 2000)
   }
+
+  const confirmLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('userRole')
+    navigate('/login')
+  }
+
+  const handleAvatarSelect = (emoji) => {
+    localStorage.setItem('userAvatar', emoji)
+    setAvatar(emoji)
+    setShowAvatarModal(false)
+  }
+
+  const emojis = ['🦁', '🦅', '🚀', '👑', '💎', '🦊', '🐯', '🔥', '⚡', '🎮', '🐼', '🦄']
+
+  const menuItems = [
+    { icon: <FiUser />, title: "Personal Information", route: '/settings' },
+    { icon: <FiShield />, title: "Account Security", route: '/security-permissions' },
+    { icon: <FiCheckSquare />, title: "Task Center", route: '/work' },
+    { icon: <FiList />, title: "Account History", route: '/account-history' },
+    { icon: <FiBookOpen />, title: "Platform Guide", route: '/guide' },
+    { icon: <FiHelpCircle />, title: "Help & Support", route: '/support' },
+    { icon: <FiInfo />, title: "About Team4Stack", route: '/about' },
+    { icon: <FiPower style={{ color: '#ef4444' }} />, title: "Logout", onClick: () => setShowLogoutModal(true) }
+  ]
 
   return (
-    <div className="app-page">
-      <div className="app-container">
-        <div className="back-button-container">
-          <button
-            type="button"
-            className="back-dashboard-button"
-            onClick={() => navigate('/dashboard')}
-          >
-            <FiArrowLeft />
-            Back Dashboard
-          </button>
-        </div>
-        <div className="user-title-box">
-          <h2 className="page-title user-title">User Profile</h2>
-        </div>
-        {!isEditing && (
-          <div className="page-header-top">
-            <button type="button" className="pill-button" onClick={() => setIsEditing(true)}>
-              <FiEdit3 />
-              Edit
-            </button>
-          </div>
-        )}
+    <div className="game-profile-wrapper">
 
-        <div className="page-card user-card p-4">
-          <div className="text-center mb-4">
-            <div
-              className="stat-icon"
-              style={{ background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)', margin: '0 auto' }}
-            >
-              <FiUser size={22} />
+      {/* 1. Master Orange Hero Section */}
+      <div className="game-hero-section">
+        <div className="game-hero-top">
+
+          <div className="hero-user-info">
+            <div className="hero-avatar interactive-avatar" onClick={() => setShowAvatarModal(true)}>
+              {avatar ? <span style={{ fontSize: '1.8rem', lineHeight: 1 }}>{avatar}</span> : user.name.charAt(0).toUpperCase()}
             </div>
-          </div>
-
-          <div className="info-list">
-            <div className="form-field">
-              <label><FiUser className="me-2" /> Name</label>
-              {isEditing ? (
-                <input
-                  className="form-input"
-                  type="text"
-                  name="name"
-                  value={user.name}
-                  onChange={handleChange}
-                />
-              ) : (
-                <strong>{user.name}</strong>
-              )}
-            </div>
-
-            <div className="form-field">
-              <label><FiMail className="me-2" /> Email</label>
-              {isEditing ? (
-                <input
-                  className="form-input"
-                  type="email"
-                  name="email"
-                  value={user.email}
-                  onChange={handleChange}
-                />
-              ) : (
-                <strong>{user.email}</strong>
-              )}
-            </div>
-
-            <div className="form-field">
-              <label><FiHash className="me-2" /> Referral Code</label>
-              <strong>{user.referralCode}</strong>
-            </div>
-
-            <div className="form-field">
-              <label><FiCalendar className="me-2" /> Member Since</label>
-              <strong>{user.memberSince}</strong>
-            </div>
-          </div>
-
-          <div className="d-flex gap-2 justify-content-center mt-4 flex-wrap">
-            {isEditing ? (
-              <>
-                <button type="button" className="primary-pill" onClick={handleSave}>
-                  <FiCheck className="me-2" />
-                  Save Changes
+            <div className="hero-user-details">
+              <div className="hero-name-row">
+                <span className="hero-name">▼ {user.name}</span>
+                <button className="icon-btn" onClick={() => handleCopy(user.name, 'name')}>
+                  <FiCopy color={copiedId === 'name' ? '#10b981' : '#fff'} />
                 </button>
-                <button type="button" className="ghost-pill" onClick={handleCancel}>
-                  <FiX className="me-2" />
-                  Cancel
+              </div>
+              <div className="hero-id-row">
+                <span className="hero-id">ID: {user.id}</span>
+                <button className="icon-btn" onClick={() => handleCopy(user.id, 'id')}>
+                  <FiCopy color={copiedId === 'id' ? '#10b981' : '#fff'} />
                 </button>
-              </>
-            ) : (
-              <button type="button" className="ghost-pill" onClick={() => navigate('/dashboard')}>
-                Back to Dashboard
+              </div>
+            </div>
+          </div>
+
+          <div className="hero-balance-box">
+            <div className="balance-amount-row">
+              <img src="https://flagcdn.com/w20/pk.png" alt="PK" className="flag-icon" />
+              <span className="balance-amount">{user.balance}</span>
+              <button className={`refresh-btn ${isRefreshing ? 'spinning' : ''}`} onClick={handleRefresh}>
+                <FiRefreshCw />
               </button>
-            )}
+            </div>
+          </div>
+        </div>
+
+        {/* 2. Team4Stack 3-Action Ribbon */}
+        <div className="game-action-ribbon">
+          <div className="ribbon-item" onClick={() => navigate('/package-deposit')}>
+            <div className="ribbon-icon-box">
+              <span className="ribbon-badge badge-dark">NEW</span>
+              <FiBox className="ribbon-icon" />
+            </div>
+            <span>Packages</span>
+          </div>
+
+          <div className="ribbon-item" onClick={() => navigate('/wallet')}>
+            <div className="ribbon-icon-box">
+              <FiCreditCard className="ribbon-icon" />
+            </div>
+            <span>Wallet</span>
+          </div>
+
+          <div className="ribbon-item" onClick={() => navigate('/withdraw')}>
+            <div className="ribbon-icon-box">
+              <FiDownload className="ribbon-icon" />
+            </div>
+            <span>Withdraw</span>
           </div>
         </div>
       </div>
+
+      {/* 3. Team4Stack Routing Menu List */}
+      <div className="game-menu-list">
+        {menuItems.map((item, index) => (
+          <motion.div
+            key={index}
+            className="game-menu-item"
+            onClick={() => item.onClick ? item.onClick() : navigate(item.route)}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.05 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <div className="menu-item-left">
+              <span className="menu-icon">{item.icon}</span>
+              <span className="menu-title">{item.title}</span>
+            </div>
+            <div className="menu-item-right">
+              <FiChevronRight className="menu-chevron" />
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Modals & Overlays */}
+      <AnimatePresence>
+
+        {/* Avatar Selection Modal */}
+        {showAvatarModal && (
+          <motion.div
+            className="feature-modal-overlay"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="feature-modal-card"
+              initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0 }}
+            >
+              <h3 className="modal-headline">Select Your Avatar</h3>
+              <p className="modal-subtext">Choose a unique emoji to represent your Team4Stack identity globally.</p>
+
+              <div className="emoji-grid">
+                {emojis.map((emoji, idx) => (
+                  <button key={idx} className="emoji-btn" onClick={() => handleAvatarSelect(emoji)}>
+                    {emoji}
+                  </button>
+                ))}
+              </div>
+
+              <button className="premium-btn modal-cancel-btn w-100" onClick={() => setShowAvatarModal(false)}>
+                Cancel
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Logout Confirmation Modal */}
+        {showLogoutModal && (
+          <motion.div
+            className="feature-modal-overlay"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="feature-modal-card logout-card"
+              initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0 }}
+            >
+              <div className="danger-icon-box">
+                <FiAlertTriangle />
+              </div>
+              <h3 className="modal-headline text-white mt-3">Are you totally sure?</h3>
+              <p className="modal-subtext">Logging out will terminate your active session entirely. You will need to re-authenticate to view your earnings.</p>
+
+              <div className="modal-action-row">
+                <button className="premium-btn outline-cancel-btn" onClick={() => setShowLogoutModal(false)}>
+                  Go Back
+                </button>
+                <button className="premium-btn danger-confirm-btn" onClick={confirmLogout}>
+                  Yes, Log Out
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+      </AnimatePresence>
+
     </div>
   )
 }
