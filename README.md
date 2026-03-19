@@ -1,4 +1,4 @@
-# Team4StackAds
+# Team4StackAds kahn
 
 A modern responsive web application and mobile-friendly dashboard for team management, earnings, and task tracking.
 
@@ -27,6 +27,7 @@ team4stackads/
 ## Technology Stack
 
 ### Frontend
+
 - React.js
 - Bootstrap & React Bootstrap
 - Axios for API requests
@@ -34,6 +35,7 @@ team4stackads/
 - Vite
 
 ### Backend
+
 - Next.js (API routes)
 - Node.js
 - Supabase Database
@@ -42,6 +44,7 @@ team4stackads/
 ## Setup Instructions
 
 ### Prerequisites
+
 - Node.js (v18 or higher)
 - npm or yarn
 - Supabase account
@@ -49,23 +52,27 @@ team4stackads/
 ### Frontend Setup
 
 1. Navigate to frontend directory:
+
 ```bash
 cd frontend
 ```
 
-2. Install dependencies:
+1. Install dependencies:
+
 ```bash
 npm install
 ```
 
-3. Create a `.env` file:
+1. Create a `.env` file:
+
 ```env
 VITE_API_URL=http://localhost:5000
 VITE_SUPABASE_URL=your-supabase-url
 VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
 
-4. Start development server:
+1. Start development server:
+
 ```bash
 npm run dev
 ```
@@ -75,23 +82,27 @@ The frontend will run on `http://localhost:3000`
 ### Backend Setup
 
 1. Navigate to backend directory:
+
 ```bash
 cd backend
 ```
 
-2. Install dependencies:
+1. Install dependencies:
+
 ```bash
 npm install
 ```
 
-3. Create a `.env.local` file:
+1. Create a `.env.local` file:
+
 ```env
 SUPABASE_URL=your-supabase-url
 SUPABASE_ANON_KEY=your-supabase-anon-key
 JWT_SECRET=your-jwt-secret-key
 ```
 
-4. Start development server:
+1. Start development server:
+
 ```bash
 npm run dev
 ```
